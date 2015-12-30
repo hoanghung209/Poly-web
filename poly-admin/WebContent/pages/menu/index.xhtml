@@ -1,0 +1,266 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{menuController.getKeywords()}"></meta>
+		<meta name="Description" content="#{menuController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Quản lý menu</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">
+			<div id="left" class="fl" style="width:20%;">
+	<h:form id="frmLeft">			
+				<ucMenu:tree ucAction="1"/>
+	</h:form>									
+			</div>
+			<div id="right" class="fr" style="width:80%;padding-bottom:20px;">
+	<h:form id="frmDetail" prependId="false">
+			    <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+					<h:commandButton id="btnAdd" styleClass="btnCss fl mr5 btnAdd pl20" 
+						value="#{lang['label.btnAdd']}"
+						action="#{menuController.add}"
+						disabled="#{menuBean.disabled.get('disabled-insert')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>																		
+				
+					<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20"
+						value="#{lang['label.btnSave']}"
+						onclick="return OnSave();"
+						action="#{menuController.update}"
+						disabled="#{menuBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form :frmList :frmLeft :pnlParentMenu"/>
+					</h:commandButton>		
+							
+					<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+						value="#{lang['label.btnCancel']}"
+						action="#{menuController.cancel}"
+						disabled="#{menuBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					    		    		    			           
+					<div class="cl h6" />
+			    </div>
+	    	
+			    <div class="area-detail top-right">
+			    	<div class="none">
+						<h:inputHidden id="txtParentId" value="#{menuBean.parent}" />		    		
+			    	</div>
+			    	
+			        <table width="100%">
+			            <colgroup>
+			                <col width="10%" />
+			                <col width="40%" />	
+			                <col width="10%" />				                
+			                <col />
+			            </colgroup>
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                    Name VN :
+			                </td>
+			                <td><h:inputText id="txtNameVn" styleClass="w90pc text idleField" value="#{menuBean.nameVn}"
+									disabled="#{menuBean.disabled.get('disabled-update')}"/></td>	
+							<td class="pl10 textboxname">
+			                    Name EN :
+			                </td>
+			                <td><h:inputText id="txtNameEn" styleClass="w90pc text idleField" value="#{menuBean.nameEn}"
+									disabled="#{menuBean.disabled.get('disabled-update')}"/></td>			                
+			            </tr>
+			            <tr>
+			            <td class="pl10 textboxname">Parent Menu :</td>
+			            <td>
+			            <div style="width: 85%" class="fl">
+									<h:inputText id="txtParentName" styleClass="w90pc text idleField" value="#{menuBean.parentName}"
+										disabled="#{menuBean.disabled.get('disabled-update')}"
+										readonly="readonly"/>												            
+					            </div>
+					            <div style="width: 10%" class="fl">
+					            	<a id="lnkChangeChannel" href="#ChangeMenuArea-modal" onmouseover="$(this).fancybox()">
+						                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/formSELECT.gif" alt="" style="cursor: pointer;"
+						                    title="Parent Menu" />
+				                    </a>
+					            </div>
+			            
+			            </td>
+			             <td class="pl10 textboxname">Position :</td>
+			            <td>
+			            		<h:selectOneMenu id="cboPosition" styleClass="idleField" value="#{menuBean.position}"
+					       			disabled="#{menuBean.disabled.get('disabled-update')}">
+									<f:selectItem itemValue="1" itemLabel="Top" />
+									<f:selectItem itemValue="2" itemLabel="Top-Bottom" />
+									<f:selectItem itemValue="3" itemLabel="Bottom" />
+								</h:selectOneMenu>   
+								<SPAN class="pl10 textboxname">Status :</SPAN>
+								<h:selectOneMenu id="cboStatus" styleClass="idleField" value="#{menuBean.status}"
+					       			disabled="#{menuBean.disabled.get('disabled-update')}">
+									<f:selectItem itemValue="0" itemLabel="Show" />
+									<f:selectItem itemValue="1" itemLabel="Hide" />									
+								</h:selectOneMenu>    
+								<SPAN class="pl10 textboxname">Order :</SPAN>
+								 <h:inputText id="txtOrd" styleClass="text idleField" value="#{menuBean.ord}"
+									disabled="#{menuBean.disabled.get('disabled-update')}" maxlength="5"/>
+			            </td>
+			            </tr>
+			            <tr>
+			            <td class="pl10 textboxname">
+			                    URL :
+			                </td>
+			                <td><h:inputText id="txtUrl" styleClass="w90pc text idleField" value="#{menuBean.url}"
+									disabled="#{menuBean.disabled.get('disabled-update')}"/></td>	
+							<td class="pl10 textboxname">
+			                    Banner :
+			                </td>
+			                <td><h:inputText id="txtBanner" styleClass="w90pc text idleField" value="#{menuBean.banner}"
+									disabled="#{menuBean.disabled.get('disabled-update')}"/></td>		
+			            </tr>
+			            		            		            		            	          
+			        </table>   
+			        
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"/>
+			    	</div>    
+			    </div>	
+	</h:form>		 
+	<h:form id="frmList" prependId="false">			    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+				            <colgroup>
+					            <col width="5%" />
+					            <col width="33%" />
+					            <col width="33%" />
+					            <col width="5%" />
+					            <col width="10%" />
+					            <col width="10%" />
+					            <col />             
+				            </colgroup>
+					        <tr class="table-header">
+					            <td>ID</td>
+					            <td>Name_vn</td>
+					            <td>Name_en</td>
+					            <td>Order</td>
+					            <td>Position</td>
+					            <td>Status</td>
+					            <td>Action</td>
+					        </tr>		
+					          <tr class="table-fillter">
+					            <td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchNameVn" styleClass="table-text idleField" value="#{menuBean.filterNameVn}"
+		                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/>				                
+					            </td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchNameEn" styleClass="table-text idleField" value="#{menuBean.filterNameEn}"
+		                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/>				                
+					            </td>
+					            <td/>	
+					            <td>
+			                        <h:selectOneMenu id="cboSearchPosition" styleClass="idleField w90pc" value="#{menuBean.filterPosition}" 
+			                        	onchange="$('*[id*=btnSearch]').click();">
+			                        	<f:selectItem itemValue="" itemLabel="Tất cả" />
+										<f:selectItem itemValue="1" itemLabel="Top" />
+										<f:selectItem itemValue="2" itemLabel="Top-bottom" />	
+										<f:selectItem itemValue="3" itemLabel="Bottom" />			                        				                        	
+			                        </h:selectOneMenu>				                
+					            </td>			            			           
+					            <td>
+			                        <h:selectOneMenu id="cboSearchStatus" styleClass="idleField w90pc" value="#{menuBean.filterStatus}" 
+			                        	onchange="$('*[id*=btnSearch]').click();">
+			                        	<f:selectItem itemValue="" itemLabel="Tất cả" />
+										<f:selectItem itemValue="0" itemLabel="Hiện" />
+										<f:selectItem itemValue="-1" itemLabel="Ẩn" />			                        				                        	
+			                        </h:selectOneMenu>				                
+					            </td>
+			                    <td align="center">
+			                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch" 
+			                    		value="Tìm"
+			                    		action="#{menuController.loadList(1)}">
+			                    		<f:ajax execute="@form" render="@form" />
+		                    		</h:commandButton>
+			                    </td>
+					        </tr>							    					        
+		<ui:repeat value="#{menuBean.list}" var="item">														         
+							<tr class="table-body #{item.get('rowOrder')}">
+								<td>#{item.get('id')}</td>
+								<td>#{item.get('name_vn')}</td>
+								<td>#{item.get('name_en')}</td>
+								<td>#{item.get('ord')}</td>
+						 		<td>#{item.get('position_name')}</td>
+						 		<td>#{item.get('status_name')}</td>
+								<td align="center">																																
+									<h:commandLink styleClass="pl5" 
+										action="#{menuController.edit}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" 
+											width="18" alt="" />
+										<f:setPropertyActionListener target="#{menuBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmDetail" />										
+									</h:commandLink>	
+																					 			
+									<h:commandLink styleClass="pl5" 
+										action="#{menuController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />
+										
+										<f:setPropertyActionListener target="#{menuBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render="@form :frmDetail :frmLeft :pnlParentMenu"/>										
+									</h:commandLink>
+								</td>							  
+							</tr>
+		</ui:repeat>														
+				        </table>				
+					<div class="mt4"></div>
+					<div class="paging-bar">
+		<ui:repeat value="#{menuBean.pageBar}" var="pageItem">
+						<h:commandLink styleClass="#{pageItem.get('class')}"
+							value="#{pageItem.get('text')}"
+							action="#{menuController.loadList}">
+							<f:setPropertyActionListener target="#{menuBean.selectedPage}" value="#{pageItem}" />
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+		</ui:repeat>
+					</div>				
+				</div>					
+	</h:form>   
+				<div id="hidden-popup">	
+<h:panelGroup id="pnlParentMenu">					
+					<div class="none">
+					    <div id="ChangeMenuArea-modal" class="modal-fb">
+					        <h2>
+					            Menu</h2>
+					        <div style="height: 400px; overflow: scroll;">
+					    		<ucMenu:tree ucAction="10"/>
+					        </div>
+					    </div>
+					</div>
+</h:panelGroup>																
+				</div>			
+   			</div>
+		</div>
+	</ui:define>	
+	<ui:define name="footer">	
+		<input id="lnkMenuDetail" type="hidden" value="#{rewriteURL.makeMenuURL('tab-1', '10', '{PARM_PARENT_ID}')}"/>		
+		<input id="hdFileStorageDomain" type="hidden" value="#{configBean.categories.get('app').get('file-storage-domain')}"/>						
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+				
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>					
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/menu/index.js"></script>				
+	</ui:define>		
+</ui:composition>

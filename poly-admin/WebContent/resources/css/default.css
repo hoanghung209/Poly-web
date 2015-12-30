@@ -1,0 +1,30 @@
+html,body,div,ul {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Arial;
+	font-size: 12px !important;
+	line-height: 16px;
+}
+
+.textBox {
+	width: 300px;
+}
+.paging-bar { font-size:12px; PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN: 3px 3px 20px; PADDING-TOP: 3px; TEXT-ALIGN: center}
+.paging-bar A {BORDER-RIGHT: #9aafe5 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #9aafe5 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #9aafe5 1px solid; COLOR: #2e6ab1; MARGIN-RIGHT: 2px; PADDING-TOP: 2px; BORDER-BOTTOM: #9aafe5 1px solid; TEXT-DECORATION: none;cursor:pointer;}
+.paging-bar A:hover {BORDER-RIGHT: #2b66a5 1px solid; BORDER-TOP: #2b66a5 1px solid; BORDER-LEFT: #2b66a5 1px solid; COLOR: #000; BORDER-BOTTOM: #2b66a5 1px solid; BACKGROUND-COLOR: lightyellow}
+.pagination A:active {BORDER-RIGHT: #2b66a5 1px solid; BORDER-TOP: #2b66a5 1px solid; BORDER-LEFT: #2b66a5 1px solid; COLOR: #000; BORDER-BOTTOM: #2b66a5 1px solid; BACKGROUND-COLOR: lightyellow}
+.paging-bar .current {BORDER-RIGHT: navy 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: navy 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; PADDING-BOTTOM: 2px; BORDER-LEFT: navy 1px solid; COLOR: #fff; MARGIN-RIGHT: 2px; PADDING-TOP: 2px; BORDER-BOTTOM: navy 1px solid; BACKGROUND-COLOR: #2e6ab1}
+.paging-bar .disabled {display:none;}
+
+/* CSS for button upload file */
+.btnUpload{width: 30px; height: 30px; border: none; background: url(../images/Data/Upload.png) no-repeat left top}
+.btn-create-folder{width: 32px; height: 32px; border: none; background: url(../images/Icon/32x32/create-folder.png) no-repeat left top}
+.btn-rename-folder{width: 32px; height: 32px; border: none; background: url(../images/Icon/32x32/rename-folder.png) no-repeat left top}
+.btn-delete-folder{width: 32px; height: 32px; border: none; background: url(../images/Icon/32x32/delete-folder.png) no-repeat left top}
+.btn-share-folder{width: 32px; height: 32px; border: none; background: url(../images/Icon/32x32/share.png) no-repeat left top}
+.btn-delete-file{width: 32px; height: 32px; border: none; background: url(../images/Icon/32x32/delete-file.png) no-repeat left top}
+
+#mask {display:none;position:fixed;z-index:1000;top:0;left:0;height:100%;width:100%;background: rgba( 0, 0, 0, .4 ) url('../images/loading.gif') 50% 50% no-repeat; }

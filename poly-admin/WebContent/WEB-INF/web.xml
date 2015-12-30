@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>pyly-admin</display-name>
+  <display-name>movitel.admin</display-name>
+  <welcome-file-list>
+    <welcome-file>pages/index.xhtml</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>server</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Production</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>/WEB-INF/faces-config.xml</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Captcha</servlet-name>
+    <servlet-class>vg.web.captcha.CaptchaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Captcha</servlet-name>
+    <url-pattern>/Captcha</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>admin.web.servlet.FileUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/FileUploadServlet</url-pattern>
+  </servlet-mapping>
+  <listener>
+    <listener-class>admin.web.listener.AppContextListener</listener-class>
+  </listener>
+  <filter>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+  </filter-mapping>
+  <filter>
+    <filter-name>Pretty Filter</filter-name>
+    <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
+    <async-supported>true</async-supported>
+  </filter>
+  <filter-mapping>
+    <filter-name>Pretty Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  <filter>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>admin.web.filter.AuthenticationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/pages/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>UTF8Filter</filter-name>
+    <filter-class>admin.web.filter.UTF8Filter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UTF8Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/error/403.xhtml</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error/404.xhtml</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error/500.xhtml</location>
+  </error-page>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>securedapp</web-resource-name>
+      <url-pattern>/index.xhtml</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+</web-app>

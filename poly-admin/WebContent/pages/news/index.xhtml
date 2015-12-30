@@ -1,0 +1,110 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{newsController.getKeywords()}"></meta>
+		<meta name="Description" content="#{newsController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>#{newsController.label}</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+	<div id="content">
+	<div id="page-header" class="area-detail top-right">
+					<h2>#{newsController.label}</h2>				
+					<div class="cl h6"></div>
+	</div>
+	<h:form id="frmDetail" prependId="false">
+			    <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+					<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20"
+						value="#{lang['label.btnSave']}"						
+						action="#{newsController.update}">	
+					</h:commandButton>		
+							
+					<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+						value="#{lang['label.btnCancel']}"
+						action="#{newsController.cancel}">	
+					</h:commandButton>
+					    		    		    			           
+					<div class="cl h6" />
+			    </div>
+	    	
+			    <div class="area-detail top-right">	
+			        <table width="100%">
+			            <colgroup>
+			                <col width="10%" />
+			                <col width="40%" />	
+			                <col width="10%" />				                
+			                <col />
+			            </colgroup>
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                    Title VN :
+			                </td>
+			                <td><h:inputText id="txtTitleVn" styleClass="w90pc text idleField" value="#{newsBean.titleVn}"
+									disabled="#{newsBean.disabled.get('disabled-update')}"/></td>	
+							<td class="pl10 textboxname">
+			                    Title EN :
+			                </td>
+			                <td><h:inputText id="txtTitleEn" styleClass="w90pc text idleField" value="#{newsBean.titleEn}"
+									disabled="#{newsBean.disabled.get('disabled-update')}"/></td>			                
+			            </tr>
+			             <tr>
+			            	<td class="pl10 textboxname">
+			                    Is show :
+			                </td>
+			                <td><h:selectOneMenu id="cboShow" value="#{newsBean.isShow}" 
+                        	onchange="$('*[id*=btnSearch]').click();">                        
+                        	<f:selectItem itemValue="0" itemLabel="Show"/>
+                        	<f:selectItem itemValue="1" itemLabel="Hide" />                        	                        		                        				                        	
+                        </h:selectOneMenu></td>	
+							<td class="pl10 textboxname">			                   
+			                </td>
+			                <td></td>			                
+			            </tr>		            		            		            	          
+			        </table>   
+			        
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"/>
+			    	</div>  
+			    	  <div class="top-right">			    
+			        <div id="content-area" class="fl w80pc">
+			        	<fieldset>
+    						<legend style="font-weight:bold;padding:5px;color:#666666">Content VN:</legend>
+    						<h:inputTextarea rows="30" styleClass="ckeditor" id="editorContentVn" value="#{newsBean.contentVn}"/>
+    						
+   						</fieldset>
+			        	<fieldset>
+    						<legend style="font-weight:bold;padding:5px;color:#666666">Content EN:</legend>
+    						<h:inputTextarea styleClass="ckeditor" id="editorContentEn" value="#{newsBean.contentEn}"/>
+    						
+   						</fieldset>			        	
+			        </div> 
+			        </div> 
+			    </div>	
+	</h:form>	  
+				
+		</div>
+	</ui:define>	
+	<ui:define name="footer">	
+		<input id="lnkMenuDetail" type="hidden" value="#{rewriteURL.makeMenuURL('tab-1', '10', '{PARM_PARENT_ID}')}"/>		
+		<input id="hdFileStorageDomain" type="hidden" value="#{contextUtils.getDomain()}"/>						
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/ckeditor/ckeditor.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>				
+	
+	</ui:define>		
+</ui:composition>

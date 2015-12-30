@@ -1,0 +1,72 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+ 
+    <tlib-version>2.0</tlib-version>
+    <uri>http://www.poly.com/taglib</uri>
+ 
+    <function>
+        <name>getSlug</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getSlug(java.lang.String , java.lang.String) </function-signature>
+    </function>
+    <function>
+        <name>convertToSlug</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String convertToSlug(java.lang.String ) </function-signature>
+    </function>
+    <function>
+        <name>hashId</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String hashId(int) </function-signature>
+    </function>
+    <function>
+        <name>getTopicHref</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getTopicHref(java.lang.String, int) </function-signature>
+    </function>
+    <function>
+        <name>getImg</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getImg(java.lang.String) </function-signature>
+    </function>
+    <function>
+        <name>getImgCrop</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getImgCrop(java.lang.String, int, int) </function-signature>
+    </function>
+    <function>
+        <name>getImgResize</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getImgResize(java.lang.String, int, int) </function-signature>
+    </function>
+    <function>
+        <name>getUrlStreaming</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getUrlStreaming(java.lang.String) </function-signature>
+    </function>
+    <function>
+        <name>getDetailContentURL</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String getDetailContentURL(java.lang.String, java.lang.String) </function-signature>
+    </function>
+    <function>
+        <name>nStr</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.String normalizeTitle(java.lang.String) </function-signature>
+    </function>
+    <function>
+        <name>abbreviate</name>
+        <function-class>org.apache.commons.lang3.StringUtils</function-class>
+        <function-signature>java.lang.String abbreviate(java.lang.String ,int) </function-signature>
+    </function>
+    <function>
+        <name>getmenu</name>
+        <function-class>com.seiu.web.utils.StringHelper</function-class>
+        <function-signature>java.lang.List getmenu() </function-signature>
+    </function>
+    
+
+
+</taglib>

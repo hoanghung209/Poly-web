@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/seiu/web/controller/CourseController.java=UTF-8
+encoding//src/main/java/com/seiu/web/controller/LibraryController.java=UTF-8
+encoding//src/main/java/com/seiu/web/utils/StringHelper.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/jsp/error/404.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/templates/left.jsp=UTF-8

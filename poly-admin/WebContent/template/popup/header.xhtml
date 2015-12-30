@@ -1,0 +1,516 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<div id="header">
+		<div id="navigator">
+            <div class="name-project fl">
+                <div class="left-name-project">
+                    <div class="name-poject">Vega Corporation</div>
+                </div>
+            </div>
+            <div class="title-page fl">
+                <span class="parent-title-page"></span>
+            </div>
+            <div class="fr mr10 mt5">
+                <div class="fl">
+                    <span>Xin chào: </span> <span id="lnkname"> <h:outputText value="#{headerUC.username}"></h:outputText>
+                    </span> <span class="ml5 mr5"> |</span>
+                </div>
+    
+                <div class="fl">
+                    <a href="#">Trang cá nhân</a>
+                    <span class="ml5 mr5"> |</span>
+                </div>
+                <div class="fl">
+                    <h:form>
+						<h:commandLink class="bold italic"
+							action="#{headerUC.logout}" value="Thoát"></h:commandLink>
+					</h:form>
+                </div>
+            </div>
+        </div>
+        <div class="icon-image fl">
+    		<a href="#">
+                <img src="#{contextUtils.getContextPath()}/resources/images/Data/icon.png" />
+    		</a>
+    	</div>
+    	<div class="cl"></div>
+    	<div class="tab-content">
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-1-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-1')">
+                MMS
+                </span>
+            </h:outputLink>
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-2-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-2')">
+				SMS
+                </span>
+            </h:outputLink>
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-3-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-3')">
+				File
+                </span>
+            </h:outputLink>    
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-4-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-4')">
+				Nội dung
+                </span>
+            </h:outputLink>    
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-5-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-5')">
+				Thành viên
+                </span>
+            </h:outputLink>           
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-6-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-6')">
+				Hệ thống
+                </span>
+            </h:outputLink>                             
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-7-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-7')">
+                Thống kê
+                </span>
+            </h:outputLink>
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-8-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-8')">
+                Marketing
+                </span>
+            </h:outputLink>
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-9-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-9')">
+                Live
+                </span>
+            </h:outputLink>            
+            <h:outputLink style="color:#383A39;" value="#">
+                <span id="tab-10-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-10')">
+                Quản lý khuyến mại
+                </span>
+            </h:outputLink>
+            
+    	</div>
+    	<div class="cl"></div>
+    	<div class="menu">
+	        <div id="tab-1" class="main-tab-content">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-10" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeArticlesURL('tab-1', '10', '')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-add.png"
+	                                    alt="Viết bài mới" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Viết bài mới
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-11" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '11', 'editing')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-writing.png"
+	                                    alt="Bài chưa gửi" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài chưa gửi</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-12" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '12', 'sended')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-write.png"
+	                                    alt="Bài đã gửi" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài đã gửi</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-13" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '13', 'denied')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-unbrowse.png"
+	                                    alt="Bài bị trả về" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài bị trả về</span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	            <div class="tab-group-separator fl"></div>
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-14" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '14', 'approving')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt="Bài duyệt dở" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">Bài duyệt dở</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-15" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '15', 'waiting')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt="Bài chờ duyệt" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">Bài chờ duyệt</span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	            <div class="tab-group-separator fl"></div>
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-16" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '16', 'approved')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt=" Bài chờ xuất bản" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài chờ xuất bản
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-17" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '17', 'published')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-publish.png"
+	                                    alt="Bài đã xuất bản" height="32" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài đã xuất bản
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-19" class="tab-icon">
+	                        <a href="#{rewriteURL.makeArticlesListURL('tab-1', '19', 'check')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-publish.png"
+	                                    alt="Kiểm tra bản tin" height="32" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Kiểm tra bản tin
+	                            </span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	        </div>
+			<div id="tab-2" class="main-tab-content none">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-20" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeSmsArticlesURL('tab-2', '20', '')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-add.png"
+	                                    alt="Viết bài mới" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Viết bài mới
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-21" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '21', 'editing')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-writing.png"
+	                                    alt="Bài chưa gửi" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài chưa gửi</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-22" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '22', 'sended')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-write.png"
+	                                    alt="Bài đã gửi" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài đã gửi</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-23" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '23', 'denied')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-unbrowse.png"
+	                                    alt="Bài bị trả về" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài bị trả về</span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	            <div class="tab-group-separator fl"></div>
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-24" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '24', 'approving')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt="Bài duyệt dở" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">Bài duyệt dở</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-25" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '25', 'waiting')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt="Bài chờ duyệt" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">Bài chờ duyệt</span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	            <div class="tab-group-separator fl"></div>
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-26" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '26', 'approved')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt=" Bài chờ xuất bản" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài chờ xuất bản
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-27" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '27', 'published')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-publish.png"
+	                                    alt="Bài đã xuất bản" height="32" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Bài đã xuất bản
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-29" class="tab-icon">
+	                        <a href="#{rewriteURL.makeSmsArticlesListURL('tab-2', '29', 'check')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-publish.png"
+	                                    alt="Kiểm tra bản tin" height="32" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Kiểm tra bản tin
+	                            </span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>			
+			</div>
+			<div id="tab-3" class="main-tab-content none">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-30" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeFileURL()}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-add.png"
+	                                    alt="Thêm file mới" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Thêm file mới
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-31" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '31', 'editing')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-writing.png"
+	                                    alt="File chưa gửi" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                File chưa gửi</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-32" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '32', 'sended')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-write.png"
+	                                    alt="File đã gửi" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                File đã gửi</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-33" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '33', 'denied')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-unbrowse.png"
+	                                    alt="File bị trả về" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">
+	                                File bị trả về</span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	            <div class="tab-group-separator fl"></div>
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-34" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '34', 'approving')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt="File duyệt dở" /></span>
+	                                    <br/>
+	                            <span class="tab-icon-bottom">File duyệt dở</span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-35" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '35', 'waiting')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt="File chờ duyệt" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">File chờ duyệt</span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	            <div class="tab-group-separator fl"></div>
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                    <div id="tab-icon-36" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '36', 'approved')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-approve.png"
+	                                    alt=" File chờ xuất bản" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                File chờ xuất bản
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-37" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '37', 'published')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-publish.png"
+	                                    alt="File đã xuất bản" height="32" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                File đã xuất bản
+	                            </span>
+	                        </a>
+	                    </div>
+	                    <div id="tab-icon-39" class="tab-icon">
+	                        <a href="#{rewriteURL.makeFileListURL('tab-3', '39', 'check')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-publish.png"
+	                                    alt="Kiểm tra file" height="32" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Kiểm tra file
+	                            </span>
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>			
+			</div>	
+			<div id="tab-4" class="main-tab-content none">
+				<div id="operation">
+            		<div class="tab-group fl">
+            			<div class="tab-group-top">
+            			
+            				<div id="tab-icon-4-1" class="tab-icon" style="cursor: pointer;">
+                                <h:outputLink value="#{contextUtils.getContextPath()}/pages/channel/index.xhtml">
+                                    <span class="tab-icon-top">
+                                        <img src="#{contextUtils.getContextPath()}/resources/images/Icon/article-writing.png"/>
+            						</span>
+            						<br/>
+            						<span class="tab-icon-bottom">Chuyên mục</span>
+                                </h:outputLink>
+            				</div>
+            				<div id="tab-icon-4-2" class="tab-icon" style="cursor: pointer;">
+                                <h:outputLink value="#{contextUtils.getContextPath()}/pages/contentprovider/index.xhtml">
+                                    <span class="tab-icon-top">
+                                        <img src="#{contextUtils.getContextPath()}/resources/images/Icon/article-writing.png"/>
+            						</span>
+            						<br/>
+            						<span class="tab-icon-bottom">CP</span>
+                                </h:outputLink>
+            				</div>
+            				<div id="tab-icon-4-3" class="tab-icon" style="cursor: pointer;">
+                                <h:outputLink value="#{contextUtils.getContextPath()}/pages/advertiser/index.xhtml">
+                                    <span class="tab-icon-top">
+                                        <img src="#{contextUtils.getContextPath()}/resources/images/Icon/article-writing.png"/>
+            						</span>
+            						<br/>
+            						<span class="tab-icon-bottom">Quảng cáo</span>
+                                </h:outputLink>
+            				</div>
+            			</div>
+            			<div class="tab-group-bottom"></div>
+            		</div>
+            	</div>
+			</div>
+			<div id="tab-5" class="main-tab-content none"></div>
+			<div id="tab-6" class="main-tab-content none"></div>	
+			<div id="tab-7" class="main-tab-content none"></div>
+			<div id="tab-8" class="main-tab-content none"></div>
+			<div id="tab-9" class="main-tab-content none"></div>								
+			<div id="tab-10" class="main-tab-content none">
+				<div id="statistic">
+            		<div class="tab-group fl">
+            			<div class="tab-group-top">
+            			
+            				<div id="tab-icon-10-1" class="tab-icon" style="cursor: pointer;">
+                                <h:outputLink value="#{contextUtils.getContextPath()}/pages/promotion/index.xhtml">
+                                    <span class="tab-icon-top">
+                                        <img src="#{contextUtils.getContextPath()}/resources/images/Icon/icon.png"/>
+            						</span>
+            						<br/>
+            						<span class="tab-icon-bottom">Quản lý khuyến mại</span>
+                                </h:outputLink>
+            				</div>
+            			</div>
+            			<div class="tab-group-bottom"></div>
+            		</div>
+            	</div>
+			</div>
+		</div>
+		<div class="cl"></div>
+	</div>
+</ui:composition>

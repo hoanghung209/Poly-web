@@ -1,0 +1,160 @@
+/*
+ * SimpleModal Basic Modal Dialog
+ * http://www.ericmmartin.com/projects/simplemodal/
+ * http://code.google.com/p/simplemodal/
+ *
+ * Copyright (c) 2009 Eric Martin - http://ericmmartin.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Revision: $Id: basic.css 212 2009-09-03 05:33:44Z emartin24 $
+ *
+ */
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#simplemodal-container {height:500px; width:800px;border:4px solid #444; padding:12px; background-color: White !important; font-size: 12px !important;}
+#simplemodal-container code{  border-left:3px solid #65B43D;  display:block; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a.modalCloseImg {background:url(../Images/Btn/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container #basic-modal-content {padding:8px;}
+.modalbox {background-color: White !important; height: 426px; }
+.modalbox-header {border-bottom:1px solid #D1E0E4; padding:16px;}
+.modal-content { width: 100%;}
+.modal-contentLeft {float:left;	padding:5px 0; 	width:50%; overflow:hidden;}
+.modal-contentRight {float:right;padding:5px 0;	width:50%; overflow:hidden;}
+#simplemodal-container .tbl-list td{font-size: 12px;}
+
+
+
+#swfupload-control p
+{
+    margin: 10px 5px;
+}
+#log
+{
+    margin: 0;
+    padding: 0;
+    width: 500px;
+}
+#log li
+{
+    list-style-position: inside;
+    margin: 2px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    background: #fff;
+    position: relative;
+}
+#log li .progressbar
+{
+    border: 1px solid #333;
+    height: 5px;
+    background: #fff;
+}
+#log li .progress
+{
+    background: #999;
+    width: 0%;
+    height: 5px;
+}
+#log li p
+{
+    line-height: 18px;
+}
+#log li.success
+{
+    border: 1px solid #339933;
+    background: #ccf9b9;
+}
+#log li span.cancel
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background: url('../../Scripts/Upload/swfupload/cancel.png') no-repeat;
+    cursor: pointer;
+}
+.sbmbutton
+{
+    background: none repeat scroll 0 0 #3B5998;
+    border: 1px outset #D9DFEA;
+    color: #FFFFFF;
+    font-size: 100%;
+    padding: 3px 4px 3px 4px !important;
+}
+        
+
+
+/*- Widget Title - */
+.wtitle {
+	background: url(../images/bg/box-bgr.gif) repeat-x top;
+}
+.wtitle h2 {
+	line-height: 40px;
+	background:url(../Images/bg/new-message.png) 0 50% no-repeat;
+	margin:0px;
+	padding:0px 0px 0px 45px;
+	font-size:20px;
+}
+
+.content-slide {
+	background: #ffffff;
+	border: 1px solid #cfcfcf;
+	margin: 0px 10px 10px 0px;
+	padding: 1px;
+	width:31%; 
+	height:470px;
+	overflow-x:hidden ;
+	overflow-y:auto;
+}
+.content-slide .content {
+	background: url(../images/bg/box-bgr.gif) #ffffff repeat-x top;
+
+	padding: 18px;
+	height:370px;
+	overflow:auto;
+	
+	}
+	
+.hl, .hl2 {
+	background: url(../images/bg/hl-dot.gif) repeat-x top;
+	clear: both;
+	height: 2px;
+	overflow: hidden;
+	width: 100%;
+}
+
+#slide-button {
+	/*background: url(../images/bg/button_bg.png) repeat-x left top;*/
+	font-size: 13px;
+	height: 56px;
+	
+}
+
+.btnmms-img
+{
+    padding-top:4px; /*padding-left:10px;*/ margin-right:10px; cursor:pointer;
+}
+.news_des_img {
+    border: 1px solid #CACACA;
+    display: block;
+    float: left;
+    margin-top: 5px;
+    margin-bottom:5px;
+    padding: 2px;
+    width:97%;
+}
+
+.news_delete_img
+{
+    position: absolute; width: 16px; height: 16px; cursor: pointer; display: none; margin-top:10px; margin-left: -20px;
+}
+.pointer{cursor:pointer;}

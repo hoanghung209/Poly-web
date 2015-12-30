@@ -1,0 +1,210 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{contentController.getKeywords()}"></meta>
+		<meta name="Description" content="#{contentController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>#{contentController.label}</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+	<div id="content">
+	<div id="page-header" class="area-detail top-right">
+					<h2>#{contentController.label}</h2>				
+					<div class="cl h6"></div>
+	</div>
+	<h:form id="frmDetail" prependId="false">
+			    <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+					<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20"
+						value="#{lang['label.btnSave']}"						
+						action="#{contentController.update}">	
+					</h:commandButton>		
+							
+					<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+						value="#{lang['label.btnCancel']}"
+						action="#{contentController.cancel}">	
+					</h:commandButton>
+					    		    		    			           
+					<div class="cl h6" />
+			    </div>
+	    	
+			    <div class="area-detail top-right">
+			    	<div class="none">
+						<h:inputHidden id="txtParentId" value="#{contentBean.menuId}" />		    		
+			    	</div>
+			    	
+			        <table width="100%">
+			            <colgroup>
+			                <col width="10%" />
+			                <col width="40%" />	
+			                <col width="10%" />				                
+			                <col />
+			            </colgroup>
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                    Title VN :
+			                </td>
+			                <td><h:inputText id="txtTitleVn" styleClass="w90pc text idleField" value="#{contentBean.titleVn}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></td>	
+							<td class="pl10 textboxname">
+			                    Title EN :
+			                </td>
+			                <td><h:inputText id="txtTitleEn" styleClass="w90pc text idleField" value="#{contentBean.titleEn}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></td>			                
+			            </tr>
+			            <tr>
+			            <td class="pl10 textboxname">Menu :</td>
+			            <td>
+			            <div style="width: 85%" class="fl">
+									<h:inputText id="txtParentName" styleClass="w90pc text idleField" value="#{contentBean.menuName}"
+										disabled="#{contentBean.disabled.get('disabled-update')}"
+										readonly="readonly"/>												            
+					            </div>
+					            <div style="width: 10%" class="fl">
+					            	<a id="lnkChangeChannel" href="#ChangeMenuArea-modal" onmouseover="$(this).fancybox()">
+						                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/formSELECT.gif" alt="" style="cursor: pointer;"
+						                    title="Parent Menu" />
+				                    </a>
+					            </div>
+			            
+			            </td>
+			             <td class="pl10 textboxname">Anchor</td>
+			            <td><h:inputText id="txtAnchor" styleClass="w90pc text idleField" value="#{contentBean.anchor}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/>		            		
+			            </td>
+			            </tr>
+			            <tr>
+			            <td class="pl10 textboxname">
+			                    Image :
+			                </td>
+			                <td>
+			                <div style="width: 85%" class="fl">
+			                <h:inputText id="txtImage" styleClass="w90pc text idleField" value="#{contentBean.image}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></div>
+							  <div style="width: 10%" class="fl">	 		                        					
+		                            <a id="lnkUploadControl" onmouseover="$(this).fancybox({'type': 'iframe'})"
+		                            	href="#{contextUtils.getContextPath()}/resources/components/fileupload/image.xhtml">
+		                                <img class="pointer" src="#{contextUtils.getContextPath()}/resources/images/Btn/ImageManager.gif" alt="" 
+		                                	title="Upload image" />
+		                            </a>
+		                        </div>
+									</td>	
+							<td class="pl10 textboxname">
+			                    Order :
+			                </td>
+			                <td><h:inputText id="txtOrder" styleClass="text idleField w10pc" value="#{contentBean.ord}"
+									disabled="#{contentBean.disabled.get('disabled-update')}" maxlength="5"/>
+									<span class="pl10 textboxname" >Type</span>
+									<h:selectOneMenu id="cboType" value="#{contentBean.type}" >			                        	
+			                        	<f:selectItem itemValue="1" itemLabel="Header"/>
+			                        	<f:selectItem itemValue="2" itemLabel="Text" />
+			                        	<f:selectItem itemValue="3" itemLabel="Title" />
+			                        	<f:selectItem itemValue="4" itemLabel="Animation" />
+			                        	<f:selectItem itemValue="5" itemLabel="Image" />	
+			                        	<f:selectItem itemValue="6" itemLabel="Column" />
+			                        	<f:selectItem itemValue="7" itemLabel="Row" />
+			                        	<f:selectItem itemValue="8" itemLabel="Grid" />
+			                        	<f:selectItem itemValue="9" itemLabel="Tab" />
+			                        	<f:selectItem itemValue="10" itemLabel="Text+Img" />
+			                        	<f:selectItem itemValue="11" itemLabel="Button" />
+			                        	<f:selectItem itemValue="12" itemLabel="Icon" />
+			                        	<f:selectItem itemValue="13" itemLabel="Tile" />	                        		                        				                        	
+			                        </h:selectOneMenu>
+									
+									<span class="pl10 textboxname" >Vị trí ảnh</span>
+									<h:selectOneMenu disabled="#{contentBean.disabled.get('disabled-update')}" value="#{contentBean.img_pos}">
+										<f:selectItem itemLabel="Trái" itemValue="0"></f:selectItem>
+										<f:selectItem itemLabel="Phải" itemValue="1"></f:selectItem>
+									</h:selectOneMenu>
+									
+									<span class="pl10 textboxname" >Khung ảnh</span>
+									<h:selectOneMenu disabled="#{contentBean.disabled.get('disabled-update')}" value="#{contentBean.width}">
+										<f:selectItem itemLabel="8.3%" itemValue="1"></f:selectItem>
+										<f:selectItem itemLabel="16.6%" itemValue="2"></f:selectItem>
+										<f:selectItem itemLabel="25%" itemValue="3"></f:selectItem>
+										<f:selectItem itemLabel="33.3%" itemValue="4"></f:selectItem>
+										<f:selectItem itemLabel="41.6%" itemValue="5"></f:selectItem>
+										<f:selectItem itemLabel="50%" itemValue="6"></f:selectItem>
+										<f:selectItem itemLabel="58.3%" itemValue="7"></f:selectItem>
+										<f:selectItem itemLabel="66.6%" itemValue="8"></f:selectItem>
+										<f:selectItem itemLabel="75%" itemValue="9"></f:selectItem>
+										<f:selectItem itemLabel="83.3%" itemValue="10"></f:selectItem>
+										<f:selectItem itemLabel="91.6%" itemValue="11"></f:selectItem>
+										<f:selectItem itemLabel="100%" itemValue="12"></f:selectItem>
+									</h:selectOneMenu>
+									</td>		
+			            </tr>
+			             <tr>
+			            	<td class="pl10 textboxname">
+			                    Description VN :
+			                </td>
+			                <td><h:inputTextarea id="txtDescVn" styleClass="w90pc text idleField" value="#{contentBean.descriptionVn}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></td>	
+							<td class="pl10 textboxname">
+			                    Description EN :
+			                </td>
+			                <td><h:inputTextarea id="txtDescEn" styleClass="w90pc text idleField" value="#{contentBean.descriptionEn}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></td>			                
+			            </tr>		            		            		            	          
+			        </table>   
+			        
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"/>
+			    	</div>  
+			    	  <div class="top-right">			    
+			        <div id="content-area" class="fl w80pc">
+			        	<fieldset>
+    						<legend style="font-weight:bold;padding:5px;color:#666666">Content VN:</legend>
+    						<h:inputTextarea rows="30" styleClass="ckeditor" id="editorContentVn" value="#{contentBean.contentVn}"/>
+    						
+   						</fieldset>
+			        	<fieldset>
+    						<legend style="font-weight:bold;padding:5px;color:#666666">Content EN:</legend>
+    						<h:inputTextarea styleClass="ckeditor" id="editorContentEn" value="#{contentBean.contentEn}"/>
+    						
+   						</fieldset>			        	
+			        </div> 
+			        </div> 
+			    </div>	
+	</h:form>		  
+				<div id="hidden-popup">	
+<h:panelGroup id="pnlParentMenu">					
+					<div class="none">
+					    <div id="ChangeMenuArea-modal" class="modal-fb">
+					        <h2>
+					            Menu</h2>
+					        <div style="height: 400px; overflow: scroll;">
+					    		<ucMenu:tree ucAction="10"/>
+					        </div>
+					    </div>
+					</div>
+</h:panelGroup>																
+				</div>			
+   			
+		</div>
+	</ui:define>	
+	<ui:define name="footer">	
+		<input id="lnkMenuDetail" type="hidden" value="#{rewriteURL.makeMenuURL('tab-1', '10', '{PARM_PARENT_ID}')}"/>		
+		<input id="hdFileStorageDomain" type="hidden" value="#{contextUtils.getDomain()}"/>						
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+				
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/ckeditor/ckeditor.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>					
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/menu/index.js"></script>				
+	</ui:define>		
+</ui:composition>

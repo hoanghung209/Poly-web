@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+<composite:interface>	
+</composite:interface>
+<composite:implementation>	
+<style type="text/css">
+            body { opacity:0.8; font-family: Arial;font-size:12px;}
+            h2 {
+                background:url('../../Scripts/Upload/swfupload/info.png') 0 50% no-repeat;
+                margin:0px;
+                padding:10px 0 10px 45px;
+                border-bottom:1px solid #333;
+                font-size:20px;
+            }        
+ </style>    
+ <link href="../../css/upload.css" type="text/css" rel="stylesheet" />
+         
+          <h2>Upload Images</h2>
+            <div id="swfupload-control">
+                <p>Số file tối đa là: 5</p>
+                <p>Dung lượng file tối đa là: 4 MB</p>
+                <p>Định dạng: (jpg jpeg gif png bmp)</p>
+
+                <input type="button" id="button" />
+                <p id="queuestatus">
+                </p>
+                <ol id="log">
+                </ol>
+            </div>     		 	
+           		
+           
+ 	<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/Scripts/Upload/jquery.swfupload.js"></script>
+    <script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/Scripts/Upload/swfupload.js"></script> 
+ 	<script type="text/javascript">
+ 	//<![CDATA[
+	    $(function () {
+        var pathNames = window.location.pathname.split("/");
+        var contextPath =  window.location.protocol + "//" + window.location.host + "/" + pathNames[1]; 
+        var myResult = '';
+        $('#swfupload-control').swfupload({
+            upload_url: contextPath + '/FileUploadServlet',
+            file_post_name: 'uploadfile',
+            file_size_limit: 1024 * 4, //KB
+            file_types: "*.jpg;*.jpeg;*.gif;*.png;*.bmp;",
+            file_types_description: "Image Files",
+            file_upload_limit: 5,
+            flash_url: "#{contextUtils.getContextPath()}/resources/Scripts/Upload/swfupload/swfupload.swf",
+            button_image_url: '#{contextUtils.getContextPath()}/resources/Scripts/Upload/swfupload/wdp_buttons_upload_114x29.png',
+            button_width: 114,
+            button_height: 29,
+            button_placeholder: $('#button')[0],
+            debug: false
+
+        })
+        .bind('fileQueued', function (event, file) {
+            var listitem = '<li id="' + file.id + '" >' +
+                'File: <em>' + file.name + '</em> (' + Math.round(file.size / 1024) + ' KB) <span class="progressvalue" ></span>' +
+                '<div class="progressbar" ><div class="progress" ></div></div>' +
+                '<p class="status">Waiting...</p>' +
+                '<span class="cancel" >&nbsp;</span>' +
+                '</li>';
+            $('#log').append(listitem);
+            $('li#' + file.id + ' .cancel').bind('click', function () {
+                var swfu = $.swfupload.getInstance('#swfupload-control');
+                swfu.cancelUpload(file.id);
+                $('li#' + file.id).slideUp('fast');
+            });
+            $(this).swfupload('startUpload');
+        })
+        .bind('fileQueueError', function (event, file, errorCode, message) {
+            alert(file.name + ': over size limit');
+        })
+        .bind('uploadStart', function (event, file) {
+            $('#log li#' + file.id).find('p.status').text('Uploading...');
+            $('#log li#' + file.id).find('span.progressvalue').text('0%');
+            $('#log li#' + file.id).find('span.cancel').hide();
+        })
+        .bind('uploadProgress', function (event, file, bytesLoaded) {
+            //Show Progress
+            var percentage = Math.round((bytesLoaded / file.size) * 100);
+            $('#log li#' + file.id).find('div.progress').css('width', percentage + '%');
+            $('#log li#' + file.id).find('span.progressvalue').text(percentage + '%');
+        })
+        .bind('uploadSuccess', function (event, file, serverData) {
+            myResult = eval(serverData);   
+
+            var item = $('#log li#' + file.id);
+            item.find('div.progress').css('width', '100%');
+            item.find('span.progressvalue').text('100%');
+            $('#log li#' + file.id).find('p.status').text(myResult.Message);
+
+            if(myResult.FileID > 0) {
+                OnSuccess(myResult);
+            }
+        })
+        .bind('uploadComplete', function (event, file) {
+            $(this).swfupload('startUpload');
+        })
+        .bind('uploadError', function (event, file, error_code, message) {
+            $('#log li#' + file.id).find('p.status').text('Have error in upload process');
+        });
+    });
+    //#endregion
+    OnSuccess = function (myResult) {   
+        window.parent.OnSuccessUpload(myResult);
+    };
+	    //]]>	 	
+ 	</script>		 				
+</composite:implementation>
+</html>

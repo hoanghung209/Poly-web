@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<category name="config_frontend">
+		<property name="hash_id" value="false" />
+		<property name="otp_message"
+			value="Quy khach dang thuc hien dang ky tai khoan tren website http://alome.vn. Ma xac nhan cua quy khach la %s" />
+		<property name="page_size" value="25" />
+		<property name="allow_pending_play_content" value="true" />
+	</category>
+	<category name="img_static">
+		<property name="default_img_link" value="default.png" />
+		<property name="static_url_original" value="http://192.168.51.149:8888/" />
+		<property name="static_url_resize" value="http://192.168.51.149:8888/resize/" />
+		<property name="static_url_crop" value="http://192.168.51.149:8888/crop/" />
+		<property name="time_cached_img" value="7200000" />
+	</category>
+	<category name="system_config">
+		<property name="http_connection_timeout" value="300000" />
+		<property name="http_socket_timeout" value="300000" />
+		<property name="cookie_age" value="604800" />
+	</category>
+	<category name="streaming">
+		<property name="domain_streaming" value="http://192.168.51.149:88/" />
+		<property name="key_get_url_streaming" value="09Alomesec90" />
+		<property name="root_path_streaming" value="/alome_vms" />
+		<property name="content_extension" value=".mp3" />
+	</category>
+	<category name="search">
+		<property name="search_keyword_cache_expired" value="60" />
+		<property name="max_search_result" value="100" />
+		<property name="content_suggester_name" value="content_suggester" />
+	</category>
+	<category name="api">
+		<property name="register_url"
+			value="http://192.168.51.68:8081/api/registerPackage" />
+		<property name="cancel_url"
+			value="http://192.168.51.68:8081/api/cancelSubPackage" />
+		<property name="send_sms_url" value="http://192.168.51.68:8081/api/sendSMS" />
+		<property name="send_gift_url" value="" />
+		<property name="api_source" value="WEB" />
+		<property name="api_type" value="8" />
+		<property name="gift_amount" value="5000" />
+	</category>
+</properties>

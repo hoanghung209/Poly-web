@@ -1,0 +1,322 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<div id="header">
+		<div id="navigator">
+            <div class="name-project fl">
+                <div class="left-name-project">
+                    <div class="name-poject">Poly Admin</div>
+                </div>
+            </div>
+            <div class="title-page fl">
+                <span class="parent-title-page"></span>
+            </div>
+<h:form>            
+            <div class="fr mr10 mt5">
+                <div class="fl">
+                    <span>Xin chào: </span> <span id="lnkname"> <h:outputText value="#{headerUC.username}"></h:outputText>
+                    </span> <span class="ml5 mr5"> |</span>
+                </div>
+    
+                <div class="fl">
+                    <a href="">Personal Page</a>
+                    <span class="ml5 mr5"> |</span>
+                </div>
+                <div class="fl">
+						<h:commandLink class="bold italic"
+							action="#{headerUC.logout}" value="#{lang['menu.logout']}"></h:commandLink>
+						<span class="ml5 mr5"> |</span>																	
+                </div>       
+                 <div class="fl">
+                		<h:commandLink styleClass="pl5" 
+							action="#{headerUC.useVietnamese}">
+							<img title="#{lang['vietnam']}" width="18" alt=""
+								src="#{contextUtils.getContextPath()}/resources/images/Icon/24x24/icon-flag-vietnam.png"/>										
+						</h:commandLink>
+						<h:commandLink styleClass="pl5" 
+							action="#{headerUC.useEnglish}">
+							<img title="#{lang['english']}" width="18" alt=""
+								src="#{contextUtils.getContextPath()}/resources/images/Icon/24x24/icon-flag-english.png"/>										
+						</h:commandLink>	
+                </div>         
+            </div>
+</h:form>
+        </div>
+        <div class="icon-image fl">
+    		<a href="JavaScript:void(0);">
+                <img src="#{contextUtils.getContextPath()}/resources/images/Data/icon.png" />
+    		</a>
+    	</div>
+    	<div class="cl"></div>
+    	<div class="tab-content">
+            <h:outputLink style="color:#383A39;" value="JavaScript:void(0);" >
+                <span id="tab-1-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-1')">
+                Nội dung
+                </span>
+            </h:outputLink>
+    
+            <h:outputLink style="color:#383A39;" value="JavaScript:void(0);">
+                <span id="tab-2-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-2')">
+				 Chương trình học
+                </span>
+            </h:outputLink>    
+            <h:outputLink style="color:#383A39;" value="JavaScript:void(0);" >
+                <span id="tab-3-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-3')">
+				 Media
+                </span>
+            </h:outputLink>           
+            <h:outputLink style="color:#383A39;" value="JavaScript:void(0);" >
+                <span id="tab-5-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-5')">
+				 CSKH
+                </span>
+            </h:outputLink>                         
+   
+            <h:outputLink style="color:#383A39;" value="JavaScript:void(0);">
+                <span id="tab-4-title" class="tab-item-normal fl"
+    				onclick="ChangeTab('tab-4')">
+                Thành viên
+                </span>
+            </h:outputLink>                               
+    	</div>
+    	<div class="cl"></div>
+    	<div class="menu">
+	        <div id="tab-1" class="main-tab-content">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                	<h:panelGroup >
+	                    <div id="tab-icon-10" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeMenuURL('tab-1', '10','')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                               Quản lý menu
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>	    
+	                    <h:panelGroup >
+	                    <div id="tab-icon-11" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeContentURL('tab-1', '11','')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                               Thêm nội dung
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>	  
+	                     <h:panelGroup >
+	                    <div id="tab-icon-12" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeContentListURL('tab-1', '12')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                               Danh sách nội dung
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>	   
+	                     <h:panelGroup >
+	                    <div id="tab-icon-13" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeNewsURL('tab-1', '13','')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Thêm tin tức
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>
+	                      <h:panelGroup >
+	                    <div id="tab-icon-14" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeNewsListURL('tab-1', '14')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Danh sách tin
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>
+	        </div>    			
+			<div id="tab-2" class="main-tab-content none">
+				<div id="operation">
+            		<div class="tab-group fl">
+            			<div class="tab-group-top">   
+            				<h:panelGroup>         			
+            				<div id="tab-icon-20" class="tab-icon" style="cursor: pointer;">
+                                <h:outputLink value="#{rewriteURL.makeCourseURL('tab-2', '20')}">
+                                    <span class="tab-icon-top">
+                                        <img src="#{contextUtils.getContextPath()}/resources/images/Data/work.png"/>
+            						</span>
+            						<br/>
+            						<span class="tab-icon-bottom">  Chương trình học</span>
+                                </h:outputLink>
+            				</div>
+            				</h:panelGroup>   
+            				<h:panelGroup>         			
+            				<div id="tab-icon-21" class="tab-icon" style="cursor: pointer;">
+                                <h:outputLink value="#{rewriteURL.makeSchedulerURL('tab-2', '21')}">
+                                    <span class="tab-icon-top">
+                                        <img src="#{contextUtils.getContextPath()}/resources/images/Data/work.png"/>
+            						</span>
+            						<br/>
+            						<span class="tab-icon-bottom">  Thời khóa biểu</span>
+                                </h:outputLink>
+            				</div>
+            				</h:panelGroup>            				    				           				            				           				   			
+            			</div>
+            			<div class="tab-group-bottom"></div>
+            		</div>
+            	</div>
+			</div>
+			
+			<div id="tab-3" class="main-tab-content none">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                	<h:panelGroup >
+	                    <div id="tab-icon-30" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeAlbumURL('tab-3', '30')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Album
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>
+	                    <h:panelGroup >
+	                    <div id="tab-icon-31" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeFileURL('tab-3', '31')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                File
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>
+	                    <h:panelGroup >
+	                    <div id="tab-icon-32" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeAdsURL('tab-3', '32')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                Ads
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>	                  
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>			
+			</div>	
+			
+			<div id="tab-4" class="main-tab-content none">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                	<h:panelGroup>
+	                    <div id="tab-icon-40" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeUserURL('tab-4', '40')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-add.png"
+	                                    alt=" #{lang['menu.Servicegroup']}" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                 User
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>              	                   
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>			
+			</div>	   	
+			
+			<div id="tab-5" class="main-tab-content none">
+	            <div class="tab-group fl">
+	                <div class="tab-group-top">
+	                	<h:panelGroup>
+	                    <div id="tab-icon-50" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeRegisterURL('tab-5', '50')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/article-add.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                                 Đăng ký Test
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>   
+	                     
+	                    <h:panelGroup >
+	                    <div id="tab-icon-51" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeFeedbackURL('tab-5', '51')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                               Feedback
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>	
+	                    <h:panelGroup >
+	                    <div id="tab-icon-52" class="tab-icon" style="cursor: pointer;">
+	                        <a href="#{rewriteURL.makeFaqURL('tab-5', '52')}">
+	                            <span class="tab-icon-top">
+	                                <img src="#{contextUtils.getContextPath()}/resources/images/Data/config.png"
+	                                    alt="" />
+	                            </span>
+	                            <br/>
+	                            <span class="tab-icon-bottom">
+	                               FAQ
+	                            </span>
+	                        </a>
+	                    </div>
+	                    </h:panelGroup>	               	                   
+	                </div>
+	                <div class="tab-group-bottom"></div>
+	            </div>			
+			</div>	   							
+		</div>
+		<div class="cl"></div>
+	</div>
+</ui:composition>

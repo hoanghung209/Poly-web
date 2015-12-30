@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	>
+<h:head>
+	<meta name="Keywords" content="#{languageBC.keywords}"></meta>
+	
+	<title>Language</title>	
+	<link href="#{contextUtils.getContextPath()}/resources/css/common.css" type="text/css" rel="stylesheet" />
+</h:head>
+<h:body>
+	<h:panelGroup style="border: 0px solid #E6E7E8; ">
+		<div>
+			<table style="width: 100%; padding: 15px 0px; font-size: 12px;">
+				<tr>
+					<td align="center">													
+						<h:form prependId="false">
+							<h:outputLabel value="current.language: #{lang['current.language']}" />
+												
+					        <div id="message" class="messagebox red tc"> 
+					    		<h:messages />
+					    	</div>							    			
+							<h:commandButton action="#{languageBC.useVietnamese()}" value="#{lang['vietnam']}">
+								<f:ajax execute="@form" render="@form" />
+							</h:commandButton>
+							<h:commandButton action="#{languageBC.useEnglish()}" value="#{lang['english']}">
+								<f:ajax execute="@form" render="@form" />
+							</h:commandButton>
+							<h:commandButton action="#{languageBC.usePortuguese()}" value="#{lang['portuguese']}">
+								<f:ajax execute="@form" render="@form" />
+							</h:commandButton>
+							
+							<hr/>
+							
+							<h:outputFormat value="#{lang['parms']}">
+							   <f:param value="param1" />
+							   <f:param value="param2" />
+							</h:outputFormat>							
+							
+							<h:commandButton action="#{languageBC.testParamter()}" value="Test Params">
+								<f:ajax execute="@form" render="@form" />
+							</h:commandButton>														
+						</h:form>					
+					</td>
+				</tr>
+			</table>
+		</div>
+	</h:panelGroup>
+</h:body>
+</html>

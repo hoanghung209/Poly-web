@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	>
+<h:head>
+	<meta name="Keywords" content="#{loginController.keywords}"></meta>
+	<meta name="Description" content="#{loginController.description}"></meta>
+	
+	<title>Poly - Login</title>
+	
+	<link href="#{contextUtils.getContextPath()}/resources/css/common.css" type="text/css" rel="stylesheet" />
+</h:head>
+<h:body>
+	<h:panelGroup style="border: 0px solid #E6E7E8; ">
+		<div id="login"
+			style="width: 400px; margin: 15% auto; border: 1px solid #E6E7E8; border-radius: 10px; background-color: #FDFEF0;">
+			<div style="text-align: center;"><img src="#{contextUtils.getContextPath()}/resources/images/Data/polylogomau.png"/></div>
+			<table style="width: 100%; padding: 15px 0px; font-size: 12px;">
+				<tr>
+					<td width="80%">
+				        <div id="message" class="messagebox red tc"> 
+				    		<h:messages />
+				    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">	
+					<h:form prependId="false">
+						<h:panelGrid id="textPanel" width="100">
+							<h:outputLabel for="name" value="Username:"
+								style="font-weight: bold;" />
+							<h:inputText id="name" label="Username"
+								value="#{loginBean.username}" style="width: 200px;"
+								required="true"
+								requiredMessage="Username must be not empty">
+							</h:inputText>
+
+							<h:outputLabel for="password" value="Password:"
+								style="font-weight: bold;" />
+                        	
+                        	<input type="password" style="display:none"/>
+                        	<!-- 
+		                    <input type="password" style="width: 200px;" onkeyup="this.form.password.value = VGMNJSE.e(this.value)" value="" />
+		                     -->
+							<h:inputSecret id="password" label="Password"
+								value="#{loginBean.password}" 
+								style="width:200px;">
+							</h:inputSecret>
+
+							<h:panelGroup rendered="#{loginController.captchaEnable}">
+								<h:graphicImage id="imageCapcha" height="40" width="155" value="/Captcha?v=1" />
+                          		<a href="javascript:ChangeRandomImage('imageCapcha');">
+									<img src="#{contextUtils.getContextPath()}/resources/images/Icon/refresh.png" height="40px" style="cursor: pointer;"/>
+                      			</a>							
+
+								<h:outputLabel for="captcha" value="Captcha code:"
+									style="font-weight: bold;" />
+								<div class="cl"></div>
+								<h:inputText id="captcha" label="Captcha code:"
+									maxlength="8" value="#{loginBean.capcha}"
+									style="width: 200px;" >
+								</h:inputText>
+								
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGroup rendered="#{loginController.loginEnable}">
+							<h:commandButton action="#{loginController.login}" id="loginBtn"
+								style="width: 100px; height: 30px;"
+								value="Login">
+							</h:commandButton>
+						</h:panelGroup>							
+						<input id="hdUserCaptcha" name="hdUserCaptcha" type="hidden" value="#{loginController.captchaEnable}" />	
+					</h:form>
+													
+					</td>
+				</tr>
+			</table>
+		</div>
+	</h:panelGroup>	
+</h:body>
+<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery-1.4.3.min.js"></script>
+<script type="text/javascript">
+	//<![CDATA[
+	function ChangeRandomImage(image, message) {  
+		imageCaptcha = document.getElementById(image);
+	    $(imageCaptcha).attr('src', $(imageCaptcha).attr('src') + Math.floor((Math.random()*10)+1));
+	    if(message != null && message.length > 0) {
+	    	$('*[id*=message]').html( message + ' <br/>');
+	    }
+	};	
+	//]]>
+</script>
+</html>

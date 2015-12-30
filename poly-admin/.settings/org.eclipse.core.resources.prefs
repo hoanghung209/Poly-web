@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//WebContent/pages/welcome/index.xhtml=UTF-8
+encoding//WebContent/resources/js/common/base.js=UTF-8
+encoding//WebContent/resources/js/language=UTF-8
+encoding//WebContent/template/default/header.xhtml=UTF-8
+encoding//WebContent/template/popup/header.xhtml=UTF-8
+encoding//src/admin/web/common/Paginator.java=UTF-8
+encoding//src/admin/web/controller/LoginController.java=UTF-8
+encoding//src/admin/web/resources/LanguageBundle.java=UTF-8
+encoding//src/admin/web/resources/language_en.properties=UTF-8
+encoding//src/admin/web/resources/language_vn.properties=UTF-8
+encoding//src/admin/web/uc/HeaderUC.java=UTF-8
+encoding//src/admin/web/util/ContextUtils.java=UTF-8
+encoding//src/admin/web/util/ExcelReportHeper.java=UTF-8
+encoding/<project>=UTF-8

@@ -1,0 +1,177 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{schedulerController.getKeywords()}"></meta>
+		<meta name="Description" content="#{schedulerController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Danh sách Nội dung</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">
+		<h:form id="frmDetail" prependId="false">			
+				<div id="page-header" class="area-detail top-right">
+					<h2>Thời khóa biểu</h2>				
+					<div class="cl h6"></div>
+					
+					   <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+					<h:commandButton id="btnAdd" styleClass="btnCss fl mr5 btnAdd pl20" 
+						value="#{lang['label.btnAdd']}"
+						action="#{schedulerController.add}"
+						disabled="#{schedulerBean.disabled.get('disabled-insert')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>																		
+				
+					<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20"
+						value="#{lang['label.btnSave']}"						
+						action="#{schedulerController.update}"
+						disabled="#{schedulerBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form :frmList"/>
+					</h:commandButton>		
+							
+					<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+						value="#{lang['label.btnCancel']}"
+						action="#{schedulerController.cancel}"
+						disabled="#{schedulerBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>					    		    		    			           
+					<div class="cl h6" />
+			    </div>    
+			    <h:inputHidden id="actionRow" value="#{schedulerBean.actionRow}"></h:inputHidden>
+			    <h:panelGroup rendered="#{!schedulerBean.disabled.get('disabled-update')}">
+			        <div class="area-detail top-right">			    	
+			        <table width="100%">
+			            <colgroup>
+			                <col width="20%" />	
+			                <col width="40%" />		               				                
+			                <col />
+			            </colgroup>
+			            <tr>
+			            <td></td>
+			            <td class="pl10 textboxname">Tiếng Việt </td>
+			            <td class="pl10 textboxname">Tiếng Anh </td>
+			            </tr>			            
+			            <ui:repeat value="#{schedulerBean.listEdit}" var="item">
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                   #{item.get('header_vn')}
+			                </td>
+			                <td><h:inputText id="txtVnCol#{item.get('column')}" styleClass="w90pc text idleField" value="#{item['content_vn']}" maxlength="255"/></td>
+			                <td><h:inputText id="txtEnCol#{item.get('column')}" styleClass="w90pc text idleField" value="#{item['content_en']}" maxlength="255"/></td>	
+						</tr>	
+						</ui:repeat>
+			        </table> 
+			    </div>	
+			    
+			    </h:panelGroup>
+			    	
+					
+					
+					<h:panelGroup rendered="#{schedulerBean.disabled.get('disabled-update')}">
+					<div style="padding-top: 15px;">
+			        <div class="w15pc fl textboxname" style="padding-left: 20px;" >
+			            Chương trình:
+			        </div>
+			        <div class="w25pc fl">
+			            <div style="width: 80%" class="fl">			               
+			            	<h:selectOneMenu id="cboSearchCourse" value="#{schedulerBean.filterChuongtrinhId}" 
+                        	onchange="$('*[id*=btnSearch]').click();">
+                        	<f:selectItems value="#{schedulerBean.listCourse}" var="course" itemValue="#{course.get('id')}" itemLabel="#{course.get('name_vn')}"/>                        	                        	                       		                        				                        	
+                        </h:selectOneMenu>
+			            </div>
+			        </div>	
+			        <div class="w15pc fl textboxname">
+			            Ngôn ngữ:
+			        </div>
+			        <div class="w25pc fl">
+			            <div style="width: 80%" class="fl">			               
+			            	<h:selectOneMenu id="cboSearchLanguage" value="#{schedulerBean.filterLanguage}" 
+                        	onchange="$('*[id*=btnSearch]').click();">
+                        	<f:selectItem itemValue="vn" itemLabel="Vietnamese"/> 
+                        	<f:selectItem itemValue="en" itemLabel="English"/>                        	                        	                       		                        				                        	
+                        </h:selectOneMenu>
+			            </div>
+			        </div>	
+			        <div class="cl"></div>			        
+					<div class="pt10">					
+							<h:commandButton id="btnSearch" 
+								value="#{lang['label.search']}"
+								action="#{schedulerController.loadList()}"
+								styleClass="btnCss mr5 ml20 btnSearch pl20">
+								<f:ajax execute="@form" render=":frmList" />
+							</h:commandButton>																				
+					</div>
+					</div>
+					</h:panelGroup>
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"></h:messages>
+			    	</div>			        
+			    </div>
+</h:form>
+	<h:form id="frmList" prependId="false">			    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">				         
+					        <tr class="table-header">
+					        	<td>STT</td>
+					            <ui:repeat value="#{schedulerBean.listHeader}" var="colName">
+					            	<td>#{colName.get('content')}</td>
+					            </ui:repeat>
+					            <td><h:commandLink styleClass="pl5" 
+										action="#{schedulerController.editHeader}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" alt="" />	
+											
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>																		
+									</h:commandLink></td>
+					        </tr>	
+					        		        
+		<ui:repeat value="#{schedulerBean.list}" var="item" step="1" varStatus="cnt">																         
+							<tr class="table-body">
+								<td>#{cnt.index+1}</td>
+								<ui:repeat value="#{schedulerBean.listHeader}" var="colName">
+					            	<td>#{item.get(colName.get('col_name'))}</td>
+					            </ui:repeat>
+					            <td align="center">																																
+									<h:commandLink styleClass="pl5" 
+										action="#{schedulerController.edit}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" 
+											width="18" alt="" />		
+											<f:setPropertyActionListener target="#{schedulerBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>																		
+									</h:commandLink>	
+																					 			
+									<h:commandLink styleClass="pl5" 
+										action="#{schedulerController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />			
+											<f:setPropertyActionListener target="#{schedulerBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>	
+									</h:commandLink>
+								</td>						  
+							</tr>
+		</ui:repeat>														
+				        </table>	
+				</div>					
+	</h:form>   						
+		</div>
+	</ui:define>	
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>		
+	</ui:define>		
+</ui:composition>

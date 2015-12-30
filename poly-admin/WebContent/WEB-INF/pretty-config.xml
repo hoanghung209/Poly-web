@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.org/prettyfaces/3.3.3" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://ocpsoft.org/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
+	<url-mapping id="home">
+		<pattern value="/" />
+		<view-id value="/index.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="error-access-forbidden">
+		<pattern value="/error/access-forbidden" />
+		<view-id value="/error/403.xhtml" />
+	</url-mapping>
+	<url-mapping id="error-file-not-found">
+		<pattern value="/error/file-not-found" />
+		<view-id value="/error/404.xhtml" />
+	</url-mapping>
+	<url-mapping id="error-internal-server">
+		<pattern value="/error/internal-server" />
+		<view-id value="/error/500.xhtml" />
+	</url-mapping>		
+</pretty-config>

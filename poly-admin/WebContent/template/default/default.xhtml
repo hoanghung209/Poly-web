@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>			
+		<ui:insert name="head-meta">
+			<meta name="Keywords" content="keyword"></meta>
+			<meta name="Description" content="description"></meta>
+		</ui:insert>
+		<ui:insert name="head-title">
+			<title>Default</title>			
+		</ui:insert>
+	
+		<link href="#{contextUtils.getContextPath()}/resources/css/common.css" type="text/css" rel="stylesheet" />
+		<link href="#{contextUtils.getContextPath()}/resources/css/default.css" type="text/css" rel="stylesheet" />		
+		<link href="#{contextUtils.getContextPath()}/resources/css/interface.css" type="text/css" rel="stylesheet" />
+		<ui:insert name="head-css"></ui:insert>		
+	</h:head>
+	<h:body>
+		<ui:insert name="header"></ui:insert>
+		
+		<ui:include src="/template/default/header.xhtml" />				
+		<ui:insert name="content">
+			<ui:include src="/template/default/content.xhtml" />
+		</ui:insert>		
+		<ui:include src="/template/default/footer.xhtml" />
+		
+		<h:inputHidden id="hdContextPath" value="#{contextUtils.getContextPath()}"/>			
+		<ui:insert name="footer"></ui:insert>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery-1.4.3.min.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/base.js"></script>			
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/master.js"></script>
+		
+		<h:inputHidden id="txtcurrentlanguage" value="en"/>
+		
+		<ui:insert name="footer-js"></ui:insert>		
+	</h:body>
+</html>

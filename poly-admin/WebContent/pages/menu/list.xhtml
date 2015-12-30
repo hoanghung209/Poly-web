@@ -1,0 +1,186 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{contentListController.getKeywords()}"></meta>
+		<meta name="Description" content="#{contentListController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Danh sách Nội dung</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">
+		<h:form id="frmDetail" prependId="false">
+				<h:inputHidden id="txtParentId" value="#{contentBean.filterMenuId}"/>
+				<div id="page-header" class="area-detail top-right">
+					<h2>Danh sách nội dung</h2>				
+					<div class="cl h6"></div>
+					
+					
+			        <div class="w15pc fl textboxname">
+			            Menu:
+			        </div>
+			        <div class="w25pc fl">
+			            <div style="width: 80%" class="fl">
+			                <input type="text" class="w90pc text" id="txtParentName" readonly="readonly" />
+			            </div>
+			            <div style="width: 10%" class="fl">
+			            	<a id="lnkChangeChannel" href="#ChangeMenuArea-modal" onmouseover="$(this).fancybox()">
+				                <img src="#{contextUtils.getContextPath()}/resources/images/Btn/formSELECT.gif" alt="" style="cursor: pointer;"
+				                    title="Menu" />
+		                    </a>
+			            </div>
+			            <div class="cl">
+			            </div>
+			        </div>
+			        <div class="w10pc fl textboxname">
+			            Tiêu đề:
+			        </div>
+			        <div class="w15pc fl">
+			        	<h:inputText id="txtTitle" value="#{contentBean.filterTitle}" styleClass="text w98pc mr5"/>
+			        </div>
+			        
+			        <div class="cl h6"></div>
+			        <div class="w15pc fl textboxname">
+			            Nội dung:
+			        </div>
+			        <div class="w25pc fl">
+			        	<h:inputText id="txtContent" value="#{contentBean.filterContent}" styleClass="text w85pc"/>			        
+			        </div>
+			        <div class="w10pc fl textboxname">
+			            Kiểu nội dung:
+			        </div>
+			        <div class="w15pc fl">
+                        <h:selectOneMenu id="cboSearchType" value="#{contentBean.filterType}" 
+                        	onchange="$('*[id*=btnSearch]').click();">
+                        	<f:selectItem itemValue="" itemLabel="All"/>
+                        	<f:selectItem itemValue="1" itemLabel="Header"/>
+                        	<f:selectItem itemValue="2" itemLabel="Text" />
+                        	<f:selectItem itemValue="3" itemLabel="Title" />
+                        	<f:selectItem itemValue="4" itemLabel="Animation" />
+                        	<f:selectItem itemValue="5" itemLabel="Image" />	
+                        	<f:selectItem itemValue="6" itemLabel="Column" />
+                        	<f:selectItem itemValue="7" itemLabel="Row" />
+                        	<f:selectItem itemValue="8" itemLabel="Grid" />
+                        	<f:selectItem itemValue="9" itemLabel="Tab" />
+                        	<f:selectItem itemValue="10" itemLabel="Text+Img" />
+                        	<f:selectItem itemValue="11" itemLabel="Button" />
+			                <f:selectItem itemValue="12" itemLabel="Icon" />
+			                 <f:selectItem itemValue="13" itemLabel="Tile" />	                        		                        				                        	
+                        </h:selectOneMenu>
+			        </div>		     
+			        
+			        <div class="cl"></div>			        
+					<div class="pt10">					
+							<h:commandButton id="btnSearch" 
+								value="#{lang['label.search']}"
+								action="#{contentListController.loadList(1)}"
+								styleClass="btnCss mr5 ml20 btnSearch pl20">
+								<f:ajax execute="@form" render=":frmList" />
+							</h:commandButton>																				
+					</div>
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"></h:messages>
+			    	</div>			        
+			    </div>
+</h:form>
+	<h:form id="frmList" prependId="false">			    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+				            <colgroup>
+					            <col width="5%" />
+					            <col width="25%" />
+					            <col width="25%" />
+					            <col width="15%" />
+					            <col width="5%" />
+					            <col width="5%" />
+					            <col width="10%" />
+					            <col />             
+				            </colgroup>
+					        <tr class="table-header">
+					            <td>ID</td>
+					            <td>Title</td>	
+					            <td>Content</td>				            
+					            <td>Menu</td>	
+					            <td>Order</td>				            
+					            <td>Type</td>
+					            <td>Action</td>
+					        </tr>			        
+		<ui:repeat value="#{contentBean.list}" var="item">														         
+							<tr class="table-body #{item.get('rowOrder')}">
+								<td><a href="#{rewriteURL.makeContentURL('tab-1', '11',item.get('id'))}">#{item.get('id')}</a></td>
+								<td><a href="#{rewriteURL.makeContentURL('tab-1', '11',item.get('id'))}">#{item.get('title_vn')}</a> </td>
+								<td>#{item.get('content_vn')}</td>
+								<td>#{item.get('menu_name')}</td>
+								<td>#{item.get('ord')}</td>						 		
+						 		<td>#{item.get('type_name')}</td>
+								<td align="center">																																
+									<h:commandLink styleClass="pl5" 
+										action="#{contentListController.edit}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" 
+											width="18" alt="" />		
+											<f:setPropertyActionListener target="#{contentBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>																		
+									</h:commandLink>	
+																					 			
+									<h:commandLink styleClass="pl5" 
+										action="#{contentListController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />			
+											<f:setPropertyActionListener target="#{contentBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>	
+									</h:commandLink>
+								</td>							  
+							</tr>
+		</ui:repeat>														
+				        </table>				
+					<div class="mt4"></div>
+					<div class="paging-bar">
+		<ui:repeat value="#{contentBean.pageBar}" var="pageItem">
+						<h:commandLink styleClass="#{pageItem.get('class')}"
+							value="#{pageItem.get('text')}"
+							action="#{contentListController.loadList}">
+							<f:setPropertyActionListener target="#{contentBean.selectedPage}" value="#{pageItem}" />
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+		</ui:repeat>
+					</div>				
+				</div>					
+	</h:form>   
+				<div id="hidden-popup">	
+<h:panelGroup id="pnlParentMenu">					
+					<div class="none">
+					    <div id="ChangeMenuArea-modal" class="modal-fb">
+					        <h2>
+					            Menu</h2>
+					        <div style="height: 400px; overflow: scroll;">
+					    		<ucMenu:tree ucAction="10"/>
+					        </div>
+					    </div>
+					</div>
+</h:panelGroup>																
+				</div>  			
+		</div>
+	</ui:define>	
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+				
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>		
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>					
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/menu/index.js"></script>				
+	</ui:define>		
+</ui:composition>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties name="root">   
+    <category name="vgdb">				
+		<property name="isDebug" value="true" />
+				
+		<property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
+		
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/bapshop_poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="bapshop_poly" />
+		<property name="password" value="25251325" /> 
+		
+		<!--
+		<property name="jdbcUrl" value="jdbc:mysql://10.0.9.63:3306/poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="root" />
+		<property name="password" value="sp1mysql" /> 
+		-->
+							
+		<property name="minConnections" value="5" />
+		<property name="maxConnections" value="20" />
+		<property name="partitionCount" value="1" />
+		<property name="connectionTimeout" value="300000" /> <!-- Milliseconds-->
+		<property name="maxConnectionAge" value="120" /> <!-- Seconds-->
+    </category>
+   
+    
+	<category name="app">
+		<property name="contextPath" value="http://poly.polyfinal.info/admin" />
+		<property name="contextWeb" value="http://polyfinal.info/poly-web" />
+		<!--<property name="contextPath" value="http://localhost:8080/Web" />-->	
+					
+		<property name="channel-root" value="1" />
+						 	
+	 	<property name="userLogin-maxLoginCount" value="5" />
+	 	<property name="userLogin-maxLoginMinutes" value="10" />
+	 	<property name="userLogin-maxCaptchaCount" value="2" />	 		 		
+	 </category> 
+     <category name="file">        
+        <property name="large_size" value="300" />
+        <property name="medium_size" value="200" />
+        <property name="small_size" value="90" />
+        
+        <property name="height_large_size" value="600" />
+        <property name="height_medium_size" value="400" />
+        <property name="height_small_size" value="180" />
+       <!--
+        <property name="server" value="http://localhost:8080/static" />
+        <property name="rootFolder" value="E://data/static" />
+         --> 
+           
+        <property name="server" value="http://polyfinal.info/static" />
+        <property name="rootFolder" value="/home/bapshop/domains/polyfinal.info/public_html/static/" />
+        
+        <property name="mimeType" value="$image/jpeg$image/gif$image/png$image/mpeg$image/bmp$image/bmp$audio/mpeg$audio/x-wav$audio/mid$video/3gpp$video/x-msvideo$video/x-flv$video/mp4$video/x-ms-wmv$application/zip$application/x-rar-compressed$application/msword$application/vnd.ms-excel$application/vnd.openxmlformats-officedocument.spreadsheetml.sheet$application/vnd.openxmlformats-officedocument.wordprocessingml.document$application/x-shockwave-flash$" />
+    </category>    	
+</properties>

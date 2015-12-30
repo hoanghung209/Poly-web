@@ -1,0 +1,128 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{newsListController.getKeywords()}"></meta>
+		<meta name="Description" content="#{newsListController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Danh sách Tin tức</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">
+		<h:form id="frmDetail" prependId="false">				
+				<div id="page-header" class="area-detail top-right">
+					<h2>Danh sách tin tức</h2>				
+					<div class="cl h6"></div>
+					
+					
+			        <div class="w10pc fl textboxname">
+			            Title:
+			        </div>
+			        <div class="w25pc fl">
+			                <h:inputText id="txtTitleVn" value="#{newsBean.filterTitle}" styleClass="text w98pc mr5"/>
+			        </div>			        
+			        <div class="w10pc fl textboxname" style="padding-left: 30px;">
+			            Is Show:
+			        </div>
+			        <div class="w15pc fl">
+                        <h:selectOneMenu id="cboSearchType" value="#{newsBean.filterShow}" 
+                        	onchange="$('*[id*=btnSearch]').click();">
+                        	<f:selectItem itemValue="" itemLabel="All"/>
+                        	<f:selectItem itemValue="0" itemLabel="Show"/>
+                        	<f:selectItem itemValue="1" itemLabel="Hide" />                        	                        		                        				                        	
+                        </h:selectOneMenu>
+			        </div>		     
+			        
+			        <div class="cl"></div>			        
+					<div class="pt10">					
+							<h:commandButton id="btnSearch" 
+								value="#{lang['label.search']}"
+								action="#{newsListController.loadList(1)}"
+								styleClass="btnCss mr5 ml20 btnSearch pl20">
+								<f:ajax execute="@form" render=":frmList" />
+							</h:commandButton>																				
+					</div>
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"></h:messages>
+			    	</div>			        
+			    </div>
+</h:form>
+	<h:form id="frmList" prependId="false">			    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+				            <colgroup>
+					            <col width="5%" />
+					            <col width="40%" />
+					            <col width="15%" />   
+					            <col width="15%" />
+					            <col />             
+				            </colgroup>
+					        <tr class="table-header">
+					            <td>ID</td>
+					            <td>Title</td>
+					            <td>Is show</td>				            
+					            <td>Updated time</td>
+					            <td>Action</td>
+					        </tr>			        
+		<ui:repeat value="#{newsBean.list}" var="item">														         
+							<tr class="table-body #{item.get('rowOrder')}">
+								<td><a href="#{rewriteURL.makeNewsURL('tab-3', '33',item.get('id'))}">#{item.get('id')}</a></td>
+								<td><a href="#{rewriteURL.makeNewsURL('tab-3', '33',item.get('id'))}">#{item.get('title_vn')}</a> </td>								
+								<td>#{item.get('show')}</td>						 		
+						 		<td>#{item.get('updated_time')}</td>
+								<td align="center">																																
+									<h:commandLink styleClass="pl5" 
+										action="#{newsListController.edit}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" 
+											width="18" alt="" />		
+											<f:setPropertyActionListener target="#{newsBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>																		
+									</h:commandLink>	
+																					 			
+									<h:commandLink styleClass="pl5" 
+										action="#{newsListController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />			
+											<f:setPropertyActionListener target="#{newsBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmList :frmDetail"/>	
+									</h:commandLink>
+								</td>							  
+							</tr>
+		</ui:repeat>														
+				        </table>				
+					<div class="mt4"></div>
+					<div class="paging-bar">
+		<ui:repeat value="#{newsBean.pageBar}" var="pageItem">
+						<h:commandLink styleClass="#{pageItem.get('class')}"
+							value="#{pageItem.get('text')}"
+							action="#{newsListController.loadList}">
+							<f:setPropertyActionListener target="#{newsBean.selectedPage}" value="#{pageItem}" />
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+		</ui:repeat>
+					</div>				
+				</div>					
+	</h:form>  			
+		</div>
+	</ui:define>	
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>				
+			
+	</ui:define>		
+</ui:composition>

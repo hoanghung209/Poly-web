@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+<composite:interface>
+	<composite:attribute name="ucAction" />				
+</composite:interface>
+<composite:implementation>
+	<ul class="filetree treeview" id="channel-tree#{cc.attrs.ucAction}">
+   		<h:outputLabel escape="false" value="#{menuTreeUC.build(cc.attrs.ucAction)}" />
+ 	</ul>
+ 	
+ 	<script type="text/javascript">
+ 		var intervalChannelTreeUC#{cc.attrs.ucAction} = setInterval(function(){
+ 			if(document.readyState == "complete") {
+ 				initChannelTreeUC#{cc.attrs.ucAction}();
+ 				clearInterval(intervalChannelTreeUC#{cc.attrs.ucAction});
+ 			}
+ 		}, 10);
+	 	
+	 	function initChannelTreeUC#{cc.attrs.ucAction}() {		 	
+	 		$("#channel-tree#{cc.attrs.ucAction}").treeview();
+	 		$('#channel-tree#{cc.attrs.ucAction} li').removeClass('expandable').removeClass('lastExpandable').addClass('collapsable');
+	 		$('#channel-tree#{cc.attrs.ucAction} li').children('.hitarea').removeClass('expandable-hitarea lastExpandable-hitarea').addClass('collapsable-hitarea');
+	 		
+	 		$('#tree-span-#{menuTreeUC.parentId}').addClass('tree-span-active');
+	 	}	  
+ 	</script>	 	
+</composite:implementation>
+</html>
