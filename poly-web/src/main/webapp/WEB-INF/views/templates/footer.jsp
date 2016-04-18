@@ -4,15 +4,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="menu" uri="/WEB-INF/mytag/MenuHelper.tld" %>
-<spring:url value="/resources/core/images/" var="img" />
-<c:set var="baseURL" value="${pageContext.request.requestURL.substring(0, pageContext.request.requestURL.length() - pageContext.request.requestURI.length())}${pageContext.request.contextPath}/" />
+<c:set var="baseURL" value="${menu:getContextPath()}" />
+<spring:url value="${baseURL}/resources/core/images/" var="img" />
 <div class="footer">
   <div class="linkfooter ">
     <div class="container">
       <div class="row">
       <c:forEach items="${menu:getMenu(-1,2)}" var="item">
         <div class="col-sm-4">
-          <div class="simple_flipper"> <a href="${item.url}" target="_blank"><i class="fa fa-tvi front"></i>${item.name}</a> </div>
+          <div class="simple_flipper"> <a href="${baseURL}/${item.url}/${item.slug}-${item.hashid}" target="_blank"><i class="fa fa-tvi front"></i>${item.name}</a> </div>
         </div>
        </c:forEach>
       </div>
@@ -21,13 +21,13 @@
   <div class="inforfooter container">
     <ul class="clearfix" style="text-transform: uppercase;">
     	<c:forEach items="${menu:getMenu(-1,3)}" var="item">
-    		<li><a href="${item.url}">${item.name}</a></li>
+    		<li><a href="${baseURL}/${item.url}/${item.slug}-${item.hashid}">${item.name}</a></li>
     	</c:forEach>     
     </ul>
     <div class="clearfix infof">
       <p>TRUNG TÂM ANH NGỮ POLY</p>
       <p> 44 Phan Khiêm Ích, Phường Tân Phong, Quận 7, HCMC, Việt Nam<br/>
-        Tel: +84 08.54107659   |   Email: tracy.tu@koreapolyschool.com</p>
+        Tel: +84 08.54107659   |   Email: polycare@polyvietnam.edu.vn</p>
       <p class="social"><a target="_blank" href="https://www.facebook.com/polyflc/?fref=ts"><span class="fa fa-facebook"></span></a><a target="_blank" href="https://www.youtube.com/channel/UCVz8xug416bugRM_9Wote8g"> <span class="fa fa-youtube"></span></a></p>
     </div>
   </div>

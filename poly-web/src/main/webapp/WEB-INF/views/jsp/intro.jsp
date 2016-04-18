@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="menu" uri="/WEB-INF/mytag/MenuHelper.tld" %>
+<c:set var="baseURL" value="${menu:getContextPath()}" />
     <div class="col-sm-9 contentmainright">
        <c:set var="cnt6" value="1"></c:set>
            <c:forEach items="${lstContent }" var="item">
@@ -14,7 +16,7 @@
 	         <c:when test="${item.type==11}">
 	         	<c:if test="${cnt11==1}"><div class="row view clearfix"></c:if>
                     <div class="clearfix col-md-6 col-xs-12 link-view">
-                        <a class="bg-a" href="${item.anchor}"> <span class="fa fa-angle-right"></span><span>${item.content}</span></a>
+                        <a class="bg-a" href="${baseURL}/${item.anchor}"> <span class="fa fa-angle-right"></span><span>${item.content}</span></a>
                     </div>
                 
                 <c:if test="${cnt11==size11}"></div></c:if>
@@ -59,7 +61,7 @@
                         <div class="text-center">
                             <p class="bg-mt-pas<c:if test='${cnt6>1}'>${cnt6-1}</c:if> text-justify">${item.content}</p>
                             <div class="radio">
-                                <img src="/poly-web/resources/core/images/elip-${cnt6}.png" class="img-responsive" alt="" />
+                                <img src="${baseURL}/resources/core/images/elip-${cnt6}.png" class="img-responsive" alt="" />
                             </div>
                         </div>
                     </li>                 
@@ -76,7 +78,7 @@
 	         	<c:set var="cnt8" value="1"></c:set>
 	         	<div class=" clearfix row monhoc view">
 	         		<c:forEach items="${monhoc}" var="nd">
-	         			<div class="col-sm-3 text-center "><a href="#"><img src="/poly-web/resources/core/images/ctpas${cnt8}.png" class="img-responsive dislay" alt=""><p class="ctpas">${nd }</p></a></div>
+	         			<div class="col-sm-3 text-center "><a href="#"><img src="${baseURL}/resources/core/images/ctpas${cnt8}.png" class="img-responsive dislay" alt=""><p class="ctpas">${nd }</p></a></div>
 	         			<c:set var="cnt8" value="${cnt8+1}"></c:set>
 	         		</c:forEach>
 	         	</div>
@@ -87,10 +89,10 @@
          <c:if test="${showStep=='0'}">
          	<div class=" view">                           
                                 <ul class="step">
-                                     <li class="active col-md-3 col-xs-6"><a data-toggle="pill" href="#step1"><img src="/poly-web/resources/core/images/step-1.png" class="img-responsive imgactive" alt=""><img src="/poly-web/resources/core/images/step-1-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
-                                     <li class="col-md-3 col-xs-6"><a data-toggle="pill" href="#step2"><img src="/poly-web/resources/core/images/step-2.png" class="img-responsive imgactive" alt=""><img src="/poly-web/resources/core/images/step-2-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
-                                     <li class="col-md-3 col-xs-6"><a data-toggle="pill" href="#step3"><img src="/poly-web/resources/core/images/step-3.png" class="img-responsive imgactive" alt=""><img src="/poly-web/resources/core/images/step-3-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
-                                     <li class="col-md-3 col-xs-6"><a data-toggle="pill" href="#step4"><img src="/poly-web/resources/core/images/step-4.png" class="img-responsive imgactive" alt=""><img src="/poly-web/resources/core/images/step-4-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
+                                     <li class="active col-md-3 col-xs-6"><a data-toggle="pill" href="#step1"><img src="${baseURL}/resources/core/images/step-1.png" class="img-responsive imgactive" alt=""><img src="${baseURL}/resources/core/images/step-1-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
+                                     <li class="col-md-3 col-xs-6"><a data-toggle="pill" href="#step2"><img src="${baseURL}/resources/core/images/step-2.png" class="img-responsive imgactive" alt=""><img src="${baseURL}/resources/core/images/step-2-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
+                                     <li class="col-md-3 col-xs-6"><a data-toggle="pill" href="#step3"><img src="${baseURL}/resources/core/images/step-3.png" class="img-responsive imgactive" alt=""><img src="${baseURL}/resources/core/images/step-3-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
+                                     <li class="col-md-3 col-xs-6"><a data-toggle="pill" href="#step4"><img src="${baseURL}/resources/core/images/step-4.png" class="img-responsive imgactive" alt=""><img src="${baseURL}/resources/core/images/step-4-bg.png" class="img-responsive imgdefaut" alt=""></a></li>
                                  </ul>
                                 
                             <div class="clearfix"></div>

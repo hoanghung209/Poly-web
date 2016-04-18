@@ -37,4 +37,33 @@ website:   	http://www.themepunch.com
 		padding:0;
 }
 
+/*Model-popup*/	
+.modal-header {
+	margin-left: 32px;
+	margin-right: 32px;
+	border-bottom: 1px solid #0662ae !important;
+	text-align: center;	
+}
+.modal-title {
+	font-size: 23.86px;
+	font-family: roboto_regular;
+	color: #0662ae;
+/* 	padding-left: 108px; */
+    text-transform: uppercase;
+    font-weight: normal;
+}		
+
+.form-group .form-control {
+	padding: 0px;
+	border-radius: 0px;
+	border: 0px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	box-shadow: inset 0 0px 0px rgba(0,0,0,.075);
+	font-style:italic;
+	color: #999999;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+
 /**/

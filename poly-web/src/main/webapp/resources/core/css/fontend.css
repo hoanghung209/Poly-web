@@ -385,6 +385,8 @@ body {
 	color: #aaa;
 	font-size: 22px;
 	padding: 17px 0px;
+	
+	margin-top:-22px;
 }
 .header-menu-mobile .header-menu > li .arrow:hover {
 	cursor: pointer;
@@ -610,9 +612,11 @@ a:hover {
 	text-transform: uppercase;
 	padding: 0px 20px 20px 20px;
 	border-bottom: 1px dashed #ccc;
+	   
+    text-align: center;
 }
 .tit1 span {
-	color: #2c2c2c;
+	/*color: #2c2c2c;*/
 	font-family: Roboto, sans-serif;
 }
 .embed-responsive {
@@ -637,6 +641,9 @@ a:hover {
 .listanh li {
 	list-style: none;
 	margin-bottom: 30px;
+}
+.listanh li:nth-child(3n+1) {
+	clear:both;
 }
 .listanh li img {
 	width: 100%;
@@ -1434,6 +1441,7 @@ a, a:hover, a:focus {
 	font-size: 18px;
 	font-weight: bold;
 	text-transform: uppercase;
+	text-align: left;
 }
 .lhxemthem {
 	float: right;
@@ -1655,11 +1663,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 .lopla .iconctimg9 {
 	background-position: -997px -150px;
 }
+
+/**/
 .arrowcontent {
 	height: 50px;
 	overflow: hidden;
+	padding:15px;
+}
+.arrowcontent:hover {
+	height:auto !important;
 }
 
+.timeline-article .content-left:hover .lhxemthem, .timeline-article .content-right:hover .lhxemthem{
+	    display:none !important;
+}
+
+.timeline-article .content-left:hover:before, .timeline-article .content-left:hover:after ,.timeline-article .content-right:hover:before, .timeline-article .content-right:hover:after {
+	    content: inherit !important;
+		border:0 !important;
+		display:none !important;
+}
+
+.timeline-article .content-left:hover, .timeline-article .content-right:hover {
+	    height: auto !important;
+}
+
+/**/
 /*===== // Vertical Timeline =====*/
 
 /*===== Resonsive Vertical Timeline =====*/
@@ -1672,12 +1701,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 .timeline-article .meta-date {
 	margin-left: 0;
 	left: 25px;
+	
+	display:none;
 }
 .timeline-article .content-left-container, .timeline-article .content-right-container {
 	max-width: 100%;
-	width: auto;
+	width: 100%;
 	float: none;
-	margin-left: 128px;
+	/*margin-left: 128px;*/
 	min-height: 53px;
 }
 .timeline-article .content-left-container {
@@ -1694,9 +1725,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 	top: -1px;
 	left: -89px;
 }
-.arrowcontent {
+
+/**/
+.arrowcontent , .timeline-article .content-left, .timeline-article .content-right {
 	display: block;
+	height:auto !important;
 }
+
+.timeline-article .content-left:after, .timeline-article .content-right:after , .timeline-article .content-left:before, .timeline-article .content-right:before {
+	display:none !important;
+}
+
+.lhxemthem{
+	    display:none !important;
+}
+
+/**/
 .timeline-article .content-left:before {
 	border-bottom: 90px solid transparent;
 	border-top: 90px solid transparent;
@@ -1740,14 +1784,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 	top: 81px;
 }
 .arrowcontent {
-	display: none;
+	/*display: none;*/
 }
 .timeline-article .content-left-container, .timeline-article .content-right-container {
 	float: none;
-	margin-left: 122px;
+	/*margin-left: 122px;*/
 	max-width: 100%;
 	min-height: 53px;
-	width: auto;
+	width: 100%;
 }
 .content-left-container p {
 	padding-left: 0;
@@ -1755,6 +1799,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 }
 .timeline-article .meta-date {
 	top: 84px;
+	display:none;
 }
 }
 @media (min-width:992px) {
@@ -1804,7 +1849,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 	visibility: hidden;
 }
 .lhopened {
-	max-width: 80%!important;
+	max-width: 100%!important;
 	z-index: 100;
 }
 .lhopened .lhxemthem a {
@@ -1934,6 +1979,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
 	border-radius: 0px!important;
 	padding: 20px;
 	font-weight: bold;
+	min-height:88px;
 }
 .dislay {
 	margin: 0 auto;
@@ -2069,6 +2115,9 @@ table, th, td {
 .mt-pas {
 	list-style: none;
 	z-index: 99;
+}
+.bg_mt{
+	
 }
 .mt-pas .bg-mt-pas {
 	/*background: url(../images/red-bg.png) no-repeat scroll 100% 100%/100% 100%;*/
@@ -2404,4 +2453,56 @@ header {
 #right_action_bar>li a:hover{
 	color:#fff;
 	opacity:.7;
+}
+
+.search_title{
+	position: relative;
+    float: left;
+    min-width: 50px;
+    margin-bottom: 15px;
+    margin-right: 20px;
+    vertical-align: top;
+    max-width: 100%;
+    border: 2px solid #00aeef;
+    text-align: center;
+	border-radius:0px;
+}
+
+.search_title .date_d{
+	margin-top: 0px;
+	padding: 0 5px;
+    margin-bottom: -4px;
+    font-size: 24px;
+	color: #00aeef;
+}
+
+.search_title .date_m{
+	padding: 0 5px;
+    font-size: 11px;
+    text-transform: uppercase;
+	color: #00aeef;
+}
+
+.search_ct{
+	padding-left:0px;
+}
+.search_ct h3{
+	margin-top: 0px;
+	color: #00aeef;
+}
+.search_ .col-sm-12{
+	    
+    
+}
+.search_ .col-sm-6{
+	border-bottom: 1px solid #E6E6E6;
+	padding: 25px 0px 0px 25px;
+}
+
+#popup_common_title,#popup_common{
+	margin-top:50px !important;
+}
+
+#LoginModal,#RegisterModal,#ForgotPassword{
+	z-index:999999999;
 }

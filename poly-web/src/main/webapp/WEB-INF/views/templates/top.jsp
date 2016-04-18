@@ -3,9 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="menu" uri="/WEB-INF/mytag/MenuHelper.tld" %>
-<spring:url value="/resources/core/images" var="img" />
-<spring:url value="/resources/core/icons" var="icon" />
 <%@page session="true"%>
+<f:set var="baseURL" value="${menu:getContextPath()}" />
 <div class=" clearfix par-pic"> <img src="${menuChinh.banner}" class="img-responsive" alt="">
   <div class="text-pic">
     <p>${menuChinh.name}
@@ -18,9 +17,9 @@
 <div class="breadcrumb">
   <div class="container">
     <ol >
-      <li><a href="/poly-web">Trang chủ</a> </li>      
-      <li><a href="${menuChinh.url}">${menuChinh.name} </a> </li>
-      <li><a href="${menuChuongtrinh.url}">${menuChuongtrinh.name} </a> </li>
+      <li><a href="${baseURL}">Trang chủ</a> </li>      
+      <li><a href="${baseURL}/${menuChinh.url}/${menuChinh.slug}-${menuChinh.hashid}">${menuChinh.name} </a> </li>
+      <li><a href="${baseURL}/${menuChuongtrinh.url}/${menuChuongtrinh.slug}-${menuChuongtrinh.hashid}">${menuChuongtrinh.name} </a> </li>
       <li class="active">${menuCap.name}</li>      
     </ol>
   </div>

@@ -15,6 +15,15 @@
         <name>existSub</name>
         <function-class>com.seiu.web.utils.MenuHelper</function-class>
         <function-signature>java.lang.Boolean existSub(java.lang.String , java.lang.String) </function-signature>
+    </function> 
+    <function>
+        <name>getContextPath</name>
+        <function-class>com.seiu.web.utils.MenuHelper</function-class>
+        <function-signature>java.lang.String getContextPath() </function-signature>
     </function>  
-
+	<function>
+        <name>hashid</name>
+        <function-class>com.seiu.web.utils.MenuHelper</function-class>
+        <function-signature>java.lang.String hashid() </function-signature>
+    </function>  
 </taglib>

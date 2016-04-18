@@ -28,28 +28,28 @@
               ${lstStep.get(1).get('content')}
             </div>
             <div id="regist" class="tab-pane fade">
-              <form action="regtest" method="POST" role="form">
+              <form action="" method="POST">
                 <legend>
                 <p class="titlecontent2"> ${lstStep.get(2).get('content')}</p>
                 </legend>
                 <div class="form-group">
                   <label class="sr-only" for="">ho va ten</label>
-                  <input type="text" class="form-control" id="fullname" name="fullname" placeholder=" Họ và tên">
+                  <input type="text" class="form-control" id="regfullname" name="regfullname" placeholder=" Họ và tên">
                 </div>
                 <div class="form-group">
                   <label class="sr-only" for=""> số điện thoại </label>
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
+                  <input type="text" class="form-control" id="regphone" name="regphone" placeholder="Số điện thoại" onkeypress="return $IsNumbers(event);">
                 </div>
                 <div class="form-group">
                   <label class="sr-only" for="">email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                  <input type="text" class="form-control" id="regemail" name="regemail" placeholder="Email">
                 </div>
                 <div class="form-group">
                   <label class="sr-only" for=""> địa chỉ</label>
-                  <input type="text" class="form-control" id="address" name= "address" placeholder=" Địa chỉ" style="height: 8em;" >
+                  <input type="text" class="form-control" id="regaddress" name= "regaddress" placeholder=" Địa chỉ" style="height: 8em;" >
                 </div>
                 <p class="p-from"> Chúng tôi sẽ liên lạc lại ngay với bạn sau 24h </p>
-                <button type="submit" id="rstest" class="btn btn-primary btn-lg pull-right">GỬI</button>
+                <button type="button" onclick="validateRegister();" id="rstest" class="btn btn-primary btn-lg pull-right">GỬI</button>
               </form>
             </div>
           </div>

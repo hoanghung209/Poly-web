@@ -3,22 +3,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-<title>Maven + Spring MVC</title>
+<title>Poly-Web Example</title>
 
 </head>
  <body>
- <h1>Welcome</h1>
- Language : <a href="?lang=en">English</a>|<a href="?lang=vn">Vietnames</a> 
+ <script src="./resources/core/js/jquery.min.js"></script>
+ <h1>Welcome to Poly Example</h1>
 <form>
 	<button type="button" onclick="changeLang('en');">English</button>
 	<button type="button" onclick="changeLang('vn');">Vietnam</button>
 </form>
 <h2>
-welcome - Xin chào : <spring:message code="welcome" text="default text" />
+<spring:message code="welcome" text="${msg}" />
 </h2>
-
-Current Locale : ${pageContext.response.locale}
+<script type="text/javascript">
+	function changeLang(lang){		
+		$.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath}/changeLanguage",
+			data: "lang=" + lang,
+			success: function(response){				
+				location.reload(); 
+			}
+		});
+	}
+</script>
 </body>
 </html>

@@ -36,7 +36,9 @@
                   </div>
                   </a>
                 </div>
-                
+                <div class="col-sm-12 text-justify">
+					${video.title}
+				</div>
               </li>              
               </c:forEach>
               </ul>

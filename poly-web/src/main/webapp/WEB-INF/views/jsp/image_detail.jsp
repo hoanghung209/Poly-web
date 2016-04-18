@@ -20,7 +20,7 @@
 				
 				<c:forEach items="${lstImage}" var="img">
 					<div class="item <c:if test='${cnt==1 }'> active</c:if>">
-					<img src="${img.url}" alt="" class="img-responsive" />
+					<img src="${img.url}" alt="${img.alt}" title="${img.title}" class="img-responsive" />
 					<div class="carousel-caption">
 					  <h3></h3>
 					  <p></p>

@@ -4,7 +4,7 @@
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
 <definition name="baseLayout" template="/WEB-INF/views/templates/layout.jsp">
-		<put-attribute name="title" value="Poly final" cascade="true"/>		
+		<put-attribute name="title" value="POLY final" cascade="true"/>		
 		<put-attribute name="navigation"
 			value="/WEB-INF/views/templates/navigations.jsp" />
 		<put-attribute name="top"
@@ -13,61 +13,33 @@
 			value="/WEB-INF/views/templates/left.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer"
-			value="/WEB-INF/views/templates/footer.jsp" />
-		<put-list-attribute name="stylesheets">
-			<add-attribute value="resources/core/css/bootstrap.css" />
-			<add-attribute value="resources/core/css/font-awesome.css" />
-			<add-attribute value="resources/core/css/fontend.css" />
-			<add-attribute value="resources/core/css/settings.css" />
-			<add-attribute value="resources/core/css/style.css" />
-			<add-attribute value="resources/core/css/jcarousel.responsive.css" />
-		</put-list-attribute>
-		<put-list-attribute name="javascripts">
-			<add-attribute value="resources/core/js/ie-emulation-modes-warning.js" />
-			<add-attribute value="resources/core/js/jquery.min.js" />
-			<add-attribute value="resources/core/js/jquery.themepunch.plugins.min.js" />
-			<add-attribute value="resources/core/js/jquery.themepunch.revolution.min.js" />
-			<add-attribute value="resources/core/js/jquery.jcarousel.min.js" />
-			<add-attribute value="resources/core/js/jcarousel.responsive.js" />
-			<add-attribute value="resources/core/js/bootstrap.min.js" />
-			<add-attribute value="resources/core/js/common.js" />
-		</put-list-attribute>
+			value="/WEB-INF/views/templates/footer.jsp" />	
 	</definition>
 	<definition name="baseLayout_index" template="/WEB-INF/views/templates/layout_index.jsp">
-		<put-attribute name="title" value="Poly final" cascade="true"/>		
+		<put-attribute name="title" value="POLY final" cascade="true"/>		
 		<put-attribute name="navigation"
 			value="/WEB-INF/views/templates/navigations.jsp" />		
 		<put-attribute name="footer"
-			value="/WEB-INF/views/templates/footer.jsp" />
-		<put-list-attribute name="stylesheets">
-			<add-attribute value="resources/core/css/bootstrap.css" />
-			<add-attribute value="resources/core/css/font-awesome.css" />
-			<add-attribute value="resources/core/css/fontend.css" />
-			<add-attribute value="resources/core/css/settings.css" />
-			<add-attribute value="resources/core/css/style.css" />
-			<add-attribute value="resources/core/css/jcarousel.responsive.css" />
-		</put-list-attribute>
-		<put-list-attribute name="javascripts">
-			<add-attribute value="resources/core/js/ie-emulation-modes-warning.js" />
-			<add-attribute value="resources/core/js/jquery.min.js" />
-			<add-attribute value="resources/core/js/jquery.themepunch.plugins.min.js" />
-			<add-attribute value="resources/core/js/jquery.themepunch.revolution.min.js" />
-			<add-attribute value="resources/core/js/jquery.jcarousel.min.js" />
-			<add-attribute value="resources/core/js/jcarousel.responsive.js" />
-			<add-attribute value="resources/core/js/bootstrap.min.js" />
-			<add-attribute value="resources/core/js/common.js" />
-		</put-list-attribute>
+			value="/WEB-INF/views/templates/footer.jsp" />		
 	</definition>
 	<definition name="intro" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Giới thiệu" />
+		<put-attribute name="title" value="POLY - Giới thiệu" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 		<put-attribute name="left"
 			value="/WEB-INF/views/templates/left-intro.jsp" />		
 		<put-attribute name="body" value="/WEB-INF/views/jsp/intro.jsp" />
 	</definition>
+	<definition name="search" extends="baseLayout">		
+		<put-attribute name="title" value="POLY - Tìm kiếm" />
+		<put-attribute name="top"
+			value="/WEB-INF/views/templates/top-intro.jsp" />
+		<put-attribute name="left"
+			value="" />		
+		<put-attribute name="body" value="/WEB-INF/views/jsp/search.jsp" />
+	</definition>
 	<definition name="video" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Video" />
+		<put-attribute name="title" value="POLY - Video" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 		<put-attribute name="left"
@@ -75,7 +47,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/jsp/video_detail.jsp" />
 	</definition>	
 	<definition name="image" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Image" />
+		<put-attribute name="title" value="POLY - Image" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 		<put-attribute name="left"
@@ -83,23 +55,31 @@
 		<put-attribute name="body" value="/WEB-INF/views/jsp/image_detail.jsp" />
 	</definition>	
 	<definition name="news" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - News" />
+		<put-attribute name="title" value="POLY - News" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 		<put-attribute name="left"
 			value="/WEB-INF/views/templates/left-lib.jsp" />		
 		<put-attribute name="body" value="/WEB-INF/views/jsp/news.jsp" />
 	</definition>
-	<definition name="register" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Giới thiệu" />
+	<definition name="news_detail" extends="baseLayout">		
+		<put-attribute name="title" value="POLY - News" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 		<put-attribute name="left"
-			value="/WEB-INF/views/templates/left-intro.jsp" />		
+			value="/WEB-INF/views/templates/left-lib.jsp" />		
+		<put-attribute name="body" value="/WEB-INF/views/jsp/news_detail.jsp" />
+	</definition>
+	<definition name="register" extends="baseLayout">		
+		<put-attribute name="title" value="POLY - Giới thiệu" />
+		<put-attribute name="top"
+			value="/WEB-INF/views/templates/top-intro.jsp" />
+		<put-attribute name="left"
+			value="/WEB-INF/views/templates/left.jsp" />		
 		<put-attribute name="body" value="/WEB-INF/views/jsp/register.jsp" />
 	</definition>
 	<definition name="thuvien" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Thư viện" />
+		<put-attribute name="title" value="POLY - Thư viện" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 			<put-attribute name="left"
@@ -107,7 +87,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/jsp/library.jsp" />
 	</definition>
 	<definition name="scheduler" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Lịch học" />
+		<put-attribute name="title" value="POLY - Lịch học" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top.jsp" />
 		<put-attribute name="left"
@@ -115,7 +95,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/jsp/scheduler.jsp" />
 	</definition>
 	<definition name="faq" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - FAQ" />
+		<put-attribute name="title" value="POLY - FAQ" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top.jsp" />
 		<put-attribute name="left"
@@ -123,7 +103,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/jsp/faq.jsp" />
 	</definition>
 	<definition name="contact" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Liên hệ" />
+		<put-attribute name="title" value="POLY - Liên hệ" />
 		<put-attribute name="top"
 			value="/WEB-INF/views/templates/top-intro.jsp" />
 		<put-attribute name="left"
@@ -131,35 +111,37 @@
 		<put-attribute name="body" value="/WEB-INF/views/jsp/contact.jsp" />
 	</definition>
 	<definition name="course" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Chương trình học" />		
+		<put-attribute name="title" value="POLY - Chương trình học" />		
 		<put-attribute name="body" value="/WEB-INF/views/jsp/course.jsp" />
 	</definition>
 	<definition name="ecd-lop" extends="baseLayout">		
-		<put-attribute name="title" value="Poly - Chương trình học" />		
+		<put-attribute name="title" value="POLY - Chương trình học" />		
 		<put-attribute name="body" value="/WEB-INF/views/jsp/ecd-lop.jsp" />
 	</definition>
-	<definition name="hello" extends="baseLayout">	
-		<put-attribute name="title" value="Poly - Giới thiệu" />		
-		<put-attribute name="body" value="/WEB-INF/views/jsp/hello.jsp" />	
+	<definition name="hello"  template="/WEB-INF/views/jsp/hello.jsp">			
 	</definition>
 	<definition name="index" extends="baseLayout_index">		
-	<put-attribute name="title" value="Poly - Trang chủ" />
+	<put-attribute name="title" value="POLY - Trang chủ" />
 		<put-attribute name="top"
 			value="" />
 		<put-attribute name="left"
 			value="" />		
 		<put-attribute name="body" value="/WEB-INF/views/jsp/index.jsp" />
+	</definition>	
+	<definition name="sitemap" template="/resources/sitemap.xml">
+	</definition>
+	<definition name="robo" template="/resources/robots.txt">
 	</definition>
 	<definition name="404" extends="baseLayout">
-		<put-attribute name="title" value="Poly - File not found" />
+		<put-attribute name="title" value="POLY - File not found" />
 		<put-attribute name="body" value="/WEB-INF/views/jsp/error/404.jsp" />
 	</definition>
 	<definition name="500" extends="baseLayout">
-		<put-attribute name="title" value="Poly - Error" />
+		<put-attribute name="title" value="POLY - Error" />
 		<put-attribute name="body" value="/WEB-INF/views/jsp/error/404.jsp" />
 	</definition>
 	<definition name="400" extends="baseLayout">
-		<put-attribute name="title" value="Poly - Error" />
+		<put-attribute name="title" value="POLY - Error" />
 		<put-attribute name="body" value="/WEB-INF/views/jsp/error/404.jsp" />
 	</definition>
 </tiles-definitions>

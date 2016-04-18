@@ -10,19 +10,19 @@
       </div>
       <div class="clearfix col-xs-12 col-sm-6 col-lg-6">
         <h3 class="titlecontent2">${lstContent.get(2).get('content') }</h3>
-        <form action="" class="form-horizontal" method="get">
+        <form action="" class="form-horizontal" method="post">
           <div class="form-group">
-            <input type="text" name = "txtName" class="form-control" placeholder="Họ và tên (*)">
+            <input type="text" name = "txtFeedbackName" id = "txtFeedbackName" class="form-control" placeholder="Họ và tên (*)">
           </div>
             <div class="form-group">
-          <input type="text" name = "txtPhone" class="form-control" placeholder="Số điện thoại(*)">
+          <input type="text" name = "txtFeedbackPhone" id = "txtFeedbackPhone" class="form-control" placeholder="Số điện thoại(*)" onkeypress="return $IsNumbers(event);">
           </div>
           <div class="form-group">
-            <textarea  class=" form-control "name="txtMes" id="txtMes" cols="" rows="8" placeholder="Thông điệp"></textarea>
+            <textarea  class=" form-control " name="txtFeedbackMes" id="txtFeedbackMes"  rows="8" placeholder="Thông điệp"></textarea>
           </div>
           <div class="form-group">
           <div class="button">
-          <input type="submit" value="Gửi" class="btn btndk ">
+          <input type="button" onclick="validateFeedback();" value="Gửi" class="btn btndk ">
              </div>
              </div>
         </form>        

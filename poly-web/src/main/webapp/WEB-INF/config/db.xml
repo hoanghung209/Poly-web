@@ -2,17 +2,11 @@
 <properties>
 	<category name="database">
 		<property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
-		<!--
-		<property name="jdbcUrl"  
-			value="jdbc:mysql://10.0.9.63:3306/poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true" />
-		<property name="username" value="root" />
-		<property name="password" value="sp1mysql" />
-		-->
-		
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/bapshop_poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8" />
-		<property name="username" value="bapshop_poly" />
-		<property name="password" value="25251325" /> 
 		  
+		<property name="jdbcUrl"  
+			value="jdbc:mysql://localhost:3306/poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true" />
+		<property name="username" value="root" />
+		<property name="password" value="25251325" />
 		
 		<property name="timeout" value="5000" />
 		<property name="reconnect_time" value="5000" />
