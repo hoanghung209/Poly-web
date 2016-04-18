@@ -1,0 +1,105 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{customerController.getKeywords()}"></meta>
+		<meta name="Description" content="#{customerController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Quản lý Khách hàng</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">
+		<div id="page-header" class="area-detail top-right">
+					<h2>Quản lý Khách hàng</h2>				
+					<div class="cl h6"></div>
+					</div>
+	<h:form id="frmList" prependId="false">			    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+				            <colgroup>
+					            <col width="5%" />
+					            <col width="20%" />
+					            <col width="20%" />
+					            <col width="15%" />
+					            <col width="15%" />					           
+					            <col width="15%" />				           
+					            <col />             
+				            </colgroup>
+					        <tr class="table-header">
+					            <td>ID</td>
+					            <td>Email</td>
+					            <td>Fullname</td>					            
+					            <td>Phone</td>		
+					            <td>Address</td>	
+					            <td>Created time</td>			           			            
+					            <td>Action</td>
+					        </tr>	
+			 <tr class="table-fillter">
+						<td></td>	
+						<td><h:inputText value="#{customerBean.filterEmail}"/>
+							</td>
+						<td></td>
+						<td><h:inputText value="#{customerBean.filterPhone}"/></td>
+						<td></td>		
+							<td></td>					
+						<td align="center"><h:commandButton id="btnSearch"
+								name="btnSubmit" styleClass="btnCss mr5 btnSearch" value="Search"
+								action="#{customerController.loadList(1)}">
+							</h:commandButton></td>
+					</tr>
+					              					        
+		<ui:repeat value="#{customerBean.list}" var="item">														         
+							<tr class="table-body #{item.get('rowOrder')}">
+								<td>#{item.get('id')}</td>
+								<td>#{item.get('email')}</td>
+								<td>#{item.get('fullname')}</td>
+								<td>#{item.get('phone')}</td>	
+								<td>#{item.get('address')}</td>	
+								<td>#{item.get('created_time')}</td>													 						 		
+								<td align="center">				 			
+									<h:commandLink styleClass="pl5" 
+										action="#{customerController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />
+										
+										<f:setPropertyActionListener target="#{customerBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render="@form"/>										
+									</h:commandLink>
+								</td>							  
+							</tr>
+		</ui:repeat>														
+				        </table>				
+					<div class="mt4"></div>
+					<div class="paging-bar">
+		<ui:repeat value="#{customerBean.pageBar}" var="pageItem">
+						<h:commandLink styleClass="#{pageItem.get('class')}"
+							value="#{pageItem.get('text')}"
+							action="#{customerController.loadList}">
+							<f:setPropertyActionListener target="#{customerBean.selectedPage}" value="#{pageItem}" />
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+		</ui:repeat>
+					</div>				
+				</div>					
+	</h:form>   					
+   			
+		</div>
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>		
+	</ui:define>		
+</ui:composition>

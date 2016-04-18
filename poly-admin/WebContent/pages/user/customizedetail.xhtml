@@ -1,0 +1,95 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{customizeDetailController.getKeywords()}"></meta>
+		<meta name="Description" content="#{customizeDetailController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Thống kê chi tiết</title>
+	</ui:define>	
+	<ui:define name="head-css" >		
+	</ui:define>
+	<ui:define name="header" />
+
+	<ui:define name="content">
+		<div id="content" style="">
+			<h:form id="frmFilter"  prependId="false">
+				<div id="page-header" class="area-detail top-right">
+					<h2>Thống kê chi tiết</h2>
+					<div class="cl h6"></div>					
+					<div class="pl5 w90pc">
+						<h:inputTextarea id="txtSql" class="table-text idleField w90pc" value="#{customizeDetailController.sql}"></h:inputTextarea>
+					</div>		
+					<div style="display:none;">Update:<h:selectBooleanCheckbox value="#{customizeDetailController.haveUpdate}"></h:selectBooleanCheckbox></div>	
+					<div class="w10pc fl textboxname tr">
+						<h:commandButton id="btnSearch" styleClass="table-text w90pc" action="#{customizeDetailController.filter}" value="Thống kê">
+							<f:ajax execute="@form" render="message :frmList"></f:ajax>
+						</h:commandButton>
+					</div>
+					<div class="w10pc fl textboxname" style="margin-left: 5%;">
+						<h:commandButton styleClass="table-text w90pc" action="#{customizeDetailController.processExcel}" value="Excel">
+						</h:commandButton>
+					</div>
+					<div class="cl h6"></div>
+					<div class="messagebox tc"> 
+        				<h:messages id="message"/>
+     				  </div>
+				</div>
+			</h:form>			
+			<!-- tab "panes" -->
+			<div class="tabcontent" style="display:block;padding: 10px 5px;">
+				<!-- cat 'list' -->
+				<div class="cat mt">
+					<h:form id="frmList">					
+						<div id="tbl-left" style="width:70px; overflow:auto;float:left;border-left:1px solid #E6E7E8;">
+			                <table class="tbl-list" cellpadding="0" cellspacing="0">
+			                    <tr class="table-header">
+			                        <td style="white-space:nowrap; width:20px;">
+			                            STT
+			                        </td>			                        
+			                    </tr>
+			                    <ui:repeat value="#{customizeDetailController.lstMap}" var="map" varStatus="stt">
+				                    <tr class="table-body">
+				                     	<td align="center">#{stt.index+1}</td>				                        				                        
+				                    </tr>  
+			                   </ui:repeat>			                    
+			                </table>         
+			           </div>			           
+			            <div id="tbl-right" style="max-width:90%; overflow-x:scroll;float:left;border-right:1px solid #E6E7E8;">
+			                <table class="tbl-list" cellpadding="0" cellspacing="0" style="width:auto;">
+			                    <tr class="table-header">
+			                       	<ui:repeat value="#{customizeDetailController.lstField}" var="item">
+			                       		<td style="white-space:nowrap;">
+		                           			<a href="">#{item}</a>
+				                       </td>
+									</ui:repeat>
+			                    </tr>
+			                    <ui:repeat value="#{customizeDetailController.lstMap}" var="map">
+				                    <tr class="table-body">
+					                    <ui:repeat value="#{customizeDetailController.lstField}" var="item">
+				                       		<td style="white-space:nowrap;">#{map.get(item)}</td>
+										</ui:repeat>
+				                    </tr>
+			                    </ui:repeat>			                     
+		                    </table>
+		               	</div>
+					</h:form>
+					<div class="mb13"></div>
+				</div>
+				<!-- End 'list' -->	
+			</div>
+			
+		</div>
+	</ui:define>
+
+	<ui:define name="footer">
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>
+	</ui:define>		
+</ui:composition>

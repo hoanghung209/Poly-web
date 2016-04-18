@@ -1,0 +1,202 @@
+<ui:composition template="/template/popup/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="head-meta" />
+	<ui:define name="head-title">
+		<title>#{lang['title.aclGroupWorkflow']}</title>
+	</ui:define>	
+	<ui:define name="head-css"/>
+	<ui:define name="header" />
+
+	<ui:define name="content">
+		<div id="content">
+<h:form prependId="false">		
+		    <div class="fl w30pc">
+		        <fieldset>
+		            <legend class="bold">#{lang['label.lstGroupPrevious']}</legend>
+		            <div>
+			        	<table style="width:100%;">
+			        		<tr>
+			        			<td align="right">
+						        	<h:commandButton id="btnRemoveBefore" styleClass="btnCss" style="width:50px;" value="&gt;&gt;" 
+						        		onclick="return OnRemoveBefore()"
+						        		action="#{aclGroupWorkflowBC.removeBefore}">
+						        		<f:ajax execute="@form" render="@form"/>
+					        		</h:commandButton>			        			
+			        			</td>
+			        		</tr>
+	        			</table>		            	
+	        		</div>
+	        				            
+		            <div style="width: 100%; height: 370px; overflow: auto" id="table-article-unassign">
+		                <table class="tbl-list border-left" style="font-size: 12px;" cellpadding="0" cellspacing="0">
+		                    <colgroup>
+		                        <col width="10%" />
+		                        <col width="90%" />
+		                    </colgroup>
+		
+		                    <tr class="table-header">
+		                        <td class="first">
+		                            <input type="checkbox" id="cbAllBeforeGroup" onclick="SelectAllBeforeGroup(this)" />
+		                        </td>
+		                        <td>#{lang['label.name']}</td>
+		                    </tr>	
+				        	<tr class="table-fillter">
+				        		<td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchBeforeName" styleClass="table-text idleField" value="#{aclGroupWorkflowBC.filterBeforeName}"
+		                        		onkeypress="if($IsEnter(event)) { Stop(event); $('*[id*=btnSearch]').click(); }"/>				                
+					            </td>				        		
+				        	</tr>		                    	                    
+		<ui:repeat value="#{aclGroupWorkflowBC.lstBeforeGroup}" var="item">		                    		                
+	                        <tr class="table-body">
+	                            <td class="first">
+	                                <input type="checkbox" name="cbBeforeGroup" onclick="CheckItemBeforeGroup(this)" value="#{item.get('id')}"/>
+	                            </td>
+	                            <td> 
+	                            	#{item.get('name')}
+	                            </td>
+	                        </tr>
+		</ui:repeat>
+		                </table>
+		            </div>
+		        </fieldset>
+		    </div>
+		    <div class="fl w40pc">		    
+		        <fieldset>		        
+		            <legend class="bold ">#{lang['label.lstGroupNotUsed']}</legend>
+		            
+			        <div>
+			        	<table style="width:100%;">
+			        		<tr>
+			        			<td align="left">
+						        	<h:commandButton id="btnMoveBefore" styleClass="btnCss" style="width:50px;" value="&lt;&lt;" 
+						        		onclick="return OnMoveBefore()"
+						        		action="#{aclGroupWorkflowBC.moveBefore}">
+						        		<f:ajax execute="@form" render="@form"/>
+					        		</h:commandButton>			        			
+			        			</td>
+			        			<td align="center">
+			        				#{lang['label.currentGroup']}: <span class="messagebox">#{aclGroupWorkflowBC.name}</span>
+				        		    <h:inputHidden id="txthdAfterGroup" value="#{aclGroupWorkflowBC.lstAfterGroupId}" />
+				        		    <h:inputHidden id="txthdBeforeGroup" value="#{aclGroupWorkflowBC.lstBeforeGroupId}" />
+					            	<h:inputHidden id="txthdFreeGroup" value="#{aclGroupWorkflowBC.lstFreeGroupId}" />
+			                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch none" value="#{lang['label.search']}"
+			                    		action="#{aclGroupWorkflowBC.bind()}">
+			                    		<f:ajax execute="@form" render="@form" />
+		                    		</h:commandButton>					            				        			
+			        			</td>
+			        			<td align="right">
+						        	<h:commandButton id="btnMoveAfter" styleClass="btnCss" style="width:50px;" value="&gt;&gt;" 
+						        		onclick="return OnMoveAfter()"
+						        		action="#{aclGroupWorkflowBC.moveAfter}">
+						        		<f:ajax execute="@form" render="@form" />
+					        		</h:commandButton>			        			
+			        			</td>
+			        		</tr>
+			        	</table>
+			        </div>	
+			        	            
+		            <div style="width: 100%; height: 370px; overflow: auto" id="table-article-assign-popup">
+		              <table class="tbl-list border-left" style="font-size: 12px;" cellpadding="0" cellspacing="0">
+		                    <colgroup>
+		                        <col width="10%" />
+		                        <col width="90%" />
+		                    </colgroup>
+		                    
+		                    <tr class="table-header">
+		                        <td class="first">
+		                            <input type="checkbox" id="cbAllFreeGroup" onclick="SelectAllFreeGroup(this)" />
+		                        </td>
+		                        <td>#{lang['label.name']}</td>
+		                    </tr>	
+				        	<tr class="table-fillter">
+				        		<td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchFreeName" styleClass="table-text idleField" value="#{aclGroupWorkflowBC.filterFreeName}"
+		                        		onkeypress="if($IsEnter(event)) { Stop(event); $('*[id*=btnSearch]').click(); }"/>				                
+					            </td>				        		
+				        	</tr>		                    	                    
+		<ui:repeat value="#{aclGroupWorkflowBC.lstFreeGroup}" var="item">		                    		                
+	                        <tr class="table-body">
+	                            <td class="first">
+	                                <input type="checkbox" name="cbFreeGroup" onclick="CheckItemFreeGroup(this)" value="#{item.get('id')}"/>
+	                            </td>
+	                            <td> 
+	                            	#{item.get('name')}
+	                            </td>
+	                        </tr>
+		</ui:repeat>				              
+		                </table>
+		            </div>
+		        </fieldset>		        
+		    </div>
+		    <div class="fl w30pc">
+		        <fieldset>
+		            <legend class="bold ">#{lang['label.lstGroupNext']}</legend>
+		            <div>
+			        	<table style="width:100%;">
+			        		<tr>
+			        			<td align="left">		            
+						        	<h:commandButton id="btnRemoveAfter" styleClass="btnCss" style="width:50px;" value="&lt;&lt;" 
+						        		onclick="return OnRemoveAfter()"
+						        		action="#{aclGroupWorkflowBC.removeAfter}">
+						        		<f:ajax execute="@form" render="@form"/>
+					        		</h:commandButton>	
+		        				</td>
+		        			</tr>
+	        			</table>		
+	        		</div>            
+		            <div style="width: 100%; height: 370px; overflow: auto" id="table-article-assign-popup">
+		              <table class="tbl-list border-left" style="font-size: 12px;" cellpadding="0" cellspacing="0">
+		                    <colgroup>
+		                        <col width="10%" />
+		                        <col width="90%" />
+		                    </colgroup>
+		                    
+		                    <tr class="table-header">
+		                        <td class="first">
+		                            <input type="checkbox" id="cbAllAfterGroup" onclick="SelectAllAfterGroup(this)" />
+		                        </td>
+		                        <td>#{lang['label.name']}</td>
+		                    </tr>	
+				        	<tr class="table-fillter">
+				        		<td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchAfterName" styleClass="table-text idleField" value="#{aclGroupWorkflowBC.filterAfterName}"
+		                        		onkeypress="if($IsEnter(event)) { Stop(event); $('*[id*=btnSearch]').click(); }"/>				                
+					            </td>				        		
+				        	</tr>		                    	                    
+		<ui:repeat value="#{aclGroupWorkflowBC.lstAfterGroup}" var="item">		                    		                
+	                        <tr class="table-body">
+	                            <td class="first">
+	                                <input type="checkbox" name="cbAfterGroup" onclick="CheckItemAfterGroup(this)" value="#{item.get('id')}"/>
+	                            </td>
+	                            <td> 
+	                            	#{item.get('name')}
+	                            </td>
+	                        </tr>
+		</ui:repeat>				              
+		                </table>
+		            </div>
+		        </fieldset>
+		    </div>
+		    	
+		    <div class="cl h6" />		    
+	        <div class="messagebox tc"> 
+	    		<h:messages id="lblMessage" />
+	    	</div>	
+</h:form>	    		    	
+		</div>
+	</ui:define>
+
+	<ui:define name="footer" />
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js" />
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js" />
+									
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/acl-group/workflow.js" />
+	</ui:define>		
+</ui:composition>

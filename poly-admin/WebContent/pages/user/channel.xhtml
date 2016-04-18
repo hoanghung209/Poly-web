@@ -1,0 +1,40 @@
+<ui:composition template='/template/popup/default.xhtml'
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="head-meta" />
+	<ui:define name="head-title">
+		<title>#{lang['title.aclUserChannel']}</title>
+	</ui:define>	
+	<ui:define name="head-css"/>
+	<ui:define name="header" />
+
+	<ui:define name="content">
+		<div id="content">
+<h:form prependId="false">
+			<div class="modal-fb">
+		        <h2>#{lang['title.theForumPost']}</h2>
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+			            <colgroup><col width="10%" /><col /></colgroup>
+				        <tr class="table-header">
+				            <td class="first">ID</td>
+				            <td>#{lang['title.nameChannel']}</td>
+				        </tr>				        
+		<ui:repeat value="#{userChannelBC.list}" var="item">														         
+						<tr class="table-body #{item.get('rowOrder')}">
+							<td class="first">#{item.get('channel_id')}</td>
+							<td>#{item.get('name')}</td>												 
+						</tr>
+		</ui:repeat>														
+		        	</table>        
+			    </div>		            
+	    	</div>
+</h:form>	    		    	
+		</div>
+	</ui:define>
+
+	<ui:define name="footer" />
+	<ui:define name="footer-js" />
+</ui:composition>

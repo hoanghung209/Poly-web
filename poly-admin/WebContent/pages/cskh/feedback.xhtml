@@ -1,0 +1,255 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{feedBackController.getKeywords()}"></meta>
+		<meta name="Description" content="#{feedBackController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Quản lý Feedback</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">
+		<div id="page-header" class="area-detail top-right">
+					<h2>Quản lý Feedback</h2>				
+					<div class="cl h6"></div>
+					</div>	
+	<h:form id="frmDetail" prependId="false">
+			    <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+					<h:commandButton id="btnAdd" styleClass="btnCss fl mr5 btnAdd pl20" 
+						value="#{lang['label.btnAdd']}"
+						action="#{feedBackController.add}"
+						disabled="#{feedbackBean.disabled.get('disabled-insert')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>																		
+				
+					<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20"
+						value="#{lang['label.btnSave']}"						
+						action="#{feedBackController.update}"
+						disabled="#{feedbackBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form :frmList"/>
+					</h:commandButton>		
+							
+					<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+						value="#{lang['label.btnCancel']}"
+						action="#{feedBackController.cancel}"
+						disabled="#{feedbackBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					    		    		    			           
+					<div class="cl h6" />
+			    </div>
+	    	
+			    <div class="area-detail top-right">			    	
+			        <table width="100%">
+			            <colgroup>
+			                <col width="10%" />	
+			                <col width="40%" />	
+			                <col width="10%" />			               				                
+			                <col />
+			            </colgroup>
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                   Name :
+			                </td>
+			                <td><h:inputText id="txtNameVn" styleClass="w90pc text idleField" value="#{feedbackBean.name}"
+									disabled="#{feedbackBean.disabled.get('disabled-update')}" maxlength="255"/></td>
+							<td class="pl10 textboxname">
+			                   Desc :
+			                </td>
+			                <td><h:inputText id="txtNameEn" styleClass="w90pc text idleField" value="#{feedbackBean.chuc}"
+									disabled="#{feedbackBean.disabled.get('disabled-update')}" maxlength="255"/></td>	
+						</tr>	
+			            <tr>
+			            <td class="pl10 textboxname">Phone :</td>			           
+			             <td><h:inputText id="txtOrder" styleClass="w90pc text idleField" value="#{feedbackBean.phone}"
+									disabled="#{feedbackBean.disabled.get('disabled-update')}" maxlength="50"/>	
+			            </td>			            
+			             <td class="pl10 textboxname">Show :</td>
+			            <td>
+								<h:selectOneMenu id="cboShow" styleClass="idleField" value="#{feedbackBean.isShow}"
+					       			disabled="#{feedbackBean.disabled.get('disabled-update')}">
+									<f:selectItem itemValue="0" itemLabel="Is Show" />
+									<f:selectItem itemValue="1" itemLabel="Is Hidden" />									
+								</h:selectOneMenu> 
+								<SPAN class="pl10 textboxname">Status :</SPAN>   
+								<h:selectOneMenu id="cboStatus" styleClass="idleField" value="#{feedbackBean.status}"
+					       			disabled="#{feedbackBean.disabled.get('disabled-update')}">
+									<f:selectItem itemValue="0" itemLabel="Chưa xử lý" />
+									<f:selectItem itemValue="1" itemLabel="Đã xử lý" />	
+									<f:selectItem itemValue="2" itemLabel="Đánh dấu" />									
+								</h:selectOneMenu>
+			            </td>
+			            </tr>
+			            <tr>
+			            <td class="pl10 textboxname">Avatar :</td>			           
+			             <td><div style="width: 85%" class="fl">
+			                <h:inputText id="txtImage" styleClass="w90pc text idleField" value="#{feedbackBean.avatar}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></div>
+							 <div style="width: 10%" class="fl">	 		                        					
+		                            <a id="lnkUploadControl" onmouseover="$(this).fancybox({'type': 'iframe'})"
+		                            	href="#{contextUtils.getContextPath()}/resources/components/fileupload/image.xhtml">
+		                                <img class="pointer" src="#{contextUtils.getContextPath()}/resources/images/Btn/ImageManager.gif" alt="" 
+		                                	title="Upload image" />
+		                            </a>
+		                        </div>
+			            </td>			            
+			             <td class="pl10 textboxname"></td>
+			            <td>								   
+			            </td>
+			            </tr>
+			            <tr>
+			            <td class="pl10 textboxname">Content :</td>
+			            <td colspan="3">
+			            	<h:inputTextarea id="txtContent" styleClass="w90pc text idleField" value="#{feedbackBean.content}"
+									disabled="#{feedbackBean.disabled.get('disabled-update')}"/>	
+			            </td>
+			            </tr>           
+			        </table>  			       
+			    </div>	
+			    <div class="w10pc fr textboxname" style="padding-bottom: 5px;">
+			    <h:commandButton styleClass="table-text w90pc" action="#{feedBackController.processExcel()}" value="Excel">
+									</h:commandButton>	
+				</div>
+	</h:form>		 
+	<h:form id="frmList" prependId="false">		
+	 <div class="messagebox tc"> 
+			    		<h:messages id="message"/>
+			    	</div>    	    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+				            <colgroup>
+					            <col width="5%" />
+					            <col width="20%" />
+					            <col width="10%" />
+					            <col width="10%" />
+					            <col width="10%" />				           
+					           	<col width="10%" />
+					           	<col width="10%" />
+					           	<col width="10%" />			           
+					            <col />             
+				            </colgroup>
+					        <tr class="table-header">
+					            <td>ID</td>
+					            <td>Name</td>
+					            <td>Phone</td>					            
+					            <td>Show</td>
+					            <td>Status</td>
+					            <td>Created_time</td> 
+					            <td>Updated_by</td>
+					            <td>Updated_time</td>    
+					            <td>Action</td>
+					        </tr>		
+					          <tr class="table-fillter">
+					            <td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchName" styleClass="table-text idleField" value="#{feedbackBean.filterName}"
+		                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/>				                
+					            </td>	
+					            <td><h:inputText id="txtSearchPhone" styleClass="table-text idleField" value="#{feedbackBean.filterPhone}"
+		                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/></td>
+					            <td>
+					            	<h:selectOneMenu id="cboSearchShow" styleClass="idleField w90pc" value="#{feedbackBean.filterShow}" 
+			                        	onchange="$('*[id*=btnSearch]').click();">
+			                        	<f:selectItem itemValue="" itemLabel="All" />
+										<f:selectItem itemValue="0" itemLabel="Show" />
+										<f:selectItem itemValue="1" itemLabel="Hidden" />              				                        	
+			                        </h:selectOneMenu>
+			                        </td>
+					            <td>
+					            <h:selectOneMenu id="cboSearchStatus" styleClass="idleField w90pc" value="#{feedbackBean.filterStatus}" 
+			                        	onchange="$('*[id*=btnSearch]').click();">
+			                        	<f:selectItem itemValue="" itemLabel="All" />
+										<f:selectItem itemValue="0" itemLabel="Chưa xử lý" />
+										<f:selectItem itemValue="1" itemLabel="Đã xử lý" />	
+										<f:selectItem itemValue="2" itemLabel="Đánh dấu" />												                        				                        	
+			                        </h:selectOneMenu>
+					            </td>	
+					            <td><h:inputText id="txtDateRange" class="idleField w90pc" value="#{feedbackBean.filterCreatedTime}" ></h:inputText></td>
+					            <td></td>
+					            <td></td>			            			
+			                    <td align="center">
+			                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch" 
+			                    		value="Tìm"
+			                    		action="#{feedBackController.loadList(1)}">
+			                    		<f:ajax execute="@form" render="@form" />
+		                    		</h:commandButton>		                    		
+			                    </td>
+					        </tr>							    					        
+		<ui:repeat value="#{feedbackBean.list}" var="item">														         
+							<tr class="table-body #{item.get('rowOrder')}">
+								<td>#{item.get('id')}</td>
+								<td>#{item.get('name')}</td>
+								<td>#{item.get('phone')}</td>								
+								<td>#{item.get('show')}</td>
+								<td>#{item.get('status_name')}</td>
+								<td>#{item.get('created_time_vn')}</td>	
+								<td>#{item.get('user')}</td>	
+								<td>#{item.get('updated_time_vn')}</td>														 						 		
+								<td align="center">																																
+									<h:commandLink styleClass="pl5" 
+										action="#{feedBackController.edit}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" 
+											width="18" alt="" />
+										<f:setPropertyActionListener target="#{feedbackBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmDetail" />										
+									</h:commandLink>	
+																					 			
+									<h:commandLink styleClass="pl5" 
+										action="#{feedBackController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />
+										
+										<f:setPropertyActionListener target="#{feedbackBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render="@form :frmDetail"/>										
+									</h:commandLink>
+								</td>							  
+							</tr>
+		</ui:repeat>														
+				        </table>				
+					<div class="mt4"></div>
+					<div class="paging-bar">
+		<ui:repeat value="#{feedbackBean.pageBar}" var="pageItem">
+						<h:commandLink styleClass="#{pageItem.get('class')}"
+							value="#{pageItem.get('text')}"
+							action="#{feedBackController.loadList}">
+							<f:setPropertyActionListener target="#{feedbackBean.selectedPage}" value="#{pageItem}" />
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+		</ui:repeat>
+					</div>				
+				</div>					
+	</h:form>   					
+   			
+		</div>
+	</ui:define>
+	<ui:define name="footer">			
+		<input id="hdFileStorageDomain" type="hidden" value="#{contextUtils.getDomain()}"/>						
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/daterangepicker/js/jquery.ui.datepicker.range.pack.js"></script>			
+		<script type="text/javascript">
+		 $(function () {
+	            $('#txtDateRange').daterangepicker({ arrows: true });
+	        });
+		</script>			
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/menu/index.js"></script>
+						
+	</ui:define>		
+</ui:composition>

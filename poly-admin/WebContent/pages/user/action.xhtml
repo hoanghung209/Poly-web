@@ -1,0 +1,202 @@
+<ui:composition template="/template/popup/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="head-meta" />
+	<ui:define name="head-title">
+		<title>#{lang['title.aclUserAction']}</title>
+	</ui:define>	
+	<ui:define name="head-css"/>
+	<ui:define name="header" />
+
+	<ui:define name="content">
+		<div id="content">
+<h:form prependId="false">		
+		    <div class="fl w30pc">
+		        <fieldset>
+		            <legend class="bold">#{lang['label.lstActionRestrict']}</legend>
+		            <div>
+			        	<table style="width:100%;">
+			        		<tr>
+			        			<td align="right">
+						        	<h:commandButton id="btnRemoveRestrict" styleClass="btnCss" style="width:50px;" value="&gt;&gt;" 
+						        		onclick="return OnRemoveRestrict()"
+						        		action="#{aclUserActionBC.removeRestrict}">
+						        		<f:ajax execute="@form" render="@form"/>
+					        		</h:commandButton>			        			
+			        			</td>
+			        		</tr>
+	        			</table>		            	
+	        		</div>
+	        				            
+		            <div style="width: 100%; height: 370px; overflow: auto" id="table-article-unassign">
+		                <table class="tbl-list border-left" style="font-size: 12px;" cellpadding="0" cellspacing="0">
+		                    <coluser>
+		                        <col width="10%" />
+		                        <col width="90%" />
+		                    </coluser>
+		
+		                    <tr class="table-header">
+		                        <td class="first">
+		                            <input type="checkbox" id="cbAllRestrictAction" onclick="SelectAllRestrictAction(this)" />
+		                        </td>
+		                        <td>#{lang['label.name']}</td>
+		                    </tr>	
+				        	<tr class="table-fillter">
+				        		<td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchRestrictName" styleClass="table-text idleField" value="#{aclUserActionBC.filterRestrictName}"
+		                        		onkeypress="if($IsEnter(event)) { Stop(event); $('*[id*=btnSearch]').click(); }"/>				                
+					            </td>				        		
+				        	</tr>		                    	                    
+		<ui:repeat value="#{aclUserActionBC.lstRestrictAction}" var="item">		                    		                
+	                        <tr class="table-body">
+	                            <td class="first">
+	                                <input type="checkbox" name="cbRestrictAction" onclick="CheckItemRestrictAction(this)" value="#{item.get('name')}"/>
+	                            </td>
+	                            <td> 
+	                            	#{item.get('name')}
+	                            </td>
+	                        </tr>
+		</ui:repeat>
+		                </table>
+		            </div>
+		        </fieldset>
+		    </div>
+		    <div class="fl w40pc">		    
+		        <fieldset>		        
+		            <legend class="bold ">#{lang['label.lstActionNotUsed']}</legend>
+		            
+			        <div>
+			        	<table style="width:100%;">
+			        		<tr>
+			        			<td align="left">
+						        	<h:commandButton id="btnRestrict" styleClass="btnCss" style="width:50px;" value="&lt;&lt;" 
+						        		onclick="return OnRestrict()"
+						        		action="#{aclUserActionBC.restrict}">
+						        		<f:ajax execute="@form" render="@form"/>
+					        		</h:commandButton>			        			
+			        			</td>
+			        			<td align="center">
+			        				#{lang['label.currentUser']}: <span class="messagebox">#{aclUserActionBC.name}</span>
+				        		    <h:inputHidden id="txthdAllowAction" value="#{aclUserActionBC.lstAllowActionId}" />
+				        		    <h:inputHidden id="txthdRestrictAction" value="#{aclUserActionBC.lstRestrictActionId}" />
+					            	<h:inputHidden id="txthdFreeAction" value="#{aclUserActionBC.lstFreeActionId}" />
+			                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch none" value="Tìm"
+			                    		action="#{aclUserActionBC.bind}">
+			                    		<f:ajax execute="@form" render="@form" />
+		                    		</h:commandButton>					            				        			
+			        			</td>
+			        			<td align="right">
+						        	<h:commandButton id="btnAllow" styleClass="btnCss" style="width:50px;" value="&gt;&gt;" 
+						        		onclick="return OnAllow()"
+						        		action="#{aclUserActionBC.allow}">
+						        		<f:ajax execute="@form" render="@form" />
+					        		</h:commandButton>			        			
+			        			</td>
+			        		</tr>
+			        	</table>
+			        </div>	
+			        	            
+		            <div style="width: 100%; height: 370px; overflow: auto" id="table-article-assign-popup">
+		              <table class="tbl-list border-left" style="font-size: 12px;" cellpadding="0" cellspacing="0">
+		                    <coluser>
+		                        <col width="10%" />
+		                        <col width="90%" />
+		                    </coluser>
+		                    
+		                    <tr class="table-header">
+		                        <td class="first">
+		                            <input type="checkbox" id="cbAllFreeAction" onclick="SelectAllFreeAction(this)" />
+		                        </td>
+		                        <td>#{lang['label.name']}</td>
+		                    </tr>	
+				        	<tr class="table-fillter">
+				        		<td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchFreeName" styleClass="table-text idleField" value="#{aclUserActionBC.filterFreeName}"
+		                        		onkeypress="if($IsEnter(event)) { Stop(event); $('*[id*=btnSearch]').click(); }"/>				                
+					            </td>				        		
+				        	</tr>		                    	                    
+		<ui:repeat value="#{aclUserActionBC.lstFreeAction}" var="item">		                    		                
+	                        <tr class="table-body">
+	                            <td class="first">
+	                                <input type="checkbox" name="cbFreeAction" onclick="CheckItemFreeAction(this)" value="#{item.get('name')}"/>
+	                            </td>
+	                            <td> 
+	                            	#{item.get('name')}
+	                            </td>
+	                        </tr>
+		</ui:repeat>				              
+		                </table>
+		            </div>
+		        </fieldset>		        
+		    </div>
+		    <div class="fl w30pc">
+		        <fieldset>
+		            <legend class="bold ">#{lang['label.lstActionAllow']}</legend>
+		            <div>
+			        	<table style="width:100%;">
+			        		<tr>
+			        			<td align="left">		            
+						        	<h:commandButton id="btnRemoveAllow" styleClass="btnCss" style="width:50px;" value="&lt;&lt;" 
+						        		onclick="return OnRemoveAllow()"
+						        		action="#{aclUserActionBC.removeAllow}">
+						        		<f:ajax execute="@form" render="@form"/>
+					        		</h:commandButton>	
+		        				</td>
+		        			</tr>
+	        			</table>		
+	        		</div>            
+		            <div style="width: 100%; height: 370px; overflow: auto" id="table-article-assign-popup">
+		              <table class="tbl-list border-left" style="font-size: 12px;" cellpadding="0" cellspacing="0">
+		                    <coluser>
+		                        <col width="10%" />
+		                        <col width="90%" />
+		                    </coluser>
+		                    
+		                    <tr class="table-header">
+		                        <td class="first">
+		                            <input type="checkbox" id="cbAllAllowAction" onclick="SelectAllAllowAction(this)" />
+		                        </td>
+		                        <td>#{lang['label.name']}</td>
+		                    </tr>	
+				        	<tr class="table-fillter">
+				        		<td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchAllowName" styleClass="table-text idleField" value="#{aclUserActionBC.filterAllowName}"
+		                        		onkeypress="if($IsEnter(event)) { Stop(event); $('*[id*=btnSearch]').click(); }"/>				                
+					            </td>				        		
+				        	</tr>		                    	                    
+		<ui:repeat value="#{aclUserActionBC.lstAllowAction}" var="item">		                    		                
+	                        <tr class="table-body">
+	                            <td class="first">
+	                                <input type="checkbox" name="cbAllowAction" onclick="CheckItemAllowAction(this)" value="#{item.get('name')}"/>
+	                            </td>
+	                            <td> 
+	                            	#{item.get('name')}
+	                            </td>
+	                        </tr>
+		</ui:repeat>				              
+		                </table>
+		            </div>
+		        </fieldset>
+		    </div>
+		    	
+		    <div class="cl h6" />		    
+	        <div class="messagebox tc"> 
+	    		<h:messages id="lblMessage" />
+	    	</div>	
+</h:form>	    		    	
+		</div>
+	</ui:define>
+
+	<ui:define name="footer" />
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js" />
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js" />
+									
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/acl-user/action.js" />
+	</ui:define>		
+</ui:composition>

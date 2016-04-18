@@ -1,0 +1,202 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{aclGroupController.getKeywords()}"></meta>
+		<meta name="Description" content="#{aclGroupController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>#{lang['title.aclGroup']}</title>
+	</ui:define>	
+	<ui:define name="head-css" />
+	<ui:define name="header" />
+
+	<ui:define name="content">
+		<div id="content">
+<h:form id="frmDetail" prependId="false">
+		    <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+				<h:commandButton id="btnAdd" styleClass="btnCss fl mr5 btnAdd pl20" 
+					value="#{lang['label.btnAdd']}"
+					action="#{aclGroupController.add}"
+					disabled="#{aclGroupBean.disabled.get('disabled-insert')}">
+					<f:ajax execute="@form" render="@form" />
+				</h:commandButton>																		
+			
+				<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20" 
+					value="#{lang['label.btnSave']}"
+					onclick="return OnSave();"
+					action="#{aclGroupController.update}"
+					disabled="#{aclGroupBean.disabled.get('disabled-update')}">
+					<f:ajax execute="@form" render="@form :frmList" />
+				</h:commandButton>		
+						
+				<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+					value="#{lang['label.btnCancel']}"
+					action="#{aclGroupController.cancel}"
+					disabled="#{aclGroupBean.disabled.get('disabled-update')}">
+					<f:ajax execute="@form" render="@form" />
+				</h:commandButton>		    		    		    			           
+				<div class="cl h6" />
+		    </div>
+    	
+		    <div class="area-detail top-right">
+		        <table width="100%">
+		            <colgroup>
+		                <col width="15%" />
+		                <col width="40%" />
+		                <col width="15%" />
+		                <col />
+		            </colgroup>
+		            <tr>
+		                <td class="pl10 textboxname">
+		                    #{lang['label.name']}:
+		                </td>
+		                <td>
+							<h:inputText id="txtName" styleClass="w90pc text idleField" value="#{aclGroupBean.name}"
+								disabled="#{aclGroupBean.disabled.get('disabled-update')}"/>
+		                </td>
+		                <td class="textboxname">
+		                    #{lang['label.status']}:
+		                </td>
+		                <td>
+				       		<h:selectOneMenu id="cboStatus" style="" value="#{aclGroupBean.status}"
+				       			disabled="#{aclGroupBean.disabled.get('disabled-update')}">
+								<f:selectItem itemValue="1" itemLabel="#{lang['label.active']}" />
+								<f:selectItem itemValue="2" itemLabel="#{lang['label.lock']}" />								
+							</h:selectOneMenu>                    
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="pl10 textboxname">
+		                    #{lang['label.description']}:                
+		                </td>
+		                <td>
+		                   	<h:inputText id="txtDescription" styleClass="w90pc text idleField" value="#{aclGroupBean.description}"
+		                   		disabled="#{aclGroupBean.disabled.get('disabled-update')}"/>
+		                </td>
+		                <td class="textboxname"></td>
+		                <td></td>
+		            </tr>
+		        </table>   
+		        
+		        <div class="messagebox tc"> 
+		    		<h:messages id="message"/>
+		    	</div>    
+		    </div>	
+</h:form>		 
+<h:form id="frmList" prependId="false">			    
+		    <div>
+			    <table class="tbl-list" cellpadding="0" cellspacing="0">
+			            <colgroup>
+				            <col width="5%" />
+				            <col width="20%" />
+				            <col width="10%" />
+				            <col width="30%" />
+				            <col width="10%" />
+				            <col width="10%" />
+				            <col />             
+			            </colgroup>
+				        <tr class="table-header">
+				            <td>#{lang['label.id']}</td>
+				            <td>#{lang['label.name']}</td>
+				            <td>#{lang['label.status']}</td>
+				            <td>#{lang['label.description']}</td>
+				            <td>#{lang['label.createdTime']}</td>
+				            <td>#{lang['label.createdBy']}</td>
+				            <td>#{lang['label.action']}</td>
+				        </tr>
+				        <tr class="table-fillter">
+				            <td></td>
+				            <td>				                
+	                        	<h:inputText id="txtSearchName" styleClass="table-text idleField" value="#{aclGroupBean.filterName}"
+	                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/>				                
+				            </td>
+				            <td>
+		                        <h:selectOneMenu id="cboSearchstatus" value="#{aclGroupBean.filterStatus}" 
+		                        	onchange="$('*[id*=btnSearch]').click();">
+		                        	<f:selectItem itemValue="" itemLabel="#{lang['label.selectStatus']}" />
+									<f:selectItem itemValue="1" itemLabel="#{lang['label.active']}" />
+									<f:selectItem itemValue="2" itemLabel="#{lang['label.lock']}" />		                        			                        				                        	
+		                        </h:selectOneMenu>				                
+				            </td>
+				            <td></td>
+				            <td></td>
+			             	<td></td>
+		                    <td align="center">
+		                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch" 
+		                    		value="#{lang['label.search']}"
+		                    		action="#{aclGroupController.loadList(1)}">
+		                    		<f:ajax execute="@form" render="@form" />
+	                    		</h:commandButton>
+		                    </td>
+				        </tr>					        
+	<ui:repeat value="#{aclGroupBean.list}" var="item">														         
+						<tr class="table-body #{item.get('rowOrder')}">
+							<td class="first">#{item.get('id')}</td>
+							<td>#{item.get('name')}</td>
+							<td>#{item.get('status_name')}</td>
+							<td>#{item.get('description')}</td>							   
+							<td>#{item.get('created_time_vn')}</td>
+					 		<td>#{item.get('created_by')}</td>
+							<td align="center">										
+								<a class="pl5" href="#{rewriteURL.makeAclGroupActionURL(item.get('id'))}"
+									onmouseover="$(this).fancybox({'type':'iframe', 'width': '100%', 'height': '90%'})">
+									<img width="18" alt="" src="#{contextUtils.getContextPath()}/resources/images/Data/Traffic-Light.png" 
+										title="#{lang['label.action']}"/>
+								</a>																
+								<a class="pl5" href="#{rewriteURL.makeAclGroupUserURL(item.get('id'))}"
+									onmouseover="$(this).fancybox({'type':'iframe', 'width': '100%', 'height': '90%'})">
+									<img width="18" alt="" src="#{contextUtils.getContextPath()}/resources/images/Btn/user.png" 
+										title="#{lang['label.listUser']}" />
+								</a>								
+								<h:commandLink styleClass="pl5" 
+									action="#{aclGroupController.edit}">
+									<img width="18" alt="" src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+										title="#{lang['label.btnEdit']}"/>
+									<f:setPropertyActionListener target="#{aclGroupBean.selectedItem}" value="#{item}" />
+									<f:ajax execute="@form" render="@form :frmDetail" />										
+								</h:commandLink>	
+																				 			
+								<h:commandLink styleClass="pl5" 
+									action="#{aclGroupController.delete}"
+									onclick="return confirm('#{lang['message.AskDelete']}')">
+									<img width="18"	alt=""  src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+										title="#{lang['label.btnDelete']}"/>
+									
+									<f:setPropertyActionListener target="#{aclGroupBean.selectedItem}" value="#{item}" />
+									<f:ajax execute="@form" render="@form :frmDetail"/>										
+								</h:commandLink>
+							</td>							  
+						</tr>
+	</ui:repeat>														
+			        </table>				
+				<div class="mt4"></div>
+				<div class="paging-bar">
+	<ui:repeat value="#{aclGroupBean.pageBar}" var="pageItem">
+					<h:commandLink styleClass="#{pageItem.get('class')}"
+						value="#{pageItem.get('text')}"
+						action="#{aclGroupController.loadList}">
+						<f:setPropertyActionListener target="#{aclGroupBean.selectedPage}" value="#{pageItem}" />
+						<f:ajax execute="@form" render="@form" />
+					</h:commandLink>
+	</ui:repeat>
+				</div>				
+			</div>					
+</h:form>   
+			
+		</div>
+	</ui:define>
+
+	<ui:define name="footer" />	
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/acl-group/index.js"></script>				
+	</ui:define>		
+</ui:composition>

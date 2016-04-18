@@ -1,0 +1,183 @@
+<ui:composition template="/template/default/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ucMenu="http://java.sun.com/jsf/composite/components/menu">	
+
+	<ui:define name="head-meta">
+		<meta name="Keywords" content="#{faqController.getKeywords()}"></meta>
+		<meta name="Description" content="#{faqController.getDescription()}"></meta>
+	</ui:define>
+	<ui:define name="head-title">
+		<title>Quản lý FAQ</title>
+	</ui:define>	
+	<ui:define name="head-css">
+		<link href="#{contextUtils.getContextPath()}/resources/css/jquery.treeview.css" type="text/css" rel="stylesheet" />
+	</ui:define>	
+	<ui:define name="header"></ui:define>
+
+	<ui:define name="content">
+		<div id="content">	
+	<h:form id="frmDetail" prependId="false">
+			    <div class="pl20 top-right pt10" style="border-bottom: solid 1px #e4e4e4;">
+					<h:commandButton id="btnAdd" styleClass="btnCss fl mr5 btnAdd pl20" 
+						value="#{lang['label.btnAdd']}"
+						action="#{faqController.add}"
+						disabled="#{faqBean.disabled.get('disabled-insert')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>																		
+				
+					<h:commandButton id="btnSave" styleClass="btnCss fl mr5 btnSave pl20"
+						value="#{lang['label.btnSave']}"						
+						action="#{faqController.update}"
+						disabled="#{faqBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form :frmList"/>
+					</h:commandButton>		
+							
+					<h:commandButton styleClass="btnCss fl mr5 btnDelete pl20" 
+						value="#{lang['label.btnCancel']}"
+						action="#{faqController.cancel}"
+						disabled="#{faqBean.disabled.get('disabled-update')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					    		    		    			           
+					<div class="cl h6" />
+			    </div>
+	    	
+			    <div class="area-detail top-right">			    	
+			        <table width="100%">
+			            <colgroup>
+			                <col width="20%" />			               				                
+			                <col />
+			            </colgroup>
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                   Câu hỏi:
+			                </td>
+			                <td><h:inputText id="txtTitle" styleClass="w90pc text idleField" value="#{faqBean.title}"
+									disabled="#{faqBean.disabled.get('disabled-update')}" maxlength="255"/></td>	
+						</tr>	
+			            <tr>
+			            <td class="pl10 textboxname">Trả lời :</td>			           
+			             <td><h:inputTextarea id="txtContent" styleClass="w90pc text idleField" value="#{faqBean.content}"
+									disabled="#{faqBean.disabled.get('disabled-update')}"/>	
+			            </td>
+			            </tr>
+			            <tr>
+			             <td class="pl10 textboxname">Language :</td>
+			            <td>
+			            		<h:selectOneMenu id="cboLang" styleClass="idleField" value="#{faqBean.language}"
+					       			disabled="#{faqBean.disabled.get('disabled-update')}" 
+					       			onchange="#{faqController.changeLanguage()}">
+									<f:selectItem itemValue="vn" itemLabel="Vietnamese" />
+									<f:selectItem itemValue="en" itemLabel="English" />
+									<f:ajax execute="@form" render=":txtOrd"/>									
+								</h:selectOneMenu>   
+								<SPAN class="pl10 textboxname">Order :</SPAN>
+								<h:inputText id="txtOrd" styleClass="text idleField" value="#{faqBean.ord}"
+									onkeypress="return $IsNumbers(event)"
+									disabled="#{faqBean.disabled.get('disabled-update')}" maxlength="5"/>   
+			            </td>
+			            </tr>           
+			        </table>  
+			        <div class="messagebox tc"> 
+			    		<h:messages id="message"/>
+			    	</div>    
+			    </div>	
+	</h:form>		 
+	<h:form id="frmList" prependId="false">			    
+			    <div>
+				    <table class="tbl-list" cellpadding="0" cellspacing="0">
+				            <colgroup>
+					            <col width="5%" />
+					            <col width="50%" />
+					            <col width="10%" />					           
+					            <col width="10%" />					           
+					            <col />             
+				            </colgroup>
+					        <tr class="table-header">
+					            <td>ID</td>
+					            <td>Câu hỏi</td>					            
+					            <td>Order</td>
+					            <td>Language</td>					            
+					            <td>Action</td>
+					        </tr>		
+					          <tr class="table-fillter">
+					            <td></td>
+					            <td>				                
+		                        	<h:inputText id="txtSearchTitle" styleClass="table-text idleField" value="#{faqBean.filterTitle}"
+		                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/>				                
+					            </td>					           
+					            <td/>	
+					            <td>
+			                        <h:selectOneMenu id="cboSearchLang" styleClass="idleField w90pc" value="#{faqBean.filterLang}" 
+			                        	onchange="$('*[id*=btnSearch]').click();">
+			                        	<f:selectItem itemValue="" itemLabel="Tất cả" />
+										<f:selectItem itemValue="vn" itemLabel="Vietnamese" />
+										<f:selectItem itemValue="en" itemLabel="English" />
+													                        				                        	
+			                        </h:selectOneMenu>				                
+					            </td>		
+			                    <td align="center">
+			                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch" 
+			                    		value="Tìm"
+			                    		action="#{faqController.loadList(1)}">
+			                    		<f:ajax execute="@form" render="@form" />
+		                    		</h:commandButton>
+			                    </td>
+					        </tr>							    					        
+		<ui:repeat value="#{faqBean.list}" var="item">														         
+							<tr class="table-body #{item.get('rowOrder')}">
+								<td>#{item.get('id')}</td>
+								<td>#{item.get('title')}</td>								
+								<td>#{item.get('ord')}</td>
+						 		<td>#{item.get('language')}</td>						 		
+								<td align="center">																																
+									<h:commandLink styleClass="pl5" 
+										action="#{faqController.edit}">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/edit.gif" 
+											title="#{lang['label.btnEdit']}" 
+											width="18" alt="" />
+										<f:setPropertyActionListener target="#{faqBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render=":frmDetail" />										
+									</h:commandLink>	
+																					 			
+									<h:commandLink styleClass="pl5" 
+										action="#{faqController.delete}"
+										onclick="return confirm('#{lang['message.AskDelete']}')">
+										<img src="#{contextUtils.getContextPath()}/resources/images/Btn/delete.png" 
+											title="#{lang['label.btnDelete']}" 
+											width="18"	alt="" />
+										
+										<f:setPropertyActionListener target="#{faqBean.selectedItem}" value="#{item}" />
+										<f:ajax execute="@form" render="@form :frmDetail"/>										
+									</h:commandLink>
+								</td>							  
+							</tr>
+		</ui:repeat>														
+				        </table>				
+					<div class="mt4"></div>
+					<div class="paging-bar">
+		<ui:repeat value="#{faqBean.pageBar}" var="pageItem">
+						<h:commandLink styleClass="#{pageItem.get('class')}"
+							value="#{pageItem.get('text')}"
+							action="#{faqController.loadList}">
+							<f:setPropertyActionListener target="#{faqBean.selectedPage}" value="#{pageItem}" />
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+		</ui:repeat>
+					</div>				
+				</div>					
+	</h:form>   					
+   			
+		</div>
+	</ui:define>
+	<ui:define name="footer-js">
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>					
+						
+	</ui:define>		
+</ui:composition>
