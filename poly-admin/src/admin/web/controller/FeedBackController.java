@@ -1,212 +1,358 @@
 package admin.web.controller;
 
+import admin.web.bc.LanguageBC;
+import admin.web.bean.FeedbackBean;
+import admin.web.common.Paginator;
+import admin.web.common.RewriteURL;
+import admin.web.dao.FeedbackDAO;
+import admin.web.dao.UserDAO;
+import admin.web.util.ContextUtils;
+import admin.web.util.ExcelTableHeper;
+import com.vega.security.AccessControl;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
+import javax.servlet.http.HttpServletRequest;
+import org.primefaces.context.RequestContext;
 import vg.core.common.StringUtils;
 import vg.core.dbproxy.DbProxy;
-import admin.web.bc.LanguageBC;
-import admin.web.bean.FeedbackBean;
-import admin.web.common.AccessControl;
-import admin.web.common.Paginator;
-import admin.web.dao.FeedbackDAO;
-import admin.web.dao.UserDAO;
-import admin.web.util.ContextUtils;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class FeedBackController implements Serializable {	
-	private String userId = AccessControl.getUserid(ContextUtils.getRequest());
-	@ManagedProperty(value = "#{feedbackBean}")
-	private FeedbackBean feedbackBean;
-	
-	@PostConstruct
-	protected void init(){					
-		bind();	
-	}			
-	
-	protected void bind(){
-		loadDetail();
-		loadList(1);
-	}	
-	
-	private void loadDetail() {
-		feedbackBean.getDisabled().put("disabled-insert", "false");
-		feedbackBean.getDisabled().put("disabled-update", "true");			
-		feedbackBean.resetModel();		
-	}
-	
-	public void loadList(int page) {
-		String sqlWhere = String.format(" AND status <> -1");
-		String sqlOrder = " ORDER BY status,updated_time DESC";
-		
-			
-		//title
-		String filterTitle = feedbackBean.getFilterName();
-		if(!StringUtils.isBlank(filterTitle)) {
-			sqlWhere = String.format("%s AND %s LIKE '%s%s%s'", sqlWhere, "name", "%", DbProxy.antiInjection(filterTitle), "%");
-		}
-		
-		//Video
-		String filterPhone = feedbackBean.getFilterPhone();
-		if(!StringUtils.isBlank(filterPhone)) {
-			sqlWhere = String.format("%s AND %s LIKE '%s%s%s'", sqlWhere, "phone", "%", DbProxy.antiInjection(filterPhone), "%");
-		}	
-		
-		//Status
-		String filterStatus = feedbackBean.getFilterStatus();
-		if(!StringUtils.isBlank(filterStatus)) {
-			sqlWhere = String.format("%s AND %s = '%s'", sqlWhere, "status", DbProxy.antiInjection(filterStatus));
-		}	
-		//Status
-		String filterShow = feedbackBean.getFilterShow();
-		if(!StringUtils.isBlank(filterShow)) {
-			sqlWhere = String.format("%s AND %s = '%s'", sqlWhere, "is_show", DbProxy.antiInjection(filterShow));
-		}	
-		
-		//standardized-sqlWhere
-		if(sqlWhere.length() > 0) {
-			sqlWhere = String.format(" WHERE %s", sqlWhere.substring(5)); //Remove First ' AND '
-		}				
-		List<Map<String, String>> lstUser = UserDAO.getAll();
-		List<Map<String, String>> lstMap = FeedbackDAO.getList(page, Paginator.DEFAULT_PAGE_SIZE, sqlWhere, sqlOrder);	
-		for(Map<String,String> map:lstMap){			
-			if(map.get("is_show").equals("0")){
-				map.put("show", "Show");
-			}else{
-				map.put("show", "Hidden");
-			}
-			if(map.get("status").equals("0")){
-				map.put("status_name", "Chưa xử lý");
-			}else if(map.get("status").equals("1")){
-				map.put("status_name", "Đã xử lý");
-			} else if(map.get("status").equals("2")){
-				map.put("status_name", "Đánh dấu");
-			}
-			map.put("user", getUserName(lstUser, map.get("updated_by")));
-		}
-		System.out.println(sqlWhere+"|"+lstMap.size());
-		feedbackBean.setList(lstMap);
-		setRowOrder(feedbackBean.getList());
-		
-		feedbackBean.setCount(FeedbackDAO.countList(sqlWhere));		
-		feedbackBean.setPageBar(Paginator.getPageBar(page, feedbackBean.getCount(), ""));
-	}
-	private String getUserName(List<Map<String,String>> lstUser,String id){
-		if(StringUtils.isBlank(id)){
-			return "";
-		}
-		for(Map<String,String> map:lstUser){
-			if(map.get("id").equals(id)){
-				return map.get("user");
-			}
-		}
-		return id;
-	}
-	
-	private void setRowOrder(List<Map<String, String>> lstMap){
-		int i = 0;
-		if(lstMap == null) return;
-		for (Map<String, String> map : lstMap) {
-			if(i%2 == 0) {
-				map.put("rowOrder", "odd");
-			} else {
-				map.put("rowOrder", "");
-			}
-			i++;
-		}		
-	}		
-	
-	//#region "Function is used by VIEW layer"
-	public void loadList(){
-		Map<String, String> selectedPage = feedbackBean.getSelectedPage();
-		if(selectedPage != null) {
-			int page = Integer.valueOf(selectedPage.get("page"));
-			loadList(page);
-		}
-	}	
-	public void add() {
-		feedbackBean.resetModel();	
-		feedbackBean.getDisabled().put("disabled-insert", "true");
-		feedbackBean.getDisabled().put("disabled-update", "false");	
-	}
-	public void edit() {
-		Map<String, String> selectedItem = feedbackBean.getSelectedItem();
-		if(selectedItem == null) {
-			ContextUtils.addMessage(LanguageBC.getValue("message.RequiredUpdateSelection"));
-		} else {
-			feedbackBean.deserializeModel(selectedItem);	
-			feedbackBean.getDisabled().put("disabled-insert", "true");
-			feedbackBean.getDisabled().put("disabled-update", "false");				
-		}		
-	}	
-	public void update() {		
-		feedbackBean.getDisabled().put("disabled-insert", "false");
-		feedbackBean.getDisabled().put("disabled-update", "true");			
-		feedbackBean.setUpdatedBy(userId);		
-		// {{ query-database				
-		if(feedbackBean.getSelectedItem() == null) {	
-			if(!FeedbackDAO.insert(feedbackBean.serializeModel())) {				
-				ContextUtils.addMessage("Hệ thống đang bận. Vui lòng thử lại sau");
-			} else {				
-				bind();
-				ContextUtils.addMessage("Thêm mới thành công");
-			}				
-		} else {
-			feedbackBean.setSelectedItem(null);
-			if(!FeedbackDAO.update(feedbackBean.serializeModel())) {				
-				ContextUtils.addMessage("Hệ thống đang bận. Vui lòng thử lại sau");				
-			} else {				
-				bind();
-				ContextUtils.addMessage("Cập nhật thành công");
-			}			
-		}
-		// }}
-				
-	}
-	public void delete(){
-		Map<String, String> selectedItem = feedbackBean.getSelectedItem();
-		if(selectedItem == null) {
-			ContextUtils.addMessage("Bạn chưa chọn mục để xóa");
-		} else {				
-				feedbackBean.setSelectedItem(null);
-				if(!FeedbackDAO.deleteLogic(selectedItem.get("id"),userId)) {
-					ContextUtils.addMessage("Hệ thống đang bận. Vui lòng thử lại sau");					
-				} else {
-					
-					bind();
-					ContextUtils.addMessage("Xóa thành công");
-				};						
-		}	
-	}	
-	public void cancel() {		
-		feedbackBean.resetModel();
-		feedbackBean.setSelectedItem(null);		
-		feedbackBean.getDisabled().put("disabled-insert", "false");
-		feedbackBean.getDisabled().put("disabled-update", "true");		
-	}	
-	public String getKeywords() {
-		return "album-keyword";
-	}
+public class FeedBackController
+  implements Serializable
+{
+  private String userId = AccessControl.getUserid(ContextUtils.getRequest());
+  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+  @ManagedProperty("#{feedbackBean}")
+  private FeedbackBean feedbackBean;
+  
+  @PostConstruct
+  protected void init()
+  {
+    if (!ContextUtils.isPostBack()) {
+      if (checkPermission()) {
+        bind();
+      } else {
+        ContextUtils.redirect(RewriteURL.makeAccessForbiddenURL());
+      }
+    }
+  }
+  
+  private boolean checkPermission()
+  {
+    HttpServletRequest req = ContextUtils.getRequest();
+    if (!AccessControl.HasPermission("feedback", req)) {
+      return false;
+    }
+    return true;
+  }
+  
+  protected void bind()
+  {
+    loadDetail();
+    loadList(1);
+  }
+  
+  private void loadDetail()
+  {
+    this.feedbackBean.getDisabled().put("disabled-insert", "false");
+    this.feedbackBean.getDisabled().put("disabled-update", "true");
+    this.feedbackBean.resetModel();
+  }
+  
+  public void loadList(int page)
+  {
+    String sqlWhere = String.format(" AND status <> -1", new Object[0]);
+    String sqlOrder = " ORDER BY status,updated_time DESC";
+    
 
-	public String getDescription() {
-		return "album-description";
-	}		
-	//#endRegion
-	
-	//#region "Getter & Setter"	
-	public FeedbackBean getFeedbackBean() {
-		return feedbackBean;
-	}
-	public void setFeedbackBean(FeedbackBean value) {
-		feedbackBean = value;
-	}
-	//#endRegion
+
+    String filterTitle = this.feedbackBean.getFilterName();
+    if (!StringUtils.isBlank(filterTitle)) {
+      sqlWhere = String.format("%s AND %s LIKE '%s%s%s'", new Object[] { sqlWhere, "name", "%", DbProxy.antiInjection(filterTitle), "%" });
+    }
+    String filterPhone = this.feedbackBean.getFilterPhone();
+    if (!StringUtils.isBlank(filterPhone)) {
+      sqlWhere = String.format("%s AND %s LIKE '%s%s%s'", new Object[] { sqlWhere, "phone", "%", DbProxy.antiInjection(filterPhone), "%" });
+    }
+    String filterStatus = this.feedbackBean.getFilterStatus();
+    if (!StringUtils.isBlank(filterStatus)) {
+      sqlWhere = String.format("%s AND %s = '%s'", new Object[] { sqlWhere, "status", DbProxy.antiInjection(filterStatus) });
+    }
+    String filterShow = this.feedbackBean.getFilterShow();
+    if (!StringUtils.isBlank(filterShow)) {
+      sqlWhere = String.format("%s AND %s = '%s'", new Object[] { sqlWhere, "is_show", DbProxy.antiInjection(filterShow) });
+    }
+    String filterCreatedTime = this.feedbackBean.getFilterCreatedTime();
+    SimpleDateFormat simDateF;
+    if (!StringUtils.isBlank(filterCreatedTime))
+    {
+    	 String toDate;
+         String fromDate;
+      try
+      {
+        String[] arrDate = filterCreatedTime.split("-");
+       
+        if (arrDate.length == 1)
+        {
+          fromDate = arrDate[0];
+          toDate = fromDate;
+        }
+        else
+        {
+          fromDate = arrDate[0];
+          toDate = arrDate[1];
+        }
+        simDateF = new SimpleDateFormat("dd/MM/yyyy");
+        Date fdate = simDateF.parse(fromDate);
+        Date tdate = simDateF.parse(toDate);
+        simDateF = new SimpleDateFormat("yyyy-MM-dd");
+        fromDate = simDateF.format(fdate);
+        toDate = simDateF.format(tdate);
+      }
+      catch (Exception ex)
+      {
+        ContextUtils.addMessage("Định dạng ngày bị lỗi:" + ex.getMessage()); return;
+      }
+     
+      sqlWhere = String.format("%s AND (%s BETWEEN '%s 00:00:00' AND '%s 23:59:59')", new Object[] { sqlWhere, "created_time", fromDate, toDate });
+    }
+    if (sqlWhere.length() > 0) {
+      sqlWhere = String.format(" WHERE %s", new Object[] { sqlWhere.substring(5) });
+    }
+    this.feedbackBean.setSqlWhere(sqlWhere);
+    this.feedbackBean.setSqlOrder(sqlOrder);
+    List<Map<String, String>> lstUser = UserDAO.getAll();
+    List<Map<String, String>> lstMap = FeedbackDAO.getList(page, Paginator.DEFAULT_PAGE_SIZE, sqlWhere, sqlOrder);
+    for (Map<String, String> map : lstMap)
+    {
+      if (((String)map.get("is_show")).equals("0")) {
+        map.put("show", "Show");
+      } else {
+        map.put("show", "Hidden");
+      }
+      if (((String)map.get("status")).equals("0")) {
+        map.put("status_name", "Chưa xử lý");
+      } else if (((String)map.get("status")).equals("1")) {
+        map.put("status_name", "Đã xử lý");
+      } else if (((String)map.get("status")).equals("2")) {
+        map.put("status_name", "Đánh dấu");
+      }
+      map.put("user", getUserName(lstUser, (String)map.get("updated_by")));
+      map.put("created_time_vn", formatDate((String)map.get("created_time")));
+      map.put("updated_time_vn", formatDate((String)map.get("updated_time")));
+    }
+    this.feedbackBean.setList(lstMap);
+    setRowOrder(this.feedbackBean.getList());
+    
+    this.feedbackBean.setCount(FeedbackDAO.countList(sqlWhere));
+    this.feedbackBean.setPageBar(Paginator.getPageBar(page, this.feedbackBean.getCount(), ""));
+    RequestContext.getCurrentInstance().execute(" $('#txtDateRange').daterangepicker({ arrows: true });");
+  }
+  
+  private String formatDate(String date)
+  {
+    try
+    {
+      if (date.length() > 19) {
+        date = date.substring(0, 19);
+      }
+      Date newDate = this.sdf.parse(date);
+      return this.sdf1.format(newDate);
+    }
+    catch (Exception ex) {}
+    return date;
+  }
+  
+  private String getUserName(List<Map<String, String>> lstUser, String id)
+  {
+    if (StringUtils.isBlank(id)) {
+      return "";
+    }
+    for (Map<String, String> map : lstUser) {
+      if (((String)map.get("id")).equals(id)) {
+        return (String)map.get("user");
+      }
+    }
+    return id;
+  }
+  
+  private void setRowOrder(List<Map<String, String>> lstMap)
+  {
+    int i = 0;
+    if (lstMap == null) {
+      return;
+    }
+    for (Map<String, String> map : lstMap)
+    {
+      if (i % 2 == 0) {
+        map.put("rowOrder", "odd");
+      } else {
+        map.put("rowOrder", "");
+      }
+      i++;
+    }
+  }
+  
+  public void loadList()
+  {
+    Map<String, String> selectedPage = this.feedbackBean.getSelectedPage();
+    if (selectedPage != null)
+    {
+      int page = Integer.valueOf((String)selectedPage.get("page")).intValue();
+      loadList(page);
+    }
+  }
+  
+  public void add()
+  {
+    this.feedbackBean.resetModel();
+    this.feedbackBean.getDisabled().put("disabled-insert", "true");
+    this.feedbackBean.getDisabled().put("disabled-update", "false");
+  }
+  
+  public void edit()
+  {
+    Map<String, String> selectedItem = this.feedbackBean.getSelectedItem();
+    if (selectedItem == null)
+    {
+      ContextUtils.addMessage(LanguageBC.getValue("message.RequiredUpdateSelection"));
+    }
+    else
+    {
+      this.feedbackBean.deserializeModel(selectedItem);
+      this.feedbackBean.getDisabled().put("disabled-insert", "true");
+      this.feedbackBean.getDisabled().put("disabled-update", "false");
+    }
+  }
+  
+  public void update()
+  {
+    this.feedbackBean.getDisabled().put("disabled-insert", "false");
+    this.feedbackBean.getDisabled().put("disabled-update", "true");
+    this.feedbackBean.setUpdatedBy(this.userId);
+    if (this.feedbackBean.getSelectedItem() == null)
+    {
+      if (!FeedbackDAO.insert(this.feedbackBean.serializeModel()))
+      {
+        ContextUtils.addMessage("Hệ thống đang bận. Vui lòng thử lại sau");
+      }
+      else
+      {
+        bind();
+        ContextUtils.addMessage("Thêm mới thành công");
+      }
+    }
+    else
+    {
+      this.feedbackBean.setSelectedItem(null);
+      if (!FeedbackDAO.update(this.feedbackBean.serializeModel()))
+      {
+        ContextUtils.addMessage("Hệ thống đang bận. Vui lòng thử lại sau");
+      }
+      else
+      {
+        bind();
+        ContextUtils.addMessage("Cập nhật thành công");
+      }
+    }
+  }
+  
+  public void delete()
+  {
+    Map<String, String> selectedItem = this.feedbackBean.getSelectedItem();
+    if (selectedItem == null)
+    {
+      ContextUtils.addMessage("Bạn chưa chọn mục để xóa");
+    }
+    else
+    {
+      this.feedbackBean.setSelectedItem(null);
+      if (!FeedbackDAO.deleteLogic((String)selectedItem.get("id"), this.userId))
+      {
+        ContextUtils.addMessage("Hệ thống đang bận. Vui lòng thử lại sau");
+      }
+      else
+      {
+        bind();
+        ContextUtils.addMessage("Xóa thành công");
+      }
+    }
+  }
+  
+  public void cancel()
+  {
+    this.feedbackBean.resetModel();
+    this.feedbackBean.setSelectedItem(null);
+    this.feedbackBean.getDisabled().put("disabled-insert", "false");
+    this.feedbackBean.getDisabled().put("disabled-update", "true");
+  }
+  
+  public void processExcel()
+  {
+    List<Map<String, String>> lstMap = FeedbackDAO.getListAll(this.feedbackBean.getSqlWhere(), this.feedbackBean.getSqlOrder());
+    List<Map<String, String>> lstUser = UserDAO.getAll();
+    for (Map<String, String> map : lstMap)
+    {
+      if (((String)map.get("is_show")).equals("0")) {
+        map.put("show", "Show");
+      } else {
+        map.put("show", "Hidden");
+      }
+      if (((String)map.get("status")).equals("0")) {
+        map.put("status_name", "Chưa xử lý");
+      } else if (((String)map.get("status")).equals("1")) {
+        map.put("status_name", "Đã xử lý");
+      } else if (((String)map.get("status")).equals("2")) {
+        map.put("status_name", "Đánh dấu");
+      }
+      map.put("updated_by_name", getUserName(lstUser, (String)map.get("updated_by")));
+      map.put("created_time_vn", formatDate((String)map.get("created_time")));
+      map.put("updated_time_vn", formatDate((String)map.get("updated_time")));
+    }
+    List<String> lstColumn = new ArrayList<String>();
+    lstColumn.add("id");
+    lstColumn.add("name");
+    lstColumn.add("chuc");
+    lstColumn.add("phone");
+    lstColumn.add("content");
+    lstColumn.add("avatar");
+    lstColumn.add("status_name");
+    lstColumn.add("show");
+    lstColumn.add("created_time_vn");
+    lstColumn.add("updated_by_name");
+    lstColumn.add("updated_time_vn");
+    
+    ExcelTableHeper.postProcessXLS(lstMap, lstColumn);
+  }
+  
+  public String getKeywords()
+  {
+    return "album-keyword";
+  }
+  
+  public String getDescription()
+  {
+    return "album-description";
+  }
+  
+  public FeedbackBean getFeedbackBean()
+  {
+    return this.feedbackBean;
+  }
+  
+  public void setFeedbackBean(FeedbackBean value)
+  {
+    this.feedbackBean = value;
+  }
 }

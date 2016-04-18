@@ -71,15 +71,17 @@
 						</tr>	
 			            <tr>
 			            <td class="pl10 textboxname">Order :</td>			           
-			             <td><h:inputText id="txtOrder" styleClass="w90pc text idleField" value="#{albumBean.ord}"
+			             <td><h:inputText id="txtOrder" styleClass="w10pc text idleField" value="#{albumBean.ord}"
+			             			onkeypress="return $IsNumbers(event)"
 									disabled="#{albumBean.disabled.get('disabled-update')}" maxlength="5"/>	
 			            </td>			            
 			             <td class="pl10 textboxname">Type :</td>
 			            <td>
-			            		<h:selectOneMenu id="cboVideo" styleClass="idleField" value="#{albumBean.isVideo}"
+			            		<h:selectOneMenu id="cboVideo" styleClass="idleField" value="#{albumBean.type}"
 					       			disabled="#{albumBean.disabled.get('disabled-update')}">
 									<f:selectItem itemValue="0" itemLabel="Is Image" />
-									<f:selectItem itemValue="1" itemLabel="Is Video" />									
+									<f:selectItem itemValue="1" itemLabel="Is Video" />	
+									<f:selectItem itemValue="2" itemLabel="Is News" />									
 								</h:selectOneMenu>   
 								<SPAN class="pl10 textboxname">Is show :</SPAN>
 								<h:selectOneMenu id="cboShow" styleClass="idleField" value="#{albumBean.isShow}"
@@ -88,7 +90,27 @@
 									<f:selectItem itemValue="1" itemLabel="Is Hidden" />									
 								</h:selectOneMenu>    
 			            </td>
-			            </tr>           
+			            </tr>      
+			            <tr>
+			            	<td class="pl10 textboxname">
+			                   Avatar:
+			                </td>
+			                <td>
+			                <div style="width: 85%" class="fl">
+			                <h:inputText id="txtImage" styleClass="w90pc text idleField" value="#{albumBean.img_avatar}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></div>
+			                <div style="width: 10%" class="fl">	 		                        					
+		                            <a id="lnkUploadControl" onmouseover="$(this).fancybox({'type': 'iframe'})"
+		                            	href="#{contextUtils.getContextPath()}/resources/components/fileupload/image.xhtml">
+		                                <img class="pointer" src="#{contextUtils.getContextPath()}/resources/images/Btn/ImageManager.gif" alt="" 
+		                                	title="Upload image" />
+		                            </a>
+		                        </div></td>
+							<td class="pl10 textboxname">
+			                
+			                </td>
+			                <td></td>	
+						</tr>	     
 			        </table>  
 			        <div class="messagebox tc"> 
 			    		<h:messages id="message"/>
@@ -129,7 +151,8 @@
 			                        	onchange="$('*[id*=btnSearch]').click();">
 			                        	<f:selectItem itemValue="" itemLabel="All" />
 										<f:selectItem itemValue="0" itemLabel="Image" />
-										<f:selectItem itemValue="1" itemLabel="Video" />													                        				                        	
+										<f:selectItem itemValue="1" itemLabel="Video" />
+										<f:selectItem itemValue="2" itemLabel="News" />													                        				                        	
 			                        </h:selectOneMenu>				                
 					            </td>
 					            <td><h:selectOneMenu id="cboSearchShow" styleClass="idleField w90pc" value="#{albumBean.filterShow}" 
@@ -194,11 +217,14 @@
    			
 		</div>
 	</ui:define>
+	<ui:define name="footer">
+		<input id="hdFileStorageDomain" type="hidden" value="#{contextUtils.getDomain()}"/>						
+	</ui:define>
 	<ui:define name="footer-js">
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
-		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
-		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
-		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>					
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>			
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>		
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/media/album.js"></script>					
 						
 	</ui:define>		
 </ui:composition>

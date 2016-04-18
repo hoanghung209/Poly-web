@@ -2,6 +2,7 @@ package admin.web.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -11,14 +12,16 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.codec.binary.Base64;
 import org.primefaces.context.RequestContext;
 
+import vg.core.common.DateUtils;
 import vg.core.common.StringUtils;
 import vg.core.configproxy.ConfigProxy;
+import vg.core.memcacheproxy.MemcacheProxy;
+
+import com.vega.security.AccessControl;
+
 import admin.web.bean.LoginBean;
-import admin.web.common.AccessControl;
 import admin.web.common.RewriteURL;
 import admin.web.util.ContextUtils;
 import vg.web.captcha.CaptchaServlet;
@@ -40,7 +43,7 @@ public class LoginController implements Serializable {
 	private int MAX_CAPTCHA_COUNT = Integer.valueOf(appConf.get("userLogin-maxCaptchaCount"));
 	
 	private boolean captchaEnable = true;
-	private boolean loginEnable = true;			
+	private boolean loginEnable = true;		
 	
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
@@ -51,8 +54,8 @@ public class LoginController implements Serializable {
 		
 		if(!ContextUtils.isPostBack()){
 			//loginBean.setUseCaptcha(false);
-			bind();			
-		}		
+			bind();
+		}
 	}		
 	
 	protected void bind(){	
@@ -67,11 +70,28 @@ public class LoginController implements Serializable {
 		}
 
 		// {{ logged or detected		
-		if(AccessControl.IsLoggedIn(ContextUtils.getRequest())) {			
-				redirectBackURL();						
+		if(AccessControl.IsLoggedIn(ContextUtils.getRequest())) {
+			if(syncLogin()) {
+				redirectBackURL();	
+			}			
 		};
 		// }}
 	}	
+	private boolean syncLogin(){
+		if(!Boolean.valueOf(appConf.get("syncLogin"))) {
+			return true;
+		}
+		
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		javax.servlet.http.HttpSession newSession = request.getSession();
+	
+		String mKey = String.valueOf(newSession.getAttribute("mKey"));
+		String mValue = String.valueOf(MemcacheProxy.get(mKey));
+		
+		ContextUtils.systemOutPrint(String.format("syncLogin:%s|%s|%s", mKey, mValue, newSession.getAttribute("mValue")));
+		
+		return mValue.equals(newSession.getAttribute("mValue"));
+	}
 	
 	private long getTotalMinutes(){
 		String sLoginCount = ContextUtils.getSession("loginCount", "");
@@ -99,12 +119,10 @@ public class LoginController implements Serializable {
 	
 	public void login() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
-		long totalMinutes = getTotalMinutes();	
-		captchaEnable = Boolean.valueOf(request.getParameter("hdUserCaptcha"));	
-		
+                
+		long totalMinutes = getTotalMinutes();		
         if (loginCount < MAX_LOGIN_COUNT || totalMinutes > MAX_LOGIN_MINUTES) {
-        	//check-captcha        	
+        	//check-captcha
         	if(captchaEnable) {
         		String sessionCaptcha = ContextUtils.getSession(CaptchaServlet.CAPTCHA_KEY, "");
         		
@@ -123,11 +141,8 @@ public class LoginController implements Serializable {
         		}        		
         	}
         	
-        	
-        	
         	// {{ login 
-        	//String password = decodeJS(loginBean.getPassword());
-        	String password = loginBean.getPassword();//decodeJS(loginBean.getPassword());
+        	String password = loginBean.getPassword();
         	AccessControl.SignIn(loginBean.getUsername(), password, request);
         	if(!AccessControl.IsLoggedIn(request))
         	{
@@ -135,11 +150,35 @@ public class LoginController implements Serializable {
 	   			ContextUtils.setSession("loginTime", System.currentTimeMillis());	   		
 	   			
 	   			captchaEnable = (loginCount >= MAX_CAPTCHA_COUNT);
-	   			ContextUtils.addMessage("Username or Password is invalid");   
+	   			ContextUtils.addMessage("Username or Password is invalid");        		
         	} else {        		        		
         		javax.servlet.http.HttpSession newSession = request.getSession();        		
-        		newSession.setAttribute("username", loginBean.getUsername());        		
-        		      		
+        		newSession.setAttribute("username", loginBean.getUsername());
+        		
+        		
+        		// {{ syncLogin
+        		if(Boolean.valueOf(appConf.get("syncLogin"))) {
+            		// {{ Session HTTP
+            		String ip = ContextUtils.getRemoteIp();
+            		String lastLoginTime = DateUtils.format("yyyyMMddHHmmss", new Date());
+            		
+            		String mKey = StringUtils.md5(String.format("%s|%s","movitel.admin", loginBean.getUsername()));
+            		String mValue = StringUtils.md5(String.format("%s|%s", ip, lastLoginTime));
+            		        		    			    			    			    
+        			newSession.setAttribute("mKey", mKey);
+        			newSession.setAttribute("mValue", mValue);
+    	    		// }}
+    	    		
+    	    		// {{ Session Memcache        		
+        			
+        			ContextUtils.systemOutPrint(String.format("put memecache: %s|%s", mKey, mValue));
+        			
+    	    		MemcacheProxy.put(mKey, mValue);
+    	    		// }}        		
+        		}
+        		// }}
+        		
+        		//ContextUtils.debugSession(newSession); // debugSession
         		
         		String url = "";
 				if (newSession.getAttribute("redirect_path") != null) {
@@ -147,7 +186,8 @@ public class LoginController implements Serializable {
 				} else {
 					url = ContextUtils.getContextPath() + "/pages/welcome/index.xhtml";
 				}
-				System.out.println(url);
+				System.out.println("di dau :"+url);
+				
 				try {
 					HttpServletResponse response= (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 					response.sendRedirect(url);
@@ -163,21 +203,6 @@ public class LoginController implements Serializable {
         }
 	}
 	
-    @SuppressWarnings("unused")
-	private String decodeJS(String input){
-    	String finput = "";
-    	
-    	for(int i = 0; i< input.length(); i++) {
-    		if(i%2 == 0) {
-    			finput += Character.toString(input.charAt(i));	
-    		}    		
-    	}
-    	    
-    	String output = new String(Base64.decodeBase64(finput.getBytes()));
-    	
-    	//ContextUtils.systemOutPrint("decodeJS:" + input + "|" + output);
-    	return output;
-    }
     
 	//#endRegion
 	
@@ -223,5 +248,4 @@ public class LoginController implements Serializable {
 		this.loginEnable = loginEnable;
 	}	
 	//#endRegion
-	
 }

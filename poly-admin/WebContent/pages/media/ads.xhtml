@@ -59,33 +59,27 @@
 			            </colgroup>
 			            <tr>
 			            	<td class="pl10 textboxname">
-			                   URL VN:
+			                   Image:
 			                </td>
 			                <td> <div style="width: 85%" class="fl">
-			                <h:inputText id="txtImageVn" styleClass="w90pc text idleField" value="#{adsBean.url_vn}"
-									disabled="#{contentBean.disabled.get('disabled-update')}"/></div>
+			                <h:inputText id="txtImageVn" styleClass="w90pc text idleField" value="#{adsBean.image}"
+									disabled="#{adsBean.disabled.get('disabled-update')}" /></div>
 							  <div style="width: 10%" class="fl">	 		                        					
-		                           <a href="javascript:void(0)" onclick="OnEmbedFile('imgvn', 'txtImageVn');" style="margin: 5px 0px 2px 7px; color: Black;">
+		                            <a id="lnkUploadControl" onmouseover="$(this).fancybox({'type': 'iframe'})"
+		                            	href="#{contextUtils.getContextPath()}/resources/components/fileupload/image.xhtml">
 		                                <img class="pointer" src="#{contextUtils.getContextPath()}/resources/images/Btn/ImageManager.gif" alt="" 
 		                                	title="Upload image" />
 		                            </a>
 		                        </div></td>
-							<td class="pl10 textboxname">
-			                   URL EN:
-			                </td>
-			                <td> <div style="width: 85%" class="fl">
-			                <h:inputText id="txtImageEn" styleClass="w90pc text idleField" value="#{adsBean.url_en}"
-									disabled="#{contentBean.disabled.get('disabled-update')}"/></div>
-							  <div style="width: 10%" class="fl">	 		                        					
-		                           <a href="javascript:void(0)" onclick="OnEmbedFile('imgen', 'txtImageEn');" style="margin: 5px 0px 2px 7px; color: Black;">
-		                                <img class="pointer" src="#{contextUtils.getContextPath()}/resources/images/Btn/ImageManager.gif" alt="" 
-		                                	title="Upload image" />
-		                            </a></div>	</td>
+							 <td class="pl10 textboxname">Name :</td>			           
+			             <td><h:inputText id="txtName" styleClass="w90pc text idleField" value="#{adsBean.name}"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="50"/>	
+			            </td>	
 						</tr>	
 			            <tr>
-			            <td class="pl10 textboxname">Name :</td>			           
-			             <td><h:inputText id="txtOrder" styleClass="w90pc text idleField" value="#{adsBean.name}"
-									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="50"/>	
+			            <td class="pl10 textboxname">URL :</td>			           
+			             <td><h:inputText id="txtURL" styleClass="w90pc text idleField" value="#{adsBean.url}"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="50"/>
 			            </td>			            
 			             <td class="pl10 textboxname">Type :</td>
 			            <td>
@@ -106,6 +100,14 @@
 									<f:selectItem itemValue="0" itemLabel="Once" />
 									<f:selectItem itemValue="1" itemLabel="Many" />									
 								</h:selectOneMenu>    
+								<SPAN class="pl10 textboxname">Target :</SPAN>
+								<h:selectOneMenu id="cboTarget" styleClass="idleField" value="#{adsBean.target}"
+					       			disabled="#{adsBean.disabled.get('disabled-update')}">
+									<f:selectItem itemValue="_blank" itemLabel="_blank" />
+									<f:selectItem itemValue="_self" itemLabel="_self" />	
+									<f:selectItem itemValue="_parent" itemLabel="_parent" />	
+									<f:selectItem itemValue="_top" itemLabel="_top" />									
+								</h:selectOneMenu>    
 			            </td>
 			            </tr>    
 			            <tr>
@@ -113,24 +115,62 @@
 			                   Desc VN:
 			                </td>
 			                <td><h:inputTextarea id="txtDescVn" styleClass="w90pc text idleField" value="#{adsBean.desc_vn}"
-									disabled="#{albumBean.disabled.get('disabled-update')}" maxlength="255"/></td>
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="255"/></td>
 							<td class="pl10 textboxname">
 			                   Desc EN:
 			                </td>
 			                <td><h:inputTextarea id="txtDescEn" styleClass="w90pc text idleField" value="#{adsBean.desc_en}"
-									disabled="#{albumBean.disabled.get('disabled-update')}" maxlength="255"/></td>	
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="255"/></td>	
+						</tr>
+						<tr>
+						<td class="pl10 textboxname">More title VN:</td>			           
+			             <td><h:inputText id="txtMoreVn" styleClass="w90pc text idleField" value="#{adsBean.more_vn}"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="50"/>	
+			            </td>	
+			            <td class="pl10 textboxname">More title EN:</td>			           
+			             <td><h:inputText id="txtMoreEn" styleClass="w90pc text idleField" value="#{adsBean.more_en}"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="50"/>	
+			            </td>	
+						</tr>	
+						<tr>
+						<td class="pl10 textboxname">Desc top:</td>			           
+			             <td><h:inputText id="txtDescTop" styleClass="w10pc text idleField" value="#{adsBean.desc_top}"
+			             			onkeypress="return $IsNumbers(event);"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="5"/>	
+									<span class="pl10 textboxname">Desc left:</span>
+									<h:inputText id="txtDescLeft" styleClass="w10pc text idleField" value="#{adsBean.desc_left}"
+									onkeypress="return $IsNumbers(event);"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="5"/>
+									<span class="pl10 textboxname">Desc align:</span>
+									<h:selectOneMenu id="cboAlign" styleClass="idleField w20pc" value="#{adsBean.text_align}" 
+										disabled="#{adsBean.disabled.get('disabled-update')}">
+			                        	<f:selectItem itemValue="center" itemLabel="center" />
+			                        	<f:selectItem itemValue="left" itemLabel="left" />
+										<f:selectItem itemValue="right" itemLabel="right" />
+										<f:selectItem itemValue="justify" itemLabel="justify" />													                        				                        	
+			                        </h:selectOneMenu>		
+			            </td>	
+			            <td class="pl10 textboxname">More title top:</td>			           
+			             <td><h:inputText id="txtMoreTop" styleClass="w10pc text idleField" value="#{adsBean.more_top}"
+			            			onkeypress="return $IsNumbers(event);"	
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="5"/>
+									<span class="pl10 textboxname">More title right:</span>
+									<h:inputText id="txtMoreRight" styleClass="w10pc text idleField" value="#{adsBean.more_right}"
+									onkeypress="return $IsNumbers(event);"
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="5"/>		
+			            </td>	
 						</tr>	
 						<tr>
 			            	<td class="pl10 textboxname">
 			                   Date start:
 			                </td>
 			                <td><h:inputText id="txtDateStart" styleClass="w30pc text idleField" value="#{adsBean.date_start}"
-									disabled="#{albumBean.disabled.get('disabled-update')}" maxlength="255" onmouseout="$(this).datepicker({ changeMonth: true, changeYear: true })"/></td>
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="255" onmouseout="$(this).datepicker({ changeMonth: true, changeYear: true })"/></td>
 							<td class="pl10 textboxname">
 			                   Date end:
 			                </td>
 			                <td><h:inputText id="txtDateEnd" styleClass="w30pc text idleField" value="#{adsBean.date_end}"
-									disabled="#{albumBean.disabled.get('disabled-update')}" maxlength="255" onmouseout="$(this).datepicker({ changeMonth: true, changeYear: true })"/></td>	
+									disabled="#{adsBean.disabled.get('disabled-update')}" maxlength="255" onmouseout="$(this).datepicker({ changeMonth: true, changeYear: true })"/></td>	
 						</tr>	
 						       
 			        </table>  

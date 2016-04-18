@@ -24,28 +24,28 @@
 				
 				<div class="widget-content">
 					<div class="shortcuts">
-						<h:panelGroup >
+						<h:panelGroup rendered="#{headerUC.menu.get('tab-content')}">
 		                    <a href="#{rewriteURL.makeMenuURL('tab-1', '10','')}" class="shortcut">
 		                        <i class="shortcut-icon icon-th-large"></i>
 		                        <span class="shortcut-label">Quản lý nội dung</span>								
 		                    </a>
 		                </h:panelGroup>
-		                <h:panelGroup >     
+		                <h:panelGroup rendered="#{headerUC.menu.get('tab-content')}">     
 		                    <a href="#{rewriteURL.makeCourseURL('tab-2', '20')}" class="shortcut">
 		                        <i class="shortcut-icon icon-book"></i>
 		                        <span class="shortcut-label">Quản lý chương trình học</span>								
 		                    </a>
 		                </h:panelGroup>
-		                <h:panelGroup >    
+		                <h:panelGroup rendered="#{headerUC.menu.get('tab-media')}">    
 		                    <a href="#{rewriteURL.makeAlbumURL('tab-3', '30')}" class="shortcut">
 		                        <i class="shortcut-icon icon-file"></i>
 		                        <span class="shortcut-label">Media</span>
 		                    </a>
 						</h:panelGroup>	
-						<h:panelGroup >    
-		                    <a href="#{rewriteURL.makeUserURL('tab-4', '40')}" class="shortcut">
+						<h:panelGroup rendered="#{headerUC.menu.get('tab-cskh')}">    
+		                    <a href="#{rewriteURL.makeRegisterURL('tab-5', '50')}" class="shortcut">
 		                        <i class="shortcut-icon icon-file"></i>
-		                        <span class="shortcut-label">User</span>
+		                        <span class="shortcut-label">CSKH</span>
 		                    </a>
 						</h:panelGroup>						
 					</div>

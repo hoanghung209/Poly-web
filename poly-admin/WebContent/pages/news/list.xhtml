@@ -30,7 +30,17 @@
 			        </div>
 			        <div class="w25pc fl">
 			                <h:inputText id="txtTitleVn" value="#{newsBean.filterTitle}" styleClass="text w98pc mr5"/>
-			        </div>			        
+			        </div>	
+			        <div class="w10pc fl textboxname" style="padding-left: 30px;">
+			           Category:
+			        </div>
+			        <div class="w15pc fl">
+                        <h:selectOneMenu id="cboSearchAlbum" value="#{newsBean.filterAlbum}" 
+                        	onchange="$('*[id*=btnSearch]').click();">
+                        	<f:selectItem itemValue="" itemLabel="All"/>
+                        	<f:selectItems value="#{newsBean.lstAlbum}" var="album" itemValue="#{album.id}" itemLabel="#{album.title_vn}"></f:selectItems>                        	                      	                        		                        				                        	
+                        </h:selectOneMenu>
+			        </div>				        
 			        <div class="w10pc fl textboxname" style="padding-left: 30px;">
 			            Is Show:
 			        </div>
@@ -63,13 +73,15 @@
 				            <colgroup>
 					            <col width="5%" />
 					            <col width="40%" />
-					            <col width="15%" />   
-					            <col width="15%" />
+					            <col width="10%" />
+					            <col width="10%" />   
+					            <col width="10%" />
 					            <col />             
 				            </colgroup>
 					        <tr class="table-header">
 					            <td>ID</td>
 					            <td>Title</td>
+					            <td>Category</td>
 					            <td>Is show</td>				            
 					            <td>Updated time</td>
 					            <td>Action</td>
@@ -78,6 +90,7 @@
 							<tr class="table-body #{item.get('rowOrder')}">
 								<td><a href="#{rewriteURL.makeNewsURL('tab-3', '33',item.get('id'))}">#{item.get('id')}</a></td>
 								<td><a href="#{rewriteURL.makeNewsURL('tab-3', '33',item.get('id'))}">#{item.get('title_vn')}</a> </td>								
+								<td>#{item.get('album_id')}</td>
 								<td>#{item.get('show')}</td>						 		
 						 		<td>#{item.get('updated_time')}</td>
 								<td align="center">																																

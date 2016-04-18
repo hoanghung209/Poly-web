@@ -6,6 +6,7 @@ package admin.web.servlet;
 
 import com.vega.fileupload.FileUploadInfo;
 import com.vega.fileupload.FileUploader;
+import com.vega.security.AccessControl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,7 +53,7 @@ public class FileUploadServlet extends HttpServlet {
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();        
         String result = "";
-        
+        if(AccessControl.HasPermission("file:upload", request)||AccessControl.HasPermission("system:administrator", request)){
         try {
 
             DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
@@ -135,7 +136,7 @@ public class FileUploadServlet extends HttpServlet {
         }
 
         logger.info("End processRequest");
-        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

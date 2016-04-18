@@ -62,14 +62,29 @@
 			            	<td class="pl10 textboxname">
 			                    Is show :
 			                </td>
-			                <td><h:selectOneMenu id="cboShow" value="#{newsBean.isShow}" 
-                        	onchange="$('*[id*=btnSearch]').click();">                        
+			                <td><h:selectOneMenu id="cboShow" value="#{newsBean.isShow}">                        
                         	<f:selectItem itemValue="0" itemLabel="Show"/>
                         	<f:selectItem itemValue="1" itemLabel="Hide" />                        	                        		                        				                        	
-                        </h:selectOneMenu></td>	
-							<td class="pl10 textboxname">			                   
+                        </h:selectOneMenu>
+                        <span class="pl10 textboxname">Category :</span>
+                        <h:selectOneMenu id="cboAlbum" value="#{newsBean.album_id}" >                        
+                        	<f:selectItems value="#{newsBean.lstAlbum}" var="album" itemValue="#{album.id}" itemLabel="#{album.title_vn}"/>                        	                       	                        		                        				                        	
+                        </h:selectOneMenu>
+                        </td>	
+							<td class="pl10 textboxname">Avatar :	                   
 			                </td>
-			                <td></td>			                
+			                <td>
+			                <div style="width: 85%" class="fl">
+			                <h:inputText id="txtImage" styleClass="w90pc text idleField" value="#{newsBean.avatar}"
+									disabled="#{contentBean.disabled.get('disabled-update')}"/></div>
+							  <div style="width: 10%" class="fl">	 		                        					
+		                            <a id="lnkUploadControl" onmouseover="$(this).fancybox({'type': 'iframe'})"
+		                            	href="#{contextUtils.getContextPath()}/resources/components/fileupload/image.xhtml">
+		                                <img class="pointer" src="#{contextUtils.getContextPath()}/resources/images/Btn/ImageManager.gif" alt="" 
+		                                	title="Upload image" />
+		                            </a>
+		                        </div>
+			                </td>			                
 			            </tr>		            		            		            	          
 			        </table>   
 			        
@@ -95,16 +110,17 @@
 				
 		</div>
 	</ui:define>	
-	<ui:define name="footer">	
-		<input id="lnkMenuDetail" type="hidden" value="#{rewriteURL.makeMenuURL('tab-1', '10', '{PARM_PARENT_ID}')}"/>		
+	<ui:define name="footer">
 		<input id="hdFileStorageDomain" type="hidden" value="#{contextUtils.getDomain()}"/>						
 	</ui:define>
 	<ui:define name="footer-js">
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.ui.core.js"></script>
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.alerts.js"></script>	
-		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery.treeview.js"></script>
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/fancybox/jquery.fancybox-1.3.4.pack.js"></script>	
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/widget/ckeditor/ckeditor.js"></script>	
-		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/enum.js"></script>				
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/news/index.js"></script>	
+					
 	
 	</ui:define>		
 </ui:composition>

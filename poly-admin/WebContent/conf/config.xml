@@ -4,17 +4,16 @@
 		<property name="isDebug" value="true" />
 				
 		<property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
-		
+		<!--
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/bapshop_poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="bapshop_poly" />
 		<property name="password" value="25251325" /> 
-		
-		<!--
-		<property name="jdbcUrl" value="jdbc:mysql://10.0.9.63:3306/poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8" />
-		<property name="username" value="root" />
-		<property name="password" value="sp1mysql" /> 
 		-->
-							
+		
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/poly?zeroDateTimeBehavior=convertToNull&amp;useEncoding=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="root" />
+		<property name="password" value="25251325" /> 	
+		
 		<property name="minConnections" value="5" />
 		<property name="maxConnections" value="20" />
 		<property name="partitionCount" value="1" />
@@ -24,9 +23,9 @@
    
     
 	<category name="app">
-		<property name="contextPath" value="http://poly.polyfinal.info/admin" />
-		<property name="contextWeb" value="http://polyfinal.info/poly-web" />
-		<!--<property name="contextPath" value="http://localhost:8080/Web" />-->	
+		<!--<property name="contextPath" value="http://poly.polyfinal.info/admin" />-->
+		<property name="contextWeb" value="http://42.117.1.228" />
+		<property name="contextPath" value="http://localhost:8080/admin" />	
 					
 		<property name="channel-root" value="1" />
 						 	
@@ -47,8 +46,8 @@
         <property name="rootFolder" value="E://data/static" />
          --> 
            
-        <property name="server" value="http://polyfinal.info/static" />
-        <property name="rootFolder" value="/home/bapshop/domains/polyfinal.info/public_html/static/" />
+        <property name="server" value="http://42.117.1.228/static" />
+        <property name="rootFolder" value="D://storage/static/" />
         
         <property name="mimeType" value="$image/jpeg$image/gif$image/png$image/mpeg$image/bmp$image/bmp$audio/mpeg$audio/x-wav$audio/mid$video/3gpp$video/x-msvideo$video/x-flv$video/mp4$video/x-ms-wmv$application/zip$application/x-rar-compressed$application/msword$application/vnd.ms-excel$application/vnd.openxmlformats-officedocument.spreadsheetml.sheet$application/vnd.openxmlformats-officedocument.wordprocessingml.document$application/x-shockwave-flash$" />
     </category>    	

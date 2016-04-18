@@ -101,6 +101,10 @@
 									<f:selectItem itemValue="0" itemLabel="Is Show" />
 									<f:selectItem itemValue="1" itemLabel="Is Hidden" />									
 								</h:selectOneMenu>    
+								<SPAN class="pl10 textboxname">Order :</SPAN>
+								<h:inputText id="txtOrd" styleClass="w10pc text idleField" value="#{fileBean.ord}"
+									onkeypress="return $IsNumbers(event)"
+									disabled="#{fileBean.disabled.get('disabled-update')}" maxlength="5"/>
 			            </td>
 			            </tr>   
 			             <tr>
@@ -148,7 +152,8 @@
 					            <col width="15%" />
 					            <col width="15%" />
 					            <col width="10%" />
-					            <col width="10%" />					           
+					            <col width="10%" />	
+					           	<col width="5%" />				           
 					            <col width="10%" />					           
 					            <col />             
 				            </colgroup>
@@ -158,7 +163,8 @@
 					            <td>Name</td>					            					            
 					            <td>Album</td>
 					            <td>Type</td>	
-					            <td>Is show</td>				            
+					            <td>Is show</td>	
+					            <td>Ord</td>			            
 					            <td>Action</td>
 					        </tr>		
 					          <tr class="table-fillter">
@@ -168,8 +174,7 @@
 		                        	<h:inputText id="txtSearchTitleVn" styleClass="table-text idleField" value="#{fileBean.filterName}"
 		                        		onkeypress="if($IsEnter(event)) $('*[id*=btnSearch]').click();"/>				                
 					            </td>	
-					            <td><h:selectOneMenu id="cboSearchAlbum" styleClass="idleField" value="#{fileBean.filterAlbumId}"
-					       			disabled="#{fileBean.disabled.get('disabled-update')}">
+					            <td><h:selectOneMenu id="cboSearchAlbum" styleClass="idleField" value="#{fileBean.filterAlbumId}"					       			>
 									<f:selectItems value="#{fileBean.listAlbum}" var="album" itemValue="#{album.id}" itemLabel="#{album.title_vn}" />																		
 								</h:selectOneMenu></td>		           
 					            	
@@ -186,7 +191,8 @@
 			                        	<f:selectItem itemValue="" itemLabel="All" />
 										<f:selectItem itemValue="0" itemLabel="Show" />
 										<f:selectItem itemValue="1" itemLabel="Hidden" />													                        				                        	
-			                        </h:selectOneMenu>	</td>			
+			                        </h:selectOneMenu>	</td>	
+			                        <td></td>		
 			                    <td align="center">
 			                    	<h:commandButton id="btnSearch" styleClass="btnCss mr5 btnSearch" 
 			                    		value="Tìm"
@@ -202,7 +208,8 @@
 								<td>#{item.get('name_vn')}</td>
 								<td>#{item.get('album_name')}</td>	
 								<td>#{item.get('type')}</td>
-								<td>#{item.get('show')}</td>						 						 		
+								<td>#{item.get('show')}</td>
+								<td>#{item.get('ord')}</td>						 						 		
 								<td align="center">																																
 									<h:commandLink styleClass="pl5" 
 										action="#{fileController.edit}">

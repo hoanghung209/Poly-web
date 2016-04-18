@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
+
+import com.vega.security.AccessControl;
+
 import vg.core.configproxy.ConfigProxy;
-import admin.web.common.AccessControl;
 
 public class AuthenticationFilter implements Filter{
 	public Map<String, String> appConf = ConfigProxy.categories.get("app");

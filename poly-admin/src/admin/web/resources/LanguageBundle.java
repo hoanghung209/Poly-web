@@ -28,13 +28,12 @@ public class LanguageBundle extends ResourceBundle {
 				.getCurrentInstance().getViewRoot().getLocale(), UTF8_CONTROL));			
 
 		String defaultSuffixLanguage = FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage();
-		
 		String suffixLanguage = ContextUtils.getSession("suffixLanguage", defaultSuffixLanguage);		
-		currentLanguage = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(suffixLanguage.replace("_", "")), UTF8_CONTROL);
+		currentLanguage = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(suffixLanguage.replace("_", "")));
 	}
 
 	public static void changeLanguage(String suffixLanguage) {
-		currentLanguage = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(suffixLanguage.replace("_", "")), UTF8_CONTROL);
+		currentLanguage = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(suffixLanguage.replace("_", "")));
 	}
 	
 	@Override

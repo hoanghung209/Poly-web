@@ -108,15 +108,21 @@
 								</h:selectOneMenu>    
 								<SPAN class="pl10 textboxname">Order :</SPAN>
 								 <h:inputText id="txtOrd" styleClass="text idleField" value="#{menuBean.ord}"
+								 	onkeypress="return $IsNumbers(event);"
 									disabled="#{menuBean.disabled.get('disabled-update')}" maxlength="5"/>
 			            </td>
 			            </tr>
 			            <tr>
 			            <td class="pl10 textboxname">
-			                    URL :
+			                    Link to :
 			                </td>
-			                <td><h:inputText id="txtUrl" styleClass="w90pc text idleField" value="#{menuBean.url}"
-									disabled="#{menuBean.disabled.get('disabled-update')}"/></td>	
+			                <td><h:inputText id="txtInpage" styleClass="w10pc text idleField" value="#{menuBean.inpage}"
+			                		onkeypress="return $IsNumbers(event);"
+									disabled="#{menuBean.disabled.get('disabled-update')}" maxlength="5"/>
+									<span class="pl10 textboxname">Anchor : </span>
+									<h:inputText id="txtAnchor" styleClass="w50pc text idleField" value="#{menuBean.anchor}"
+									disabled="#{menuBean.disabled.get('disabled-update')}" maxlength="50"/>									
+									</td>	
 							<td class="pl10 textboxname">
 			                    Banner :
 			                </td>

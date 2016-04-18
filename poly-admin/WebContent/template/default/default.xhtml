@@ -13,7 +13,7 @@
 		<ui:insert name="head-title">
 			<title>Default</title>			
 		</ui:insert>
-	
+		
 		<link href="#{contextUtils.getContextPath()}/resources/css/common.css" type="text/css" rel="stylesheet" />
 		<link href="#{contextUtils.getContextPath()}/resources/css/default.css" type="text/css" rel="stylesheet" />		
 		<link href="#{contextUtils.getContextPath()}/resources/css/interface.css" type="text/css" rel="stylesheet" />
@@ -30,6 +30,7 @@
 		
 		<h:inputHidden id="hdContextPath" value="#{contextUtils.getContextPath()}"/>			
 		<ui:insert name="footer"></ui:insert>	
+		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/language/language#{contextUtils.getSession('suffixLanguage', '_en')}.js"></script>
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/core/jquery-1.4.3.min.js"></script>
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/common/base.js"></script>			
 		<script type="text/javascript" src="#{contextUtils.getContextPath()}/resources/js/pages/master.js"></script>
